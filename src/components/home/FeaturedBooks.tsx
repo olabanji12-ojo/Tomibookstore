@@ -1,0 +1,110 @@
+import { motion } from 'framer-motion';
+import type { Book } from '../../types';
+
+const FEATURED_BOOKS: Book[] = [
+  {
+    id: 'f1',
+    title: 'Simple Way Of Piece Life',
+    author: 'Simon Adams',
+    price: 15000,
+    image: '/book1.jpg',
+    description: 'A beautiful collection of life-changing perspectives on modern living.',
+  },
+  {
+    id: 'f2',
+    title: 'Great Travel At Desert',
+    author: 'John Doe',
+    price: 12500,
+    image: '/book3.jpg',
+    description: 'An immersive journey through the world\'s most unforgiving and beautiful deserts.',
+  },
+  {
+    id: 'f3',
+    title: 'The Lady Beauty Scarlett',
+    author: 'Alice Hall',
+    price: 18000,
+    image: '/book5.jpg',
+    description: 'A classic tale of beauty, tragedy, and social class in the Victorian era.',
+  },
+  {
+    id: 'f4',
+    title: 'Once Upon A Time',
+    author: 'Jane Smith',
+    price: 14000,
+    image: '/book6.jpg',
+    description: 'A modern reimagining of classic fairy tales with a contemporary twist.',
+  },
+];
+
+interface FeaturedBooksProps {
+  onBookSelect: (book: Book) => void;
+}
+
+const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
+  return (
+    <section className="py-24 bg-[#f3f2ee]">
+      <div className="max-w-[1200px] mx-auto px-10">
+        
+        {/* Header Section */}
+        <div className="text-center mb-16 relative">
+          <p className="font-poppins text-[10px] font-bold tracking-[0.3em] uppercase text-black/35 mb-2">
+            Some Quality Items
+          </p>
+          <div className="relative flex items-center justify-center">
+            {/* Decorative Lines */}
+            <div className="absolute w-full h-[1px] bg-black/10 top-1/2 -translate-y-1/2" />
+            <h2 className="font-mona text-3xl md:text-4xl font-black text-black relative bg-[#f3f2ee] px-10">
+              Featured Books
+            </h2>
+          </div>
+        </div>
+
+        {/* Books Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {FEATURED_BOOKS.map((book) => (
+            <div key={book.id} className="group cursor-pointer">
+              
+              {/* Image Frame/Container */}
+              <div className="aspect-[4/5] bg-white/40 flex items-center justify-center p-8 mb-6 relative overflow-hidden transition-all duration-500 hover:shadow-xl">
+                
+                {/* Book Cover */}
+                <motion.img
+                  src={book.image}
+                  alt={book.title}
+                  className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
+                />
+
+                {/* Add to Cart Overlay Button */}
+                <button
+                  onClick={() => onBookSelect(book)}
+                  className="absolute bottom-10 left-0 w-full h-12 bg-black text-white 
+                             font-poppins text-[10px] font-bold tracking-[0.2em] uppercase
+                             opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0
+                             transition-all duration-500 ease-out z-10"
+                >
+                  Add To Cart
+                </button>
+              </div>
+
+              {/* Book Info */}
+              <div className="text-center">
+                <h3 className="font-mona text-sm font-bold text-black mb-1 hover:text-black/60 transition-colors duration-300">
+                  {book.title}
+                </h3>
+                <p className="font-poppins text-[10px] tracking-[0.1em] text-black/40 uppercase mb-2">
+                  {book.author}
+                </p>
+                <p className="font-poppins text-xs font-bold text-black/80">
+                  ₦{book.price.toLocaleString()}
+                </p>
+              </div>
+              
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FeaturedBooks;
