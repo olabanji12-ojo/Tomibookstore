@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, Minus, Plus, Trash2 } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
@@ -43,56 +43,42 @@ const CheckoutModal = ({
 
   // ── Paystack Integration ──────────────────────────────────────────────────
   
-  // Convert to Kobo
-  const amountInKobo = totalPrice * 100;
-  
-  const config = {
+  // Memoized Config to ensure hook stability during re-renders
+  const config = useMemo(() => ({
     reference: (new Date()).getTime().toString(),
     email: formData.email,
-    amount: amountInKobo,
+    amount: totalPrice * 100,
     publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_2c0505115dfb9ef47b3b47afb0605d65afffed7c',
     currency: 'NGN',
     metadata: {
         custom_fields: [
-            {
-                display_name: "Customer Name",
-                variable_name: "customer_name",
-                value: formData.name
-            },
-            {
-                display_name: "Shipping Address",
-                variable_name: "shipping_address",
-                value: formData.address
-            },
-            {
-                display_name: "Phone Number",
-                variable_name: "phone_number",
-                value: formData.phone
-            }
+            { display_name: "Name", variable_name: "name", value: formData.name },
+            { display_name: "Address", variable_name: "address", value: formData.address },
+            { display_name: "Phone", variable_name: "phone", value: formData.phone }
         ]
     }
-  };
+  }), [formData.email, formData.name, formData.address, formData.phone, totalPrice]);
 
   const initializePayment = usePaystackPayment(config);
 
-  const handlePaystackSuccess = (reference: any) => {
+  const handlePaystackSuccess = useCallback((reference: any) => {
     console.log("Payment Successful", reference);
     setIsSuccess(true);
     
-    // Clear cart and close after a slight delay or via prop
+    // Clear global cart state immediately
     onSuccess();
 
     Swal.fire({
       icon: 'success',
       title: 'Payment Successful!',
-      text: 'Your order has been placed. Check your email for a receipt.',
+      text: 'Your order has been placed. Our team will reach out soon.',
       background: '#ffffff',
       color: '#000000',
       confirmButtonColor: '#000000',
     });
-  };
+  }, [onSuccess]);
 
-  const handlePaystackClose = () => {
+  const handlePaystackClose = useCallback(() => {
     Swal.fire({
       toast: true,
       position: 'top-end',
@@ -104,7 +90,7 @@ const CheckoutModal = ({
       background: '#ffffff',
       color: '#000000',
     });
-  };
+  }, []);
 
   // ───────────────────────────────────────────────────────────────────────────
 
@@ -123,7 +109,10 @@ const CheckoutModal = ({
   const handlePurchaseButton = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isFormValid) {
-        initializePayment({ onSuccess: handlePaystackSuccess, onClose: handlePaystackClose });
+        initializePayment({ 
+            onSuccess: handlePaystackSuccess, 
+            onClose: handlePaystackClose 
+        });
     }
   };
 

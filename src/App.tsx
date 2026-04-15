@@ -78,7 +78,7 @@ function App() {
 
   const handlePaymentSuccess = () => {
     setCartItems([]);
-    setIsModalOpen(false);
+    // Do not close immediately so they see the success screen in the modal
   };
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
