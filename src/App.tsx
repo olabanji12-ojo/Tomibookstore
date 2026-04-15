@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
@@ -19,7 +19,9 @@ const STORAGE_KEYS = {
 };
 
 function App() {
-  // Initialize state from LocalStorage
+  const isHydrated = useRef(false);
+
+  // Initialize state from LocalStorage (Lazy)
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.CART);
@@ -43,14 +45,23 @@ function App() {
   const [focusedBook, setFocusedBook] = useState<Book | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  // Sync Cart to LocalStorage
+  // Mark as hydrated after mount
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
+    isHydrated.current = true;
+  }, []);
+
+  // Sync Cart to LocalStorage (Guard against first-render overwrite)
+  useEffect(() => {
+    if (isHydrated.current) {
+      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
+    }
   }, [cartItems]);
 
-  // Sync Form to LocalStorage
+  // Sync Form to LocalStorage (Guard against first-render overwrite)
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.FORM, JSON.stringify(formData));
+    if (isHydrated.current) {
+      localStorage.setItem(STORAGE_KEYS.FORM, JSON.stringify(formData));
+    }
   }, [formData]);
 
   const handleAddToCart = (book: Book) => {
