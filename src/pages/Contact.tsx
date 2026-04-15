@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MessageCircle, MapPin, Send } from 'lucide-react';
+import { Mail, MessageCircle, MapPin, Send, Camera } from 'lucide-react';
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -74,6 +74,15 @@ const Contact = () => {
                   <div className="flex items-center gap-3 justify-center md:justify-start">
                     <MapPin size={16} strokeWidth={1} className="text-black/40" />
                     <span className="font-poppins text-base font-medium text-black">Victoria Island, Lagos, Nigeria</span>
+                  </div>
+                </div>
+
+                {/* Instagram Mock with available icon */}
+                <div className="flex flex-col gap-2">
+                  <span className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/20">Follow</span>
+                  <div className="flex items-center gap-3 justify-center md:justify-start">
+                    <Camera size={16} strokeWidth={1} className="text-black/40" />
+                    <span className="font-poppins text-base font-medium text-black">@booksaw_ng</span>
                   </div>
                 </div>
               </div>
