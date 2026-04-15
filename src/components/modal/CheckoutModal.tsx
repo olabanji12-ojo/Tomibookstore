@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, Minus, Plus, Trash2 } from 'lucide-react';
+import { usePaystackPayment } from 'react-paystack';
+import Swal from 'sweetalert2';
 import type { CartItem } from '../../App';
 import type { Book } from '../../types';
 
@@ -37,7 +39,75 @@ const CheckoutModal = ({
   const [isSuccess, setIsSuccess] = useState(false);
 
   const displayItems = mode === 'cart' ? items : (focusedBook ? [{ book: focusedBook, quantity: 1 }] : []);
+  const totalPrice = displayItems.reduce((acc, item) => acc + (item.book.price * item.quantity), 0);
+
+  // ── Paystack Integration ──────────────────────────────────────────────────
   
+  // Convert to Kobo
+  const amountInKobo = totalPrice * 100;
+  
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: formData.email,
+    amount: amountInKobo,
+    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_2c0505115dfb9ef47b3b47afb0605d65afffed7c',
+    currency: 'NGN',
+    metadata: {
+        custom_fields: [
+            {
+                display_name: "Customer Name",
+                variable_name: "customer_name",
+                value: formData.name
+            },
+            {
+                display_name: "Shipping Address",
+                variable_name: "shipping_address",
+                value: formData.address
+            },
+            {
+                display_name: "Phone Number",
+                variable_name: "phone_number",
+                value: formData.phone
+            }
+        ]
+    }
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePaystackSuccess = (reference: any) => {
+    console.log("Payment Successful", reference);
+    setIsSuccess(true);
+    
+    // Clear cart and close after a slight delay or via prop
+    onSuccess();
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Payment Successful!',
+      text: 'Your order has been placed. Check your email for a receipt.',
+      background: '#ffffff',
+      color: '#000000',
+      confirmButtonColor: '#000000',
+    });
+  };
+
+  const handlePaystackClose = () => {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'info',
+      title: 'Payment cancelled.',
+      text: 'Your items are still in the cart.',
+      showConfirmButton: false,
+      timer: 3000,
+      background: '#ffffff',
+      color: '#000000',
+    });
+  };
+
+  // ───────────────────────────────────────────────────────────────────────────
+
   if (displayItems.length === 0 && !isSuccess) {
     onClose();
     return null;
@@ -50,19 +120,18 @@ const CheckoutModal = ({
     formData.phone.trim().length >= 10 && 
     formData.address.trim().length > 5;
 
-  const handleCompletePurchase = (e: React.FormEvent) => {
+  const handlePurchaseButton = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsSuccess(true);
-    onSuccess();
+    if (isFormValid) {
+        initializePayment({ onSuccess: handlePaystackSuccess, onClose: handlePaystackClose });
+    }
   };
-
-  const totalPrice = displayItems.reduce((acc, item) => acc + (item.book.price * item.quantity), 0);
 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-4 px-0">
         
-        {/* Backdrop - Visible Gap Area at top */}
+        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -71,7 +140,7 @@ const CheckoutModal = ({
           className="absolute inset-0 bg-black/40 backdrop-blur-md cursor-pointer"
         />
 
-        {/* Modal Container: Single Scroll Surface Architecture */}
+        {/* Modal Container */}
         <motion.div
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -84,10 +153,10 @@ const CheckoutModal = ({
           }}
           className="relative w-full max-w-[1000px] h-[92vh] sm:h-auto sm:max-h-[85vh] bg-[#f3f2ee] shadow-2xl flex flex-col overflow-hidden rounded-t-[32px] sm:rounded-none z-[70]"
         >
-          {/* 1. Drag Handle / Top Spacing */}
+          {/* Drag Handle */}
           <div className="md:hidden w-12 h-1.5 bg-black/10 rounded-full mx-auto mt-4 mb-2 shrink-0" />
 
-          {/* 2. Fixed Close Button */}
+          {/* Close Button */}
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 z-[80] p-2 bg-white/80 backdrop-blur-sm rounded-full text-black hover:bg-white transition-all cursor-pointer shadow-sm"
@@ -238,7 +307,8 @@ const CheckoutModal = ({
                     {/* Desktop CTA */}
                     <div className="hidden md:block pt-6">
                       <button
-                        onClick={handleCompletePurchase}
+                        type="button"
+                        onClick={handlePurchaseButton}
                         disabled={!isFormValid || displayItems.length === 0}
                         className="w-full h-14 bg-black text-white font-poppins text-[10px] font-bold tracking-[0.5em] uppercase
                                    disabled:opacity-10 transition-all duration-500 cursor-pointer shadow-2xl shadow-black/10"
@@ -267,11 +337,12 @@ const CheckoutModal = ({
             </div>
           )}
 
-          {/* 3. FIXED MOBILE ACTION BAR (Always visible at bottom) */}
+          {/* 3. FIXED MOBILE ACTION BAR */}
           {!isSuccess && (
             <div className="md:hidden absolute bottom-0 left-0 w-full p-6 bg-white border-t border-black/5 z-[90] shadow-[0_-10px_40px_rgba(0,0,0,0.08)]">
               <button
-                onClick={handleCompletePurchase}
+                type="button"
+                onClick={handlePurchaseButton}
                 disabled={!isFormValid || displayItems.length === 0}
                 className="w-full h-15 bg-black text-white font-poppins text-[10px] font-bold tracking-[0.4em] uppercase
                            disabled:opacity-20 transition-all cursor-pointer rounded-none active:scale-[0.98]"

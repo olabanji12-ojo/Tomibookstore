@@ -76,6 +76,11 @@ function App() {
     setIsModalOpen(false);
   };
 
+  const handlePaymentSuccess = () => {
+    setCartItems([]);
+    setIsModalOpen(false);
+  };
+
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
@@ -111,7 +116,7 @@ function App() {
             formData={formData}
             onFormDataChange={setFormData}
             onClose={handleCloseModal}
-            onSuccess={() => {}}
+            onSuccess={handlePaymentSuccess}
             onAddToCart={handleAddToCart}
           />
         )}
