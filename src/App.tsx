@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
@@ -13,20 +13,45 @@ export interface CartItem {
   quantity: number;
 }
 
+const STORAGE_KEYS = {
+  CART: 'booksaw_cart_v1',
+  FORM: 'booksaw_form_v1'
+};
+
 function App() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  // Initialize state from LocalStorage
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.CART);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.FORM);
+      return saved ? JSON.parse(saved) : { name: '', email: '', phone: '', address: '' };
+    } catch {
+      return { name: '', email: '', phone: '', address: '' };
+    }
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'cart' | 'quickview'>('cart');
   const [focusedBook, setFocusedBook] = useState<Book | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  
-  // Persistent Form Data
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
-  });
+
+  // Sync Cart to LocalStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  // Sync Form to LocalStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.FORM, JSON.stringify(formData));
+  }, [formData]);
 
   const handleAddToCart = (book: Book) => {
     setCartItems(prev => {
@@ -41,7 +66,6 @@ function App() {
       return [...prev, { book, quantity: 1 }];
     });
     
-    // Trigger Navbar Feedback
     setIsAddingToCart(true);
     setTimeout(() => setIsAddingToCart(false), 1500);
   };
@@ -77,8 +101,13 @@ function App() {
   };
 
   const handlePaymentSuccess = () => {
+    // Clear State
     setCartItems([]);
-    // Do not close immediately so they see the success screen in the modal
+    setFormData({ name: '', email: '', phone: '', address: '' });
+    
+    // Clear Storage
+    localStorage.removeItem(STORAGE_KEYS.CART);
+    localStorage.removeItem(STORAGE_KEYS.FORM);
   };
 
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -105,7 +134,6 @@ function App() {
 
         <Footer />
 
-        {/* CheckoutModal handles its own AnimatePresence interior logic */}
         {isModalOpen && (
           <CheckoutModal 
             mode={modalMode}
