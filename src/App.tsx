@@ -66,6 +66,12 @@ function App() {
     setIsModalOpen(true);
   };
 
+  const handleQuickView = (book: Book) => {
+    setFocusedBook(book);
+    setModalMode('quickview');
+    setIsModalOpen(true);
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -83,7 +89,12 @@ function App() {
         />
 
         <Routes>
-          <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
+          <Route path="/" element={
+            <Home 
+              onAddToCart={handleAddToCart} 
+              onQuickView={handleQuickView} 
+            />
+          } />
           <Route path="/contact" element={<Contact />} />
         </Routes>
 

@@ -62,12 +62,12 @@ const imageVariants = {
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
 interface HeroSectionProps {
-  onBookSelect: (book: Book) => void;
+  onQuickView: (book: Book) => void;
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
-const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
+const HeroSection = ({ onQuickView }: HeroSectionProps) => {
   const [current, setCurrent]       = useState(0);
   const [autoPlay, setAutoPlay]     = useState(true);
 
@@ -100,8 +100,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
       style={{ backgroundColor: '#f3f2ee' }}
       className="relative w-full min-h-[calc(100vh-129px)] flex items-center overflow-hidden"
     >
-
-      {/* ── Floating Left Arrow ─────────────────────────────────────────────── */}
       <button
         onClick={handlePrev}
         aria-label="Previous slide"
@@ -112,7 +110,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
         <ChevronLeft size={24} strokeWidth={1.2} />
       </button>
 
-      {/* ── Floating Right Arrow ────────────────────────────────────────────── */}
       <button
         onClick={handleNext}
         aria-label="Next slide"
@@ -123,11 +120,9 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
         <ChevronRight size={24} strokeWidth={1.2} />
       </button>
 
-      {/* ── Content Grid ────────────────────────────────────────────────────── */}
       <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-16 md:py-0 min-h-[calc(100vh-129px)]">
 
-          {/* ── BOOK IMAGE (mobile: top / desktop: right) ─────────────────── */}
           <div className="order-1 md:order-2 flex justify-center items-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -138,12 +133,10 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                 exit="exit"
                 className="relative"
               >
-                {/* Ambient shadow beneath cover */}
                 <div
                   className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[65%] h-10 blur-3xl opacity-20 rounded-full bg-black/10"
                 />
 
-                {/* Book cover */}
                 <div
                   className="relative w-[190px] md:w-[240px] lg:w-[280px] aspect-[2/3] rounded-[2px]"
                   style={{
@@ -151,34 +144,16 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                       '10px 18px 55px rgba(0,0,0,0.16), 3px 6px 16px rgba(0,0,0,0.08), -1px 0 0 rgba(0,0,0,0.05)',
                   }}
                 >
-                  {slide.image ? (
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className="w-full h-full object-cover rounded-[2px]"
-                    />
-                  ) : (
-                    /* Placeholder until real cover images are provided */
-                    <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-                        stroke="rgba(255,255,255,0.35)" strokeWidth="0.8">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                      </svg>
-                      <p
-                        className="text-white/25 text-[8px] tracking-[0.3em] uppercase"
-                        style={{ fontFamily: 'Poppins, sans-serif' }}
-                      >
-                        Cover
-                      </p>
-                    </div>
-                  )}
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-cover rounded-[2px]"
+                  />
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* ── TEXT BLOCK (mobile: bottom / desktop: left) ───────────────── */}
           <div className="order-2 md:order-1 text-center md:text-left">
             <AnimatePresence mode="wait">
               <motion.div
@@ -188,7 +163,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                 animate="center"
                 exit="exit"
               >
-                {/* Slide counter */}
                 <p
                   className="text-[9px] tracking-[0.4em] uppercase text-black/25 mb-7"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -196,7 +170,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                   0{current + 1}&nbsp;&nbsp;/&nbsp;&nbsp;0{HERO_SLIDES.length}
                 </p>
 
-                {/* Title */}
                 <h1
                   className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black
                              leading-[1.08] tracking-[-0.02em] mb-5 font-poppins"
@@ -204,7 +177,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                   {slide.title}
                 </h1>
 
-                {/* Author */}
                 <p
                   className="text-[10px] tracking-[0.22em] uppercase text-black/30 mb-6"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -212,7 +184,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                   by {slide.author}
                 </p>
 
-                {/* Description */}
                 <p
                   className="text-[13.5px] text-black/45 leading-[1.8] max-w-sm mx-auto md:mx-0 mb-7"
                   style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}
@@ -220,7 +191,6 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                   {slide.description}
                 </p>
 
-                {/* Price */}
                 <p
                   className="text-[12px] tracking-[0.12em] text-black/50 mb-8"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -228,9 +198,8 @@ const HeroSection = ({ onBookSelect }: HeroSectionProps) => {
                   ₦{slide.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </p>
 
-                {/* CTA — passes slide data to modal handler */}
                 <button
-                  onClick={() => onBookSelect(slide)}
+                  onClick={() => onQuickView(slide)}
                   className="inline-flex items-center gap-3
                              border border-black/80 text-black
                              text-[10px] tracking-[0.25em] uppercase

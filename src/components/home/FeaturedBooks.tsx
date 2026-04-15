@@ -37,10 +37,11 @@ const FEATURED_BOOKS: Book[] = [
 ];
 
 interface FeaturedBooksProps {
-  onBookSelect: (book: Book) => void;
+  onAddToCart: (book: Book) => void;
+  onQuickView: (book: Book) => void;
 }
 
-const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
+const FeaturedBooks = ({ onAddToCart, onQuickView }: FeaturedBooksProps) => {
   return (
     <section className="py-24 bg-[#f3f2ee]">
       <div className="max-w-[1200px] mx-auto px-10">
@@ -51,7 +52,6 @@ const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
             Some Quality Items
           </p>
           <div className="relative flex items-center justify-center">
-            {/* Decorative Lines */}
             <div className="absolute w-full h-[1px] bg-black/10 top-1/2 -translate-y-1/2" />
             <h2 className="font-mona text-3xl md:text-4xl font-black text-black relative bg-[#f3f2ee] px-10">
               Featured Books
@@ -65,7 +65,10 @@ const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
             <div key={book.id} className="group cursor-pointer">
               
               {/* Image Frame/Container */}
-              <div className="aspect-[4/5] bg-white/40 flex items-center justify-center p-8 mb-6 relative overflow-hidden transition-all duration-500 hover:shadow-xl">
+              <div 
+                onClick={() => onQuickView(book)}
+                className="aspect-[4/5] bg-white/40 flex items-center justify-center p-8 mb-6 relative overflow-hidden transition-all duration-500 hover:shadow-xl"
+              >
                 
                 {/* Book Cover */}
                 <motion.img
@@ -74,13 +77,16 @@ const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
                   className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
                 />
 
-                {/* Add to Cart Overlay Button */}
+                {/* Add to Cart Overlay Button - Explicit Addition */}
                 <button
-                  onClick={() => onBookSelect(book)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent opening modal
+                    onAddToCart(book);
+                  }}
                   className="absolute bottom-10 left-0 w-full h-12 bg-black text-white 
                              font-poppins text-[10px] font-bold tracking-[0.2em] uppercase
                              opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0
-                             transition-all duration-500 ease-out z-10"
+                             transition-all duration-500 ease-out z-10 cursor-pointer"
                 >
                   Add To Cart
                 </button>
@@ -88,7 +94,10 @@ const FeaturedBooks = ({ onBookSelect }: FeaturedBooksProps) => {
 
               {/* Book Info */}
               <div className="text-center">
-                <h3 className="font-mona text-sm font-bold text-black mb-1 hover:text-black/60 transition-colors duration-300">
+                <h3 
+                  onClick={() => onQuickView(book)}
+                  className="font-mona text-sm font-bold text-black mb-1 hover:text-black/60 transition-colors duration-300 cursor-pointer"
+                >
                   {book.title}
                 </h3>
                 <p className="font-poppins text-[10px] tracking-[0.1em] text-black/40 uppercase mb-2">

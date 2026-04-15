@@ -5,14 +5,15 @@ import type { Book } from '../types';
 
 interface HomeProps {
   onAddToCart: (book: Book) => void;
+  onQuickView: (book: Book) => void;
 }
 
-const Home = ({ onAddToCart }: HomeProps) => {
+const Home = ({ onAddToCart, onQuickView }: HomeProps) => {
   return (
     <main>
-      <HeroSection onBookSelect={onAddToCart} />
+      <HeroSection onQuickView={onQuickView} />
       <PartnerLogos />
-      <FeaturedBooks onBookSelect={onAddToCart} />
+      <FeaturedBooks onAddToCart={onAddToCart} onQuickView={onQuickView} />
     </main>
   );
 };
