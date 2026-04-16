@@ -3,7 +3,7 @@ import { Camera, X, MessageCircle, Send } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#f3f2ee] py-24 px-8 md:px-12 border-t border-black/[0.03]">
+    <footer className="bg-[#ede9e1] py-24 px-8 md:px-12 border-t border-black/[0.03]">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-12 text-center md:text-left">
           
