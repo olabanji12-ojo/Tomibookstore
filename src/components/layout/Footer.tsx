@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Camera, X, MessageCircle, Send } from 'lucide-react';
+import { Instagram, Mail, MessageCircle, Send } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -35,14 +35,27 @@ const Footer = () => {
               CONNECT
             </h3>
             <div className="flex justify-center md:justify-start gap-6">
-              <a href="#" className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300">
-                <Camera size={16} strokeWidth={1.5} />
+              <a 
+                href="https://www.instagram.com/shopgoodthingsco?igsh=cG12ZG5hMTkzN2U3" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+              >
+                <Instagram size={16} strokeWidth={1.5} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300">
+              <a 
+                href="https://wa.me/2348028970296" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+              >
                 <MessageCircle size={16} strokeWidth={1.5} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300">
-                <X size={16} strokeWidth={1.5} />
+              <a 
+                href="#" 
+                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+              >
+                <Mail size={16} strokeWidth={1.5} />
               </a>
             </div>
           </div>
