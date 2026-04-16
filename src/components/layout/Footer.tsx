@@ -34,28 +34,39 @@ const Footer = () => {
             <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/30">
               CONNECT
             </h3>
-            <div className="flex justify-center md:justify-start gap-6">
+            <div className="flex justify-center md:justify-start gap-5">
+              {/* Instagram: Authentic SVG logo */}
               <a 
                 href="https://www.instagram.com/shopgoodthingsco?igsh=cG12ZG5hMTkzN2U3" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+                className="w-11 h-11 rounded-full border border-black/10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
               >
-                <Camera size={16} strokeWidth={1.5} />
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
               </a>
+
+              {/* WhatsApp: Authentic SVG logo */}
               <a 
                 href="https://wa.me/2348028970296" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+                className="w-11 h-11 rounded-full border border-black/10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
               >
-                <MessageCircle size={16} strokeWidth={1.5} />
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 8.38 8.38 0 0 1 3.8.9L21 3z"/>
+                </svg>
               </a>
+
+              {/* Mail: Lucide Mail icon */}
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/40 hover:bg-black hover:text-white transition-all duration-300"
+                className="w-11 h-11 rounded-full border border-black/10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
               >
-                <Mail size={16} strokeWidth={1.5} />
+                <Mail size={18} strokeWidth={1.8} />
               </a>
             </div>
           </div>
