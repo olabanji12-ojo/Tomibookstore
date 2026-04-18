@@ -35,7 +35,6 @@ const CheckoutModal = ({
   onFormDataChange,
   onClose, 
   onSuccess,
-  onAddToCart
 }: CheckoutModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -54,9 +53,6 @@ const CheckoutModal = ({
   }, [mode, focusedBook, items]);
 
   const totalPrice = displayItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-
-  // Maintain usage to avoid build errors
-  const _usage = { onAddToCart };
 
   // ── Paystack Integration ──────────────────────────────────────────────────
   const config = useMemo(() => ({
