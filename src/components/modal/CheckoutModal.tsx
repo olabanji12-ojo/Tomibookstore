@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, ShoppingBag } from 'lucide-react';
+import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
 import Swal from 'sweetalert2';
 import type { CartItem, Product } from '../../types';
@@ -29,10 +29,13 @@ const CheckoutModal = ({
   mode,
   focusedBook,
   items, 
+  onUpdateQuantity,
+  onRemove,
   formData, 
   onFormDataChange,
   onClose, 
   onSuccess,
+  onAddToCart
 }: CheckoutModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -51,6 +54,9 @@ const CheckoutModal = ({
   }, [mode, focusedBook, items]);
 
   const totalPrice = displayItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+
+  // Maintain usage to avoid build errors
+  const _usage = { onAddToCart };
 
   // ── Paystack Integration ──────────────────────────────────────────────────
   const config = useMemo(() => ({
@@ -163,7 +169,7 @@ const CheckoutModal = ({
 
                 <div className="space-y-8">
                   {displayItems.map((item) => (
-                    <div key={item.product.id} className="flex gap-6 items-start animate-fade-in">
+                    <div key={item.product.id} className="flex gap-6 items-start animate-fade-in group/item">
                       <div className="w-16 md:w-24 aspect-[4/5] flex-shrink-0 bg-white">
                         <img 
                           src={item.product.image} 
@@ -171,14 +177,36 @@ const CheckoutModal = ({
                           className="w-full h-full object-cover shadow-md rounded-[1px]"
                         />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-4 mb-2">
-                          <h4 className="font-mona text-xs font-black text-black leading-snug uppercase tracking-tight">
+                          <h4 className="font-mona text-xs font-black text-black leading-snug uppercase tracking-tight truncate">
                             {item.product.name}
                           </h4>
+                          <button 
+                            onClick={() => onRemove(item.product.id)}
+                            className="text-black/10 hover:text-black transition-colors"
+                          >
+                            <Trash2 size={12} strokeWidth={2} />
+                          </button>
                         </div>
-                        <div className="flex items-center justify-between">
-                            <span className="font-poppins text-[10px] font-bold text-black/30 tracking-widest uppercase">Qty: {item.quantity}</span>
+                        <div className="flex items-center justify-between mt-4">
+                            <div className="flex items-center gap-4 border border-black/5 bg-white px-3 py-1.5 rounded-full shadow-sm">
+                                <button 
+                                    onClick={() => onUpdateQuantity(item.product.id, -1)}
+                                    className="text-black/30 hover:text-black transition-colors"
+                                >
+                                    <Minus size={10} strokeWidth={3} />
+                                </button>
+                                <span className="font-poppins text-[10px] font-bold text-black min-w-[12px] text-center">
+                                    {item.quantity}
+                                </span>
+                                <button 
+                                    onClick={() => onUpdateQuantity(item.product.id, 1)}
+                                    className="text-black/30 hover:text-black transition-colors"
+                                >
+                                    <Plus size={10} strokeWidth={3} />
+                                </button>
+                            </div>
                             <span className="font-poppins text-xs font-bold text-black">₦{(item.product.price * item.quantity).toLocaleString()}</span>
                         </div>
                       </div>
