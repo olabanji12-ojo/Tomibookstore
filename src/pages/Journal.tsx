@@ -109,7 +109,7 @@ export default function Journal() {
                     The Journal
                 </span>
             </motion.div>
-          <h1 className="font-mona text-6xl md:text-9xl font-black tracking-tighter text-black mb-10 leading-[0.85]">
+          <h1 className="font-mona text-[13vw] md:text-9xl font-black tracking-tighter text-black mb-10 leading-[0.85]">
             INTENTIONAL <br /> LIVING
           </h1>
           <p className="font-poppins text-lg md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">

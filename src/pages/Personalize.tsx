@@ -172,7 +172,7 @@ export default function Personalize() {
                     Bespoke Creations
                 </span>
             </motion.div>
-          <h1 className="font-mona text-5xl md:text-8xl font-black tracking-tighter text-black mb-8 leading-[0.9]">
+          <h1 className="font-mona text-[11vw] md:text-8xl font-black tracking-tighter text-black mb-8 leading-[0.9]">
             THE CONCIERGE <br /> PORTAL
           </h1>
           <p className="font-poppins text-lg md:text-xl text-black/40 max-w-3xl mx-auto leading-relaxed">

@@ -232,11 +232,11 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
       </AnimatePresence>
 
       {/* Product Display */}
-      <section className="max-w-[1400px] mx-auto px-8 py-20">
+      <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-20">
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-12" 
+                ? "grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-12" 
                 : "flex flex-col gap-6"
             }
         >
@@ -248,7 +248,7 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className={`group bg-white rounded-3xl overflow-hidden border border-black/[0.03] hover:border-black/10 transition-all duration-500 shadow-sm hover:shadow-xl ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-64' : ''}`}
+                    className={`group bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-black/[0.03] hover:border-black/10 transition-all duration-500 shadow-sm hover:shadow-xl ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-64' : ''}`}
                 >
                     {/* Image Area */}
                     <div 
@@ -261,7 +261,7 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                         />
                         <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
-                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
                             <span className="bg-black/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[8px] font-black tracking-widest uppercase">
                                 Quick View
                             </span>
@@ -269,18 +269,18 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
                     </div>
 
                     {/* Content Area */}
-                    <div className="p-6 md:p-8 flex flex-col justify-between flex-1">
+                    <div className="p-4 md:p-8 flex flex-col justify-between flex-1">
                         <div>
-                            <div className="flex justify-between items-start mb-2">
-                                <span className="font-mona text-[10px] font-black text-black/20 uppercase tracking-[0.2em]">
+                            <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-1 md:gap-4 mb-2">
+                                <span className="font-mona text-[8px] md:text-[10px] font-black text-black/20 uppercase tracking-[0.2em]">
                                     {product.category}
                                 </span>
-                                <span className="font-poppins text-xs font-bold text-black opacity-60">
+                                <span className="font-poppins text-[10px] md:text-xs font-bold text-black opacity-60">
                                     ₦{(product.price || 0).toLocaleString()}
                                 </span>
                             </div>
                             <h3 
-                                className={`font-mona font-black text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'}`}
+                                className={`font-mona font-black text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-xl md:text-3xl' : 'text-sm md:text-xl'}`}
                                 onClick={() => onQuickView(product)}
                             >
                                 {product.name}
@@ -294,10 +294,11 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
 
                         <button
                             onClick={() => onAddToCart(product)}
-                            className="mt-6 flex items-center justify-center gap-3 w-full bg-black text-white py-4 rounded-2xl font-mona text-[10px] font-black tracking-[0.3em] uppercase hover:bg-black/90 transition-all overflow-hidden relative group/btn"
+                            className="mt-4 md:mt-6 flex items-center justify-center gap-3 w-full bg-black text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-mona text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase hover:bg-black/90 transition-all overflow-hidden relative group/btn"
                         >
                             <span className="relative z-10">Acquire</span>
-                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform relative z-10" />
+                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform relative z-10 md:hidden" />
+                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform relative z-10 hidden md:block" />
                             <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
                         </button>
                     </div>
