@@ -7,7 +7,7 @@ export const books: Book[] = [
     title: 'Stories That Stay With You',
     author: 'Good Things Co',
     price: 9500,
-    image: '/book1.jpg',
+    image: '/Goodthings1.jpg',
     description: 'A masterpiece curated for the modern reader who seeks depth and inspiration in every page.',
   },
   {
@@ -15,7 +15,7 @@ export const books: Book[] = [
     title: 'The Art of Curated Living',
     author: 'Good Things Co',
     price: 9500,
-    image: '/book2.jpg',
+    image: '/Goodthings2.jpg',
     description: 'Explore the journey of intentional living through a collection of life-changing perspectives.',
   }
 ];
