@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 import type { Book } from '../../types';
 import { books as HERO_SLIDES } from '../../data/books';
@@ -37,12 +37,8 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
     () => setCurrent((p) => (p + 1) % HERO_SLIDES.length),
     []
   );
-  const prev = useCallback(
-    () => setCurrent((p) => (p - 1 + HERO_SLIDES.length) % HERO_SLIDES.length),
-    []
-  );
 
-  // ── Auto-play: 5 s interval ─────────────────────────────────────────────────
+  // ── Auto-play: 4 s interval ─────────────────────────────────────────────────
   useEffect(() => {
     if (!autoPlay) return;
     const id = setInterval(next, 4000);
@@ -50,8 +46,6 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
   }, [autoPlay, next]);
 
   // ── Handlers ────────────────────────────────────────────────────────────────
-  const handlePrev = () => { prev(); setAutoPlay(false); };
-  const handleNext = () => { next(); setAutoPlay(false); };
   const handleDot  = (i: number) => { setCurrent(i); setAutoPlay(false); };
 
   return (
@@ -60,26 +54,6 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
       style={{ backgroundColor: '#f3f2ee' }}
       className="relative w-full min-h-[calc(100vh-129px)] flex items-center overflow-hidden"
     >
-      <button
-        onClick={handlePrev}
-        aria-label="Previous slide"
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20
-                   w-10 h-10 flex items-center justify-center cursor-pointer
-                   text-black/20 hover:text-black/60 transition-colors duration-200"
-      >
-        <ChevronLeft size={24} strokeWidth={1.2} />
-      </button>
-
-      <button
-        onClick={handleNext}
-        aria-label="Next slide"
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20
-                   w-10 h-10 flex items-center justify-center cursor-pointer
-                   text-black/20 hover:text-black/60 transition-colors duration-200"
-      >
-        <ChevronRight size={24} strokeWidth={1.2} />
-      </button>
-
       <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-16 md:py-0 min-h-[calc(100vh-129px)]">
 
@@ -98,16 +72,16 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                 />
 
                 <div
-                  className="relative w-[190px] md:w-[240px] lg:w-[280px] aspect-[2/3] rounded-[2px]"
+                  className="relative w-[220px] md:w-[280px] lg:w-[320px] aspect-[2/3] rounded-[1px]"
                   style={{
                     boxShadow:
-                      '10px 18px 55px rgba(0,0,0,0.16), 3px 6px 16px rgba(0,0,0,0.08), -1px 0 0 rgba(0,0,0,0.05)',
+                      '10px 18px 55px rgba(0,0,0,0.12), 3px 6px 16px rgba(0,0,0,0.06), -1px 0 0 rgba(0,0,0,0.03)',
                   }}
                 >
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className="w-full h-full object-cover rounded-[2px]"
+                    className="w-full h-full object-cover rounded-[1px]"
                   />
                 </div>
               </motion.div>
@@ -124,70 +98,64 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                 exit="exit"
               >
                 <p
-                  className="text-[9px] tracking-[0.4em] uppercase text-black/25 mb-7"
+                  className="text-[9px] tracking-[0.4em] uppercase text-black/25 mb-8"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
-                  0{current + 1}&nbsp;&nbsp;/&nbsp;&nbsp;0{HERO_SLIDES.length}
+                  Stories that stay with you
                 </p>
 
                 <h1
-                  className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black
-                             leading-[1.08] tracking-[-0.02em] mb-5 font-poppins"
+                  className="text-4xl md:text-5xl lg:text-6xl font-black text-black
+                             leading-[1.05] tracking-[-0.03em] mb-6 font-mona uppercase"
                 >
                   {slide.title}
                 </h1>
 
                 <p
-                  className="text-[10px] tracking-[0.22em] uppercase text-black/30 mb-6"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  by {slide.author}
-                </p>
-
-                <p
-                  className="text-[13.5px] text-black/45 leading-[1.8] max-w-sm mx-auto md:mx-0 mb-7"
-                  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}
+                  className="text-[13px] text-black/50 leading-[1.8] max-w-sm mx-auto md:mx-0 mb-10"
+                  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
                 >
                   {slide.description}
                 </p>
 
-                <p
-                  className="text-[12px] tracking-[0.12em] text-black/50 mb-8"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  ₦{slide.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                </p>
-
-                <button
-                  onClick={() => onQuickView(slide)}
-                  className="inline-flex items-center gap-3
-                             border border-black/80 text-black
-                             text-[10px] tracking-[0.25em] uppercase
-                             px-8 py-3.5 cursor-pointer
-                             hover:bg-black hover:text-[#f3f2ee]
-                             transition-all duration-300 ease-in-out group
-                             mx-auto md:mx-0"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  Read More
-                  <ArrowRight
-                    size={11}
-                    strokeWidth={1.5}
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                </button>
+                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 mb-12">
+                   <p
+                    className="text-[14px] font-black text-black/80"
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                  >
+                    ₦{slide.price.toLocaleString()}
+                  </p>
+                  
+                  <button
+                    onClick={() => onQuickView(slide)}
+                    className="inline-flex items-center gap-4
+                               bg-black text-white
+                               text-[9px] font-black tracking-[0.3em] uppercase
+                               px-10 py-5 cursor-pointer
+                               hover:bg-neutral-800
+                               transition-all duration-300 ease-in-out group
+                               mx-auto md:mx-0"
+                  >
+                    Experience Curation
+                    <ArrowRight
+                      size={12}
+                      strokeWidth={2}
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </button>
+                </div>
 
                 {/* Pagination Dots */}
-                <div className="flex items-center gap-2 mt-10 justify-center md:justify-start">
+                <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">
                   {HERO_SLIDES.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => handleDot(i)}
                       aria-label={`Go to slide ${i + 1}`}
-                      className={`rounded-full transition-all duration-300 cursor-pointer ${
+                      className={`rounded-full transition-all duration-400 cursor-pointer ${
                         i === current
-                          ? 'w-5 h-[5px] bg-black'
-                          : 'w-[5px] h-[5px] bg-black/20 hover:bg-black/40'
+                          ? 'w-8 h-[2px] bg-black'
+                          : 'w-4 h-[2px] bg-black/10 hover:bg-black/30'
                       }`}
                     />
                   ))}

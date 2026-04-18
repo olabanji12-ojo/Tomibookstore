@@ -1,0 +1,65 @@
+import { motion } from 'framer-motion';
+
+const ENTRY_PATHS = [
+  {
+    title: 'Find a Gift',
+    subtitle: 'A Gift for the Thoughtful',
+    image: '/book1.jpg',
+    link: '#',
+  },
+  {
+    title: 'Elevate Your Space',
+    subtitle: 'Curate Your Sanctuary',
+    image: '/Goodthings1.jpg',
+    link: '#',
+  },
+  {
+    title: 'Wear Something Meaningful',
+    subtitle: 'The Uniform of Intent',
+    image: '/Goodthings2.jpg',
+    link: '#',
+  }
+];
+
+const EntryPaths = () => {
+  return (
+    <section className="py-24 bg-white">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
+          {ENTRY_PATHS.map((path, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.8 }}
+              className="flex flex-col gap-6 group cursor-pointer"
+            >
+              {/* Image Container (4:5 Ratio) */}
+              <div className="aspect-[4/5] overflow-hidden relative grayscale-[30%] group-hover:grayscale-0 transition-all duration-700">
+                <img 
+                  src={path.image} 
+                  alt={path.title}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
+              </div>
+
+              {/* Text Content */}
+              <div className="text-center md:text-left">
+                <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/30 mb-2">
+                  {path.subtitle}
+                </p>
+                <h3 className="font-mona text-xl font-black text-black uppercase tracking-tighter group-hover:opacity-60 transition-opacity">
+                  {path.title}
+                </h3>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default EntryPaths;
