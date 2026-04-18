@@ -50,13 +50,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateQuantity = (productId: string, delta: number) => {
-    setCartItems(prev => prev.map(item => {
-      if (item.product.id === productId) {
-        const newQty = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQty };
+    setCartItems(prev => {
+      const existing = prev.find(item => item.product.id === productId);
+      if (!existing) return prev;
+
+      const newQty = existing.quantity + delta;
+      
+      if (newQty <= 0) {
+        return prev.filter(item => item.product.id !== productId);
       }
-      return item;
-    }));
+
+      return prev.map(item => 
+        item.product.id === productId ? { ...item, quantity: newQty } : item
+      );
+    });
+  };
+
+  const getItemQuantity = (productId: string) => {
+    return cartItems.find(item => item.product.id === productId)?.quantity || 0;
   };
 
   const clearCart = () => {
@@ -67,7 +78,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, totalItems }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, getItemQuantity, clearCart, totalItems }}>
       {children}
     </CartContext.Provider>
   );

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { Product } from '../../types';
 import { products } from '../../data/books';
+import ProductAction from '../shared/ProductAction';
 
 interface FeaturedCollectionProps {
   onAddToCart: (product: Product) => void;
@@ -43,19 +44,14 @@ const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProp
                   className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
                 />
 
-                {/* Add to Cart Overlay Button */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); 
-                    onAddToCart(product);
-                  }}
-                  className="absolute bottom-10 left-0 w-full h-12 bg-black text-white 
-                             font-poppins text-[9px] font-black tracking-[0.3em] uppercase
-                             opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0
-                             transition-all duration-500 ease-out z-10 cursor-pointer"
+                <div 
+                   className="absolute bottom-10 left-0 w-full px-6
+                              opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0
+                              transition-all duration-500 ease-out z-10"
+                   onClick={(e) => e.stopPropagation()}
                 >
-                  Purchase Now
-                </button>
+                  <ProductAction product={product} />
+                </div>
               </div>
 
               {/* Product Info */}

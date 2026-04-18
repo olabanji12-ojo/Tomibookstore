@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
 import toast from 'react-hot-toast';
+import ProductAction from '../components/shared/ProductAction';
 
 const categories = ['FASHION', 'ACCESSORIES', 'GIFTS', 'HOME', 'PACKAGING'];
 const rituals = ['WORK', 'PLAY', 'FANCY', 'SLEEP', 'EAT'];
@@ -292,15 +293,7 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
                             )}
                         </div>
 
-                        <button
-                            onClick={() => onAddToCart(product)}
-                            className="mt-4 md:mt-6 flex items-center justify-center gap-3 w-full bg-black text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-mona text-[8px] md:text-[10px] font-black tracking-[0.3em] uppercase hover:bg-black/90 transition-all overflow-hidden relative group/btn"
-                        >
-                            <span className="relative z-10">Acquire</span>
-                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform relative z-10 md:hidden" />
-                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform relative z-10 hidden md:block" />
-                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
-                        </button>
+                        <ProductAction product={product} />
                     </div>
                 </motion.div>
             ))}

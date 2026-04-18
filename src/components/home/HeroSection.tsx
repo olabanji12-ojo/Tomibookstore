@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import ProductAction from '../shared/ProductAction';
 
 import type { Product } from '../../types';
 import { products as HERO_SLIDES } from '../../data/books';
@@ -126,23 +127,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                     ₦{slide.price.toLocaleString()}
                   </p>
                   
-                  <button
-                    onClick={() => onQuickView(slide)}
-                    className="inline-flex items-center gap-4
-                               bg-black text-white
-                               text-[9px] font-black tracking-[0.3em] uppercase
-                               px-10 py-5 cursor-pointer
-                               hover:bg-neutral-800
-                               transition-all duration-300 ease-in-out group
-                               mx-auto md:mx-0"
-                  >
-                    Experience Curation
-                    <ArrowRight
-                      size={12}
-                      strokeWidth={2}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </button>
+                  <ProductAction product={slide} variant="large" />
                 </div>
 
                 <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">
