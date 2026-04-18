@@ -63,7 +63,7 @@ const Footer = () => {
 
               {/* Mail: Lucide Mail icon */}
               <a 
-                href="#" 
+                href="mailto:books@goodthingsco.online" 
                 className="w-11 h-11 rounded-full border border-black/10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
               >
                 <Mail size={18} strokeWidth={1.8} />

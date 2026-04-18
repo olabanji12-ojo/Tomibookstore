@@ -104,8 +104,8 @@ const Contact = () => {
                 {/* Email */}
                 <div className="group">
                   <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/20 mb-2">Email Us</p>
-                  <a href="mailto:hello@goodthingsco.ltd" className="font-poppins text-xl md:text-2xl font-black text-black hover:opacity-60 transition-opacity">
-                    hello@goodthingsco.ltd
+                  <a href="mailto:books@goodthingsco.online" className="font-poppins text-xl md:text-2xl font-black text-black hover:opacity-60 transition-opacity">
+                    books@goodthingsco.online
                   </a>
                 </div>
 
