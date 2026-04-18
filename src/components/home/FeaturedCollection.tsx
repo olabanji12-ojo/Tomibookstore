@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import type { Book } from '../../types';
-import { books as products } from '../../data/books';
+import type { Product } from '../../types';
+import { products } from '../../data/books';
 
 interface FeaturedCollectionProps {
-  onAddToCart: (product: Book) => void;
-  onQuickView: (product: Book) => void;
+  onAddToCart: (product: Product) => void;
+  onQuickView: (product: Product) => void;
 }
 
 const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProps) => {
@@ -39,7 +39,7 @@ const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProp
                 {/* Product Image */}
                 <motion.img
                   src={product.image}
-                  alt={product.title}
+                  alt={product.name}
                   className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
                 />
 
@@ -64,7 +64,7 @@ const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProp
                   onClick={() => onQuickView(product)}
                   className="font-mona text-xs font-bold text-black mb-1 hover:text-black/60 transition-colors duration-300 cursor-pointer uppercase tracking-tight"
                 >
-                  {product.title}
+                  {product.name}
                 </h3>
                 <p className="font-poppins text-[9px] tracking-[0.1em] text-black/40 uppercase mb-3">
                   {product.author}

@@ -3,33 +3,22 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
+import Personalize from './pages/Personalize';
+import Journal from './pages/Journal';
+import Shop from './pages/Shop';
 import CheckoutModal from './components/modal/CheckoutModal';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/utils/ScrollToTop';
-import type { Book } from './types';
-
-export interface CartItem {
-  book: Book;
-  quantity: number;
-}
+import { useCart } from './context/CartContext';
+import type { Product } from './types';
 
 const STORAGE_KEYS = {
-  CART: 'good_things_cart_v1',
   FORM: 'good_things_form_v1'
 };
 
 function App() {
   const isHydrated = useRef(false);
-
-  // Initialize state from LocalStorage (Lazy)
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.CART);
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const { cartItems, addToCart, removeFromCart, updateQuantity, totalItems, clearCart } = useCart();
 
   const [formData, setFormData] = useState(() => {
     try {
@@ -42,7 +31,7 @@ function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'cart' | 'quickview'>('cart');
-  const [focusedBook, setFocusedBook] = useState<Book | null>(null);
+  const [focusedProduct, setFocusedProduct] = useState<Product | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   // Mark as hydrated after mount
@@ -50,59 +39,27 @@ function App() {
     isHydrated.current = true;
   }, []);
 
-  // Sync Cart to LocalStorage (Guard against first-render overwrite)
-  useEffect(() => {
-    if (isHydrated.current) {
-      localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
-    }
-  }, [cartItems]);
-
-  // Sync Form to LocalStorage (Guard against first-render overwrite)
+  // Sync Form to LocalStorage
   useEffect(() => {
     if (isHydrated.current) {
       localStorage.setItem(STORAGE_KEYS.FORM, JSON.stringify(formData));
     }
   }, [formData]);
 
-  const handleAddToCart = (book: Book) => {
-    setCartItems(prev => {
-      const existing = prev.find(item => item.book.id === book.id);
-      if (existing) {
-        return prev.map(item => 
-          item.book.id === book.id 
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { book, quantity: 1 }];
-    });
-    
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
     setIsAddingToCart(true);
     setTimeout(() => setIsAddingToCart(false), 1500);
   };
 
-  const updateQuantity = (bookId: string, delta: number) => {
-    setCartItems(prev => prev.map(item => {
-      if (item.book.id === bookId) {
-        const newQty = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQty };
-      }
-      return item;
-    }));
-  };
-
-  const removeFromCart = (bookId: string) => {
-    setCartItems(prev => prev.filter(item => item.book.id !== bookId));
-  };
-
   const handleOpenCart = () => {
     setModalMode('cart');
-    setFocusedBook(null);
+    setFocusedProduct(null);
     setIsModalOpen(true);
   };
 
-  const handleQuickView = (book: Book) => {
-    setFocusedBook(book);
+  const handleQuickView = (product: Product) => {
+    setFocusedProduct(product);
     setModalMode('quickview');
     setIsModalOpen(true);
   };
@@ -112,23 +69,17 @@ function App() {
   };
 
   const handlePaymentSuccess = () => {
-    // Clear State
-    setCartItems([]);
+    clearCart();
     setFormData({ name: '', email: '', phone: '', address: '' });
-    
-    // Clear Storage
-    localStorage.removeItem(STORAGE_KEYS.CART);
     localStorage.removeItem(STORAGE_KEYS.FORM);
   };
-
-  const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
       <div className="min-h-screen bg-[#f3f2ee] selection:bg-black selection:text-white">
         <Navbar 
-          cartCount={totalCartCount} 
+          cartCount={totalItems} 
           onCartClick={handleOpenCart}
           isAdding={isAddingToCart}
         />
@@ -140,6 +91,14 @@ function App() {
               onQuickView={handleQuickView} 
             />
           } />
+          <Route path="/shop" element={
+            <Shop 
+              onAddToCart={handleAddToCart} 
+              onQuickView={handleQuickView} 
+            />
+          } />
+          <Route path="/personalize" element={<Personalize />} />
+          <Route path="/journal" element={<Journal />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
 
@@ -148,7 +107,7 @@ function App() {
         {isModalOpen && (
           <CheckoutModal 
             mode={modalMode}
-            focusedBook={focusedBook}
+            focusedBook={focusedProduct}
             items={cartItems}
             onUpdateQuantity={updateQuantity}
             onRemove={removeFromCart}

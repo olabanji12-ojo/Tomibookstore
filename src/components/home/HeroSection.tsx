@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-import type { Book } from '../../types';
-import { books as HERO_SLIDES } from '../../data/books';
+import type { Product } from '../../types';
+import { products as HERO_SLIDES } from '../../data/books';
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 
@@ -22,7 +22,7 @@ const imageVariants = {
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
 interface HeroSectionProps {
-  onQuickView: (book: Book) => void;
+  onQuickView: (product: Product) => void;
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -80,7 +80,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                 >
                   <img
                     src={slide.image}
-                    alt={slide.title}
+                    alt={slide.name}
                     className="w-full h-full object-cover rounded-[1px]"
                   />
                 </div>
@@ -108,7 +108,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                   className="text-4xl md:text-5xl lg:text-6xl font-black text-black
                              leading-[1.05] tracking-[-0.03em] mb-6 font-mona uppercase"
                 >
-                  {slide.title}
+                  {slide.name}
                 </h1>
 
                 <p
@@ -145,9 +145,8 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                   </button>
                 </div>
 
-                {/* Pagination Dots */}
                 <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">
-                  {HERO_SLIDES.map((_, i) => (
+                  {HERO_SLIDES.map((_, i: number) => (
                     <button
                       key={i}
                       onClick={() => handleDot(i)}

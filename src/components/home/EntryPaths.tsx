@@ -1,27 +1,30 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const ENTRY_PATHS = [
   {
     title: 'Find a Gift',
     subtitle: 'A Gift for the Thoughtful',
-    image: '/book1.jpg',
-    link: '#',
+    image: '/gift_entry.png',
+    category: 'GIFTS',
   },
   {
     title: 'Elevate Your Space',
     subtitle: 'Curate Your Sanctuary',
-    image: '/Goodthings1.jpg',
-    link: '#',
+    image: '/space_entry.png',
+    category: 'HOME',
   },
   {
     title: 'Wear Something Meaningful',
     subtitle: 'The Uniform of Intent',
-    image: '/Goodthings2.jpg',
-    link: '#',
+    image: '/wear_entry.png',
+    category: 'FASHION',
   }
 ];
 
 const EntryPaths = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-24 bg-white">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
@@ -34,6 +37,7 @@ const EntryPaths = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.8 }}
               className="flex flex-col gap-6 group cursor-pointer"
+              onClick={() => navigate(`/shop?category=${path.category}`)}
             >
               {/* Image Container (4:5 Ratio) */}
               <div className="aspect-[4/5] overflow-hidden relative grayscale-[30%] group-hover:grayscale-0 transition-all duration-700">

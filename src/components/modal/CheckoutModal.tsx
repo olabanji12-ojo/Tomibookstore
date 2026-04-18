@@ -3,15 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, Minus, Plus, Trash2 } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
 import Swal from 'sweetalert2';
-import type { CartItem } from '../../App';
-import type { Book } from '../../types';
+import type { CartItem, Product } from '../../types';
 
 interface CheckoutModalProps {
   mode: 'cart' | 'quickview';
-  focusedBook: Book | null;
+  focusedBook: Product | null;
   items: CartItem[];
-  onUpdateQuantity: (bookId: string, delta: number) => void;
-  onRemove: (bookId: string) => void;
+  onUpdateQuantity: (productId: string, delta: number) => void;
+  onRemove: (productId: string) => void;
   formData: {
     name: string;
     email: string;
@@ -21,7 +20,7 @@ interface CheckoutModalProps {
   onFormDataChange: (data: any) => void;
   onClose: () => void;
   onSuccess: () => void;
-  onAddToCart?: (book: Book) => void; 
+  onAddToCart?: (product: Product) => void; 
 }
 
 const CheckoutModal = ({ 
@@ -38,8 +37,8 @@ const CheckoutModal = ({
 }: CheckoutModalProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const displayItems = mode === 'cart' ? items : (focusedBook ? [{ book: focusedBook, quantity: 1 }] : []);
-  const totalPrice = displayItems.reduce((acc, item) => acc + (item.book.price * item.quantity), 0);
+  const displayItems = mode === 'cart' ? items : (focusedBook ? [{ product: focusedBook, quantity: 1 }] : []);
+  const totalPrice = displayItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
 
   // ── Paystack Integration ──────────────────────────────────────────────────
   
@@ -170,11 +169,11 @@ const CheckoutModal = ({
                       <div className="flex flex-col items-center text-center">
                           <img 
                             src={focusedBook.image} 
-                            alt={focusedBook.title} 
+                            alt={focusedBook.name} 
                             className="h-72 md:h-80 object-contain shadow-2xl mb-8 rounded-[1px]"
                           />
                           <h2 className="font-mona text-2xl font-black text-black leading-tight uppercase tracking-tight mb-2">
-                              {focusedBook.title}
+                              {focusedBook.name}
                           </h2>
                           <p className="font-poppins text-[10px] font-medium text-black/40 uppercase tracking-[0.2em] mb-6">
                               by {focusedBook.author}
@@ -191,21 +190,21 @@ const CheckoutModal = ({
                       </div>
                     ) : (
                       items.map((item) => (
-                        <div key={item.book.id} className="flex gap-4 md:gap-6 items-start">
+                        <div key={item.product.id} className="flex gap-4 md:gap-6 items-start">
                           <div className="w-16 md:w-20 aspect-[2/3] flex-shrink-0">
                             <img 
-                              src={item.book.image} 
-                              alt={item.book.title} 
+                              src={item.product.image} 
+                              alt={item.product.name} 
                               className="w-full h-full object-cover shadow-lg rounded-[1px]"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between items-start mb-1">
                               <h4 className="font-mona text-sm font-bold text-black truncate pr-4">
-                                {item.book.title}
+                                {item.product.name}
                               </h4>
                               <button 
-                                onClick={() => onRemove(item.book.id)}
+                                onClick={() => onRemove(item.product.id)}
                                 className="text-black/20 hover:text-red-500 cursor-pointer"
                               >
                                 <Trash2 size={12} />
@@ -213,12 +212,12 @@ const CheckoutModal = ({
                             </div>
                             <div className="flex items-center justify-between mt-4">
                               <div className="flex items-center gap-3 border border-black/10 rounded-full px-2 py-0.5 bg-white/30">
-                                <button onClick={() => onUpdateQuantity(item.book.id, -1)} className="p-1 cursor-pointer"><Minus size={10} /></button>
+                                <button onClick={() => onUpdateQuantity(item.product.id, -1)} className="p-1 cursor-pointer"><Minus size={10} /></button>
                                 <span className="w-4 text-center font-poppins text-[10px] font-bold">{item.quantity}</span>
-                                <button onClick={() => onUpdateQuantity(item.book.id, 1)} className="p-1 cursor-pointer"><Plus size={10} /></button>
+                                <button onClick={() => onUpdateQuantity(item.product.id, 1)} className="p-1 cursor-pointer"><Plus size={10} /></button>
                               </div>
                               <div className="font-poppins text-xs font-bold text-black">
-                                ₦{(item.book.price * item.quantity).toLocaleString()}
+                                ₦{(item.product.price * item.quantity).toLocaleString()}
                               </div>
                             </div>
                           </div>

@@ -9,12 +9,12 @@ const Footer = () => {
           
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-6 items-center md:items-start">
-            <h2 className="font-poppins text-2xl font-black tracking-widest text-black">
-              GOOD THINGS CO
-            </h2>
+            <Link to="/" className="hover:opacity-70 transition-opacity">
+              <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-32 w-auto object-contain -ml-2" />
+            </Link>
             <p className="font-poppins text-xs text-black/50 leading-relaxed max-w-[200px]">
-              Stories that stay with you. <br />
-              Curated for the modern reader.
+              The uniform of intent. <br />
+              Premium lifestyle & boutique curations.
             </p>
           </div>
 

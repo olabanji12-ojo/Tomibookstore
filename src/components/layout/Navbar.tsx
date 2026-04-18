@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'HOME', href: '/' },
-  { label: 'CONTACT US', href: '/contact' },
+  { label: 'SHOP', href: '/shop' },
+  { label: 'PERSONALIZE', href: '/personalize' },
+  { label: 'JOURNAL', href: '/journal' },
+  { label: 'CONTACT', href: '/contact' },
 ];
 
 interface NavbarProps {
@@ -20,11 +22,10 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
   return (
     <header className="sticky top-0 z-50 w-full bg-[#f3f2ee]">
       <div className="border-b border-black/[0.04]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-[85px] flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 h-[95px] flex items-center justify-between">
           
-          {/* Brand Logo */}
-          <Link to="/" className="font-poppins text-[18px] md:text-[22px] font-black tracking-[0.1em] text-black hover:opacity-70 transition-opacity">
-            GOOD THINGS CO
+          <Link to="/" className="hover:opacity-70 transition-opacity">
+            <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-28 md:h-32 w-auto object-contain" />
           </Link>
 
           {/* Right Side: Navigation & Cart */}
