@@ -1,40 +1,6 @@
 import { motion } from 'framer-motion';
 import type { Book } from '../../types';
-
-const FEATURED_BOOKS: Book[] = [
-  {
-    id: 'f1',
-    title: 'Simple Way Of Piece Life',
-    author: 'Simon Adams',
-    price: 15000,
-    image: '/book1.jpg',
-    description: 'A beautiful collection of life-changing perspectives on modern living.',
-  },
-  {
-    id: 'f2',
-    title: 'Great Travel At Desert',
-    author: 'John Doe',
-    price: 12500,
-    image: '/book3.jpg',
-    description: 'An immersive journey through the world\'s most unforgiving and beautiful deserts.',
-  },
-  {
-    id: 'f3',
-    title: 'The Lady Beauty Scarlett',
-    author: 'Alice Hall',
-    price: 18000,
-    image: '/book5.jpg',
-    description: 'A classic tale of beauty, tragedy, and social class in the Victorian era.',
-  },
-  {
-    id: 'f4',
-    title: 'Once Upon A Time',
-    author: 'Jane Smith',
-    price: 14000,
-    image: '/book6.jpg',
-    description: 'A modern reimagining of classic fairy tales with a contemporary twist.',
-  },
-];
+import { books } from '../../data/books';
 
 interface FeaturedBooksProps {
   onAddToCart: (book: Book) => void;
@@ -44,24 +10,24 @@ interface FeaturedBooksProps {
 const FeaturedBooks = ({ onAddToCart, onQuickView }: FeaturedBooksProps) => {
   return (
     <section className="py-24 bg-[#f3f2ee]">
-      <div className="max-w-[1200px] mx-auto px-10">
+      <div className="max-w-[800px] mx-auto px-10">
         
         {/* Header Section */}
         <div className="text-center mb-16 relative">
           <p className="font-poppins text-[10px] font-bold tracking-[0.3em] uppercase text-black/35 mb-2">
-            Some Quality Items
+            The Curated Selection
           </p>
           <div className="relative flex items-center justify-center">
             <div className="absolute w-full h-[1px] bg-black/10 top-1/2 -translate-y-1/2" />
             <h2 className="font-mona text-3xl md:text-4xl font-black text-black relative bg-[#f3f2ee] px-10">
-              Featured Books
+              Featured Titles
             </h2>
           </div>
         </div>
 
-        {/* Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {FEATURED_BOOKS.map((book) => (
+        {/* Books Grid - Centered 2 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-24">
+          {books.map((book) => (
             <div key={book.id} className="group cursor-pointer">
               
               {/* Image Frame/Container */}

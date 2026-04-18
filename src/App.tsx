@@ -14,8 +14,8 @@ export interface CartItem {
 }
 
 const STORAGE_KEYS = {
-  CART: 'booksaw_cart_v1',
-  FORM: 'booksaw_form_v1'
+  CART: 'good_things_cart_v1',
+  FORM: 'good_things_form_v1'
 };
 
 function App() {

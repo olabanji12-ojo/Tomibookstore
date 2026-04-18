@@ -48,7 +48,7 @@ const CheckoutModal = ({
     reference: (new Date()).getTime().toString(),
     email: formData.email,
     amount: totalPrice * 100,
-    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_2c0505115dfb9ef47b3b47afb0605d65afffed7c',
+    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
     currency: 'NGN',
     metadata: {
         custom_fields: [
@@ -321,7 +321,7 @@ const CheckoutModal = ({
                 onClick={onClose}
                 className="font-poppins text-[10px] font-bold uppercase tracking-[0.4em] border-b border-black pb-1 cursor-pointer hover:opacity-50 transition-opacity"
               >
-                Close Gallery
+                Return to Store
               </button>
             </div>
           )}

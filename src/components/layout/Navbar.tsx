@@ -23,8 +23,8 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-[85px] flex items-center justify-between">
           
           {/* Brand Logo */}
-          <Link to="/" className="font-poppins text-[22px] font-black tracking-[0.08em] text-black hover:opacity-70 transition-opacity">
-            BOOKSAW
+          <Link to="/" className="font-poppins text-[18px] md:text-[22px] font-black tracking-[0.1em] text-black hover:opacity-70 transition-opacity">
+            GOOD THINGS CO
           </Link>
 
           {/* Right Side: Navigation & Cart */}

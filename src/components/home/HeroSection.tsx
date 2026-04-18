@@ -3,47 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
 import type { Book } from '../../types';
-
-// ─── Slide Data ────────────────────────────────────────────────────────────────
-
-const HERO_SLIDES: Book[] = [
-  {
-    id: '1',
-    title: 'Atomic Habits',
-    author: 'James Clear',
-    description:
-      'An easy and proven way to build good habits and break bad ones. Tiny changes, remarkable results — used by millions worldwide.',
-    image: '/book1.jpg',
-    price: 24.99,
-  },
-  {
-    id: '2',
-    title: 'The Great Alone',
-    author: 'Kristin Hannah',
-    description:
-      'A powerful, sweeping story of human resilience and survival in the unforgiving wilderness of 1970s Alaska.',
-    image: '/book6.jpg',
-    price: 21.99,
-  },
-  {
-    id: '3',
-    title: 'Sapiens',
-    author: 'Yuval Noah Harari',
-    description:
-      'A brief history of humankind. From foragers to AI — every revolution that shaped the world we live in today.',
-    image: '/book3.jpg',
-    price: 22.99,
-  },
-  {
-    id: '4',
-    title: 'The Midnight Library',
-    author: 'Matt Haig',
-    description:
-      'Between life and death there is a library. A luminous novel about all the lives we could have lived — and the one we choose.',
-    image: '/book4.jpg',
-    price: 19.99,
-  },
-];
+import { books as HERO_SLIDES } from '../../data/books';
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 

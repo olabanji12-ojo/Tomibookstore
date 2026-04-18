@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-6 items-center md:items-start">
             <h2 className="font-poppins text-2xl font-black tracking-widest text-black">
-              BOOKSAW
+              GOOD THINGS CO
             </h2>
             <p className="font-poppins text-xs text-black/50 leading-relaxed max-w-[200px]">
               Stories that stay with you. <br />
@@ -93,7 +93,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-24 pt-10 border-t border-black/5 flex flex-col items-center gap-4 text-center">
           <p className="font-poppins text-[9px] tracking-[0.2em] uppercase text-black/30 font-bold">
-            © 2026 BOOKSAW. Built by Olabanji.
+            © 2026 GOOD THINGS CO LTD. Built by Olabanji.
           </p>
         </div>
       </div>

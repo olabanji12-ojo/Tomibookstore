@@ -104,8 +104,8 @@ const Contact = () => {
                 {/* Email */}
                 <div className="group">
                   <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/20 mb-2">Email Us</p>
-                  <a href="mailto:hello@booksaw.com" className="font-poppins text-xl md:text-2xl font-black text-black hover:opacity-60 transition-opacity">
-                    hello@booksaw.com
+                  <a href="mailto:hello@goodthingsco.ltd" className="font-poppins text-xl md:text-2xl font-black text-black hover:opacity-60 transition-opacity">
+                    hello@goodthingsco.ltd
                   </a>
                 </div>
 
@@ -113,7 +113,7 @@ const Contact = () => {
                 <div className="pt-2">
                    <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/20 mb-6">Immediate Response</p>
                    <a 
-                    href="https://wa.me/2348000000000?text=Hello%20BookSaw%2C%20I%20have%20a%20question..." 
+                    href="https://wa.me/2348028970296?text=Hello%20Good%20Things%20Co%2C%20I%20have%20a%20question..." 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center md:justify-start gap-4 bg-white border border-green-500/10 px-8 py-5 rounded-[4px] shadow-sm hover:shadow-xl hover:translate-y-[-2px] transition-all group"
