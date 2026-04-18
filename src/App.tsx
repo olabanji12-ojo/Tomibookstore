@@ -23,9 +23,9 @@ function App() {
   const [formData, setFormData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.FORM);
-      return saved ? JSON.parse(saved) : { name: '', email: '', phone: '', address: '' };
+      return saved ? JSON.parse(saved) : { name: '', email: '', phone: '', address: '', city: '', state: '' };
     } catch {
-      return { name: '', email: '', phone: '', address: '' };
+      return { name: '', email: '', phone: '', address: '', city: '', state: '' };
     }
   });
 
@@ -70,7 +70,7 @@ function App() {
 
   const handlePaymentSuccess = () => {
     clearCart();
-    setFormData({ name: '', email: '', phone: '', address: '' });
+    setFormData({ name: '', email: '', phone: '', address: '', city: '', state: '' });
     localStorage.removeItem(STORAGE_KEYS.FORM);
   };
 
