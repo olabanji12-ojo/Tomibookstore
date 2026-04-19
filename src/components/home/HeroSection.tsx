@@ -29,6 +29,25 @@ const imageVariants = {
   exit:   { scale: 1.05, opacity: 0, transition: { duration: 0.3,  ease: 'easeIn' as const } },
 };
 
+const containerVariants = {
+  center: {
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const letterVariants = {
+  enter: { opacity: 0, y: 12 },
+  center: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } 
+  },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+};
+
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
 interface HeroSectionProps {
@@ -76,48 +95,60 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
             transition={{ duration: 0.8 }}
             className="absolute inset-0 w-full h-full"
           >
-            {/* Background Image */}
+            {/* Background Image Layer */}
             <div className="absolute inset-0 w-full h-full">
               <img
                 src={slide.image}
                 alt=""
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/10" /> {/* Very light overlay for contrast */}
+              {/* Very subtle vignette to ensure text contrast while keeping image clear */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent md:from-black/10" />
             </div>
 
-            {/* Content Overlay */}
-            <div className="relative z-10 w-full h-full flex items-center pt-24 md:pt-0">
+            {/* Content Overlay Layer */}
+            <div className="relative z-10 w-full h-full flex items-center">
               <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center md:text-left">
                 <div className="max-w-2xl">
                   <motion.div
-                    variants={textVariants}
+                    variants={containerVariants}
                     initial="enter"
                     animate="center"
                     exit="exit"
                   >
-                    <p
-                      className="text-[9px] tracking-[0.4em] uppercase text-black/40 mb-8"
+                    <motion.p
+                      variants={letterVariants}
+                      className="text-[9px] tracking-[0.4em] uppercase text-black/50 mb-8"
                       style={{ fontFamily: 'Poppins, sans-serif' }}
                     >
                       Good Things Come to Those Who Seek
-                    </p>
+                    </motion.p>
 
-                    <h1
+                    <motion.h1
                       className="text-4xl md:text-6xl lg:text-7xl font-black text-black
-                                 leading-[0.95] tracking-[-0.04em] mb-8 font-mona uppercase"
+                                 leading-[0.95] tracking-[-0.04em] mb-8 font-mona uppercase flex flex-wrap justify-center md:justify-start"
                     >
-                      {slide.name}
-                    </h1>
+                      {slide.name.split('').map((char, index) => (
+                        <motion.span
+                          key={index}
+                          variants={letterVariants}
+                          style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </motion.h1>
 
-                    <p
+                    <motion.p
+                      variants={letterVariants}
                       className="text-[12px] md:text-[14px] text-black/70 leading-[1.8] max-w-lg mx-auto md:mx-0 mb-12"
                       style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
                     >
                       {slide.description}
-                    </p>
+                    </motion.p>
 
-                    <button 
+                    <motion.button 
+                      variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
                       className="flex items-center justify-center gap-4 bg-black text-white px-10 py-5 md:px-14 md:py-6 rounded-full font-mona text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto md:mx-0"
                     >
@@ -128,7 +159,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                       >
                         →
                       </motion.span>
-                    </button>
+                    </motion.button>
                     
                     {/* Dots for Intro */}
                     <div className="flex items-center gap-3 mt-16 md:mt-24 justify-center md:justify-start">
