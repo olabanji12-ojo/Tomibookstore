@@ -128,14 +128,18 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                       className="text-4xl md:text-6xl lg:text-7xl font-black text-black
                                  leading-[0.95] tracking-[-0.04em] mb-8 font-mona uppercase flex flex-wrap justify-center md:justify-start"
                     >
-                      {slide.name.split('').map((char, index) => (
-                        <motion.span
-                          key={index}
-                          variants={letterVariants}
-                          style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-                        >
-                          {char}
-                        </motion.span>
+                      {slide.name.split(' ').map((word, wIdx) => (
+                        <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
+                          {word.split('').map((char, cIdx) => (
+                            <motion.span
+                              key={cIdx}
+                              variants={letterVariants}
+                              className="inline-block"
+                            >
+                              {char}
+                            </motion.span>
+                          ))}
+                        </span>
                       ))}
                     </motion.h1>
 
