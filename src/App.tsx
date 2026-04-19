@@ -87,13 +87,11 @@ function App() {
         <Routes>
           <Route path="/" element={
             <Home 
-              onAddToCart={handleAddToCart} 
               onQuickView={handleQuickView} 
             />
           } />
           <Route path="/shop" element={
             <Shop 
-              onAddToCart={handleAddToCart} 
               onQuickView={handleQuickView} 
             />
           } />

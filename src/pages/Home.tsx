@@ -6,11 +6,10 @@ import TrustSection from '../components/home/TrustSection';
 import type { Book } from '../types';
 
 interface HomeProps {
-  onAddToCart: (product: Book) => void;
-  onQuickView: (product: Book) => void;
+  onQuickView: (product: Product) => void;
 }
 
-const Home = ({ onAddToCart, onQuickView }: HomeProps) => {
+const Home = ({ onQuickView }: HomeProps) => {
   return (
     <main className="overflow-x-hidden">
       {/* 01. Hero */}
@@ -23,10 +22,7 @@ const Home = ({ onAddToCart, onQuickView }: HomeProps) => {
       <Philosophy />
 
       {/* 04. Featured Collection */}
-      <FeaturedCollection 
-        onAddToCart={onAddToCart} 
-        onQuickView={onQuickView} 
-      />
+      <FeaturedCollection onQuickView={onQuickView} />
 
       {/* 05. Trust Section */}
       <TrustSection />

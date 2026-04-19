@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import ProductAction from '../shared/ProductAction';
 
 import type { Product } from '../../types';
@@ -127,7 +126,18 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
                     ₦{slide.price.toLocaleString()}
                   </p>
                   
-                  <ProductAction product={slide} variant="large" />
+                  <button 
+                    onClick={() => onQuickView(slide)}
+                    className="flex-1 md:flex-none flex items-center justify-center gap-4 bg-black text-white px-12 py-5 rounded-full font-mona text-[10px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 group cursor-pointer"
+                  >
+                    Experience Selection
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      →
+                    </motion.span>
+                  </button>
                 </div>
 
                 <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">

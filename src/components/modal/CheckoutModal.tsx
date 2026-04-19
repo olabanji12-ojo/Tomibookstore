@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
@@ -35,22 +35,20 @@ const CheckoutModal = ({
   onFormDataChange,
   onClose, 
   onSuccess,
+  onAddToCart,
 }: CheckoutModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [createAccount, setCreateAccount] = useState(false);
 
   // ── Cumulative Bag Logic ──
-  const displayItems = useMemo(() => {
-    const baseItems = [...items];
-    if (mode === 'quickview' && focusedBook) {
-      const alreadyInCart = baseItems.find(item => item.product.id === focusedBook.id);
-      if (!alreadyInCart) {
-        baseItems.push({ product: focusedBook, quantity: 1 });
-      }
-    }
-    return baseItems;
-  }, [mode, focusedBook, items]);
+  const displayItems = items;
+
+  const isFocusedInCart = useMemo(() => {
+    return items.some(item => item.product.id === focusedBook?.id);
+  }, [items, focusedBook]);
+
+  const showQuickViewHeader = mode === 'quickview' && focusedBook && !isFocusedInCart;
 
   const totalPrice = displayItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
 
@@ -117,8 +115,13 @@ const CheckoutModal = ({
     }
   };
 
-  if (displayItems.length === 0 && !isSuccess) {
-    onClose();
+  useEffect(() => {
+    if (displayItems.length === 0 && !isSuccess && !showQuickViewHeader) {
+      onClose();
+    }
+  }, [displayItems.length, isSuccess, showQuickViewHeader, onClose]);
+
+  if (displayItems.length === 0 && !isSuccess && !showQuickViewHeader) {
     return null;
   }
 
@@ -159,11 +162,45 @@ const CheckoutModal = ({
                 <div className="flex items-center gap-4 mb-10">
                   <ShoppingBag size={18} strokeWidth={1.5} className="text-black/30" />
                   <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/40">
-                    {mode === 'quickview' ? 'Selection + Bag' : 'Your Selection'} ({displayItems.length})
+                    {mode === 'quickview' ? 'Selection + Bag' : 'Your Selection'} ({displayItems.length + (showQuickViewHeader ? 1 : 0)})
                   </h3>
                 </div>
 
                 <div className="space-y-8">
+                  {/* Quick View Item (If not in cart) */}
+                  {showQuickViewHeader && focusedBook && (
+                    <div className="flex gap-6 items-start animate-fade-in group/item bg-white/40 p-4 -mx-4 rounded-2xl border border-black/5 shadow-sm">
+                      <div className="w-20 md:w-28 aspect-[4/5] flex-shrink-0 bg-white">
+                        <img 
+                          src={focusedBook.image} 
+                          alt={focusedBook.name} 
+                          className="w-full h-full object-cover shadow-md rounded-[1px]"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between gap-4 mb-2">
+                          <h4 className="font-mona text-sm font-black text-black leading-snug uppercase tracking-tight">
+                            {focusedBook.name}
+                          </h4>
+                          <span className="bg-black text-white px-2 py-0.5 rounded text-[7px] font-black tracking-widest uppercase">
+                            New Find
+                          </span>
+                        </div>
+                        <p className="font-poppins text-[9px] text-black/40 uppercase tracking-widest mb-4">
+                           {focusedBook.author}
+                        </p>
+                        
+                        <button
+                          onClick={() => onAddToCart(focusedBook)}
+                          className="w-full py-3 bg-black text-white font-mona text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center gap-2"
+                        >
+                          <Plus size={12} />
+                          Add to Bag — ₦{focusedBook.price.toLocaleString()}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {displayItems.map((item) => (
                     <div key={item.product.id} className="flex gap-6 items-start animate-fade-in group/item">
                       <div className="w-16 md:w-24 aspect-[4/5] flex-shrink-0 bg-white">

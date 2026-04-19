@@ -12,10 +12,9 @@ const rituals = ['WORK', 'PLAY', 'FANCY', 'SLEEP', 'EAT'];
 
 interface ShopProps {
   onQuickView: (product: Product) => void;
-  onAddToCart: (product: Product) => void;
 }
 
-export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
+export default function Shop({ onQuickView }: ShopProps) {
   const [searchParams] = useSearchParams();
   const catParam = searchParams.get('category');
 
@@ -293,7 +292,13 @@ export default function Shop({ onQuickView, onAddToCart }: ShopProps) {
                             )}
                         </div>
 
-                        <ProductAction product={product} />
+                        <button 
+                            onClick={() => onQuickView(product)}
+                            className="w-full mt-6 py-4 bg-black text-white font-mona text-[9px] font-black uppercase tracking-[0.3em] rounded-xl hover:bg-neutral-800 transition-all shadow-sm flex items-center justify-center gap-2 group/btn"
+                        >
+                            View Details
+                            <ArrowRight size={10} className="group-hover/btn:translate-x-1 transition-transform" />
+                        </button>
                     </div>
                 </motion.div>
             ))}

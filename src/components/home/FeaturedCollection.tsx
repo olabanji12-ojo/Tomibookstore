@@ -4,11 +4,10 @@ import { products } from '../../data/books';
 import ProductAction from '../shared/ProductAction';
 
 interface FeaturedCollectionProps {
-  onAddToCart: (product: Product) => void;
   onQuickView: (product: Product) => void;
 }
 
-const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProps) => {
+const FeaturedCollection = ({ onQuickView }: FeaturedCollectionProps) => {
   return (
     <section className="py-24 bg-[#f3f2ee]">
       <div className="max-w-[1000px] mx-auto px-10">
@@ -48,9 +47,14 @@ const FeaturedCollection = ({ onAddToCart, onQuickView }: FeaturedCollectionProp
                    className="absolute bottom-10 left-0 w-full px-6
                               opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0
                               transition-all duration-500 ease-out z-10"
-                   onClick={(e) => e.stopPropagation()}
+                   onClick={(e) => {
+                     e.stopPropagation();
+                     onQuickView(product);
+                   }}
                 >
-                  <ProductAction product={product} />
+                  <button className="w-full py-4 bg-black text-white font-mona text-[9px] font-black uppercase tracking-[0.3em] rounded-xl hover:bg-neutral-800 transition-all shadow-xl">
+                    View Selection
+                  </button>
                 </div>
               </div>
 
