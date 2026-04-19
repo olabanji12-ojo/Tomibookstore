@@ -3,7 +3,7 @@ import EntryPaths from '../components/home/EntryPaths';
 import Philosophy from '../components/home/Philosophy';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
-import type { Book } from '../types';
+import type { Product } from '../types';
 
 interface HomeProps {
   onQuickView: (product: Product) => void;

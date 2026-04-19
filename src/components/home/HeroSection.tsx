@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ProductAction from '../shared/ProductAction';
 
 import type { Product } from '../../types';
 import { products as HERO_SLIDES } from '../../data/books';

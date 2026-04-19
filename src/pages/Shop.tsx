@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom';
 import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
 import toast from 'react-hot-toast';
-import ProductAction from '../components/shared/ProductAction';
 
 const categories = ['FASHION', 'ACCESSORIES', 'GIFTS', 'HOME', 'PACKAGING'];
 const rituals = ['WORK', 'PLAY', 'FANCY', 'SLEEP', 'EAT'];

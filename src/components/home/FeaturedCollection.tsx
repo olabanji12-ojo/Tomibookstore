@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import type { Product } from '../../types';
 import { products } from '../../data/books';
-import ProductAction from '../shared/ProductAction';
 
 interface FeaturedCollectionProps {
   onQuickView: (product: Product) => void;
