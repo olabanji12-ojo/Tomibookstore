@@ -107,8 +107,8 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
             </div>
 
             {/* Content Overlay Layer */}
-            <div className="relative z-10 w-full h-full flex items-center">
-              <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center md:text-left">
+            <div className="relative z-10 w-full h-full flex items-start md:items-center pt-24 md:pt-0">
+              <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center md:text-left md:pt-24">
                 <div className="max-w-2xl">
                   <motion.div
                     variants={containerVariants}
@@ -194,7 +194,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
             transition={{ duration: 0.6 }}
             className="w-full max-w-[1400px] mx-auto px-12 md:px-20"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-16 md:py-0 min-h-[calc(100vh-129px)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-20 md:py-0 pt-28 md:pt-32 min-h-[calc(100vh-129px)]">
               <div className="order-1 md:order-2 flex justify-center items-center">
                 <motion.div
                   key={slide.id + '-cover'}

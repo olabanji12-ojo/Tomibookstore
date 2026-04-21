@@ -88,6 +88,7 @@ const CheckoutModal = ({
     const templateParams = {
       customer_name: formData.name,
       customer_email: formData.email,
+      to_email: formData.email, // Standard fallback
       customer_address: `${formData.address}, ${formData.city}, ${formData.state}`,
       order_id: orderId,
       cart_html: cartHtml,
