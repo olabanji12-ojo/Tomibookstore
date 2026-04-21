@@ -12,6 +12,9 @@ import ScrollToTop from './components/utils/ScrollToTop';
 import { useCart } from './context/CartContext';
 import AdminAuth from './pages/AdminAuth';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProducts from './pages/AdminProducts';
+import AdminAddProduct from './pages/AdminAddProduct';
+import AdminOrders from './pages/AdminOrders';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import type { Product } from './types';
 
@@ -108,6 +111,21 @@ function App() {
           <Route path="/admin/dashboard" element={
             <ProtectedRoute>
               <AdminDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/products" element={
+            <ProtectedRoute>
+              <AdminProducts />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/products/add" element={
+            <ProtectedRoute>
+              <AdminAddProduct />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/orders" element={
+            <ProtectedRoute>
+              <AdminOrders />
             </ProtectedRoute>
           } />
         </Routes>

@@ -119,6 +119,17 @@ export const getProductBySlug = async (slug: string) => {
   }
 };
 
+export const deleteProduct = async (id: string) => {
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, 'products', id));
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    return { success: false, error };
+  }
+};
+
 // ==================== ORDER HELPERS ====================
 
 export const createOrder = async (orderData: Omit<Order, 'id' | 'createdAt'>) => {
@@ -204,4 +215,45 @@ export const logoutAdmin = async () => {
 
 export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {
   return onAuthStateChanged(auth, callback);
+};
+
+// ==================== DASHBOARD STATS ====================
+
+export const getDashboardStats = async () => {
+  try {
+    const [productsRes, ordersRes] = await Promise.all([
+      getProducts(),
+      getOrders()
+    ]);
+
+    const products = productsRes.products || [];
+    const orders = ordersRes.orders || [];
+
+    const pendingOrders = orders.filter(o => o.status === 'Pending').length;
+    const lowStockItems = products.filter(p => Number(p.stock || 0) < 5).length;
+    
+    // Simple revenue calculation (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    
+    const revenue = orders
+      .filter(o => {
+        const orderDate = o.createdAt?.toDate ? o.createdAt.toDate() : new Date();
+        return orderDate >= thirtyDaysAgo && o.status !== 'Cancelled';
+      })
+      .reduce((sum, o) => sum + o.total, 0);
+
+    return {
+      success: true,
+      stats: {
+        totalRevenue: revenue,
+        pendingOrders,
+        inventoryCount: products.length,
+        lowStockItems
+      }
+    };
+  } catch (error) {
+    console.error('Error getting dashboard stats:', error);
+    return { success: false, stats: null };
+  }
 };

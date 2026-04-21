@@ -1,7 +1,28 @@
-import { LayoutDashboard } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { LayoutDashboard, ShoppingCart, Package, TrendingUp } from 'lucide-react';
 import AdminLayout from '../components/admin/AdminLayout';
+import { getDashboardStats } from '../firebase/helpers';
 
 const AdminDashboard = () => {
+  const [stats, setStats] = useState({
+    totalRevenue: 0,
+    pendingOrders: 0,
+    inventoryCount: 0,
+    lowStockItems: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const res = await getDashboardStats();
+      if (res.success && res.stats) {
+        setStats(res.stats);
+      }
+      setLoading(false);
+    };
+    fetchStats();
+  }, []);
+
   return (
     <AdminLayout>
       <div className="flex items-center justify-between mb-12">
@@ -19,30 +40,58 @@ const AdminDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <StatCard label="Total Sales" value="₦0" subValue="+0% vs last week" />
-        <StatCard label="Orders" value="0" subValue="Pending fulfillment" />
-        <StatCard label="Inventory" value="0" subValue="Items in boutique" />
+        <StatCard 
+          label="Total Revenue (30d)" 
+          value={`₦${stats.totalRevenue.toLocaleString()}`} 
+          icon={<TrendingUp size={16} />}
+          subValue="Paid via Paystack" 
+        />
+        <StatCard 
+          label="Pending Orders" 
+          value={stats.pendingOrders.toString()} 
+          icon={<ShoppingCart size={16} />}
+          subValue="Awaiting fulfillment" 
+        />
+        <StatCard 
+          label="Boutique Inventory" 
+          value={stats.inventoryCount.toString()} 
+          icon={<Package size={16} />}
+          subValue={`${stats.lowStockItems} items low on stock`} 
+        />
       </div>
 
-      <div className="mt-16 bg-white rounded-[2.5rem] border border-black/5 p-12 text-center">
-        <div className="w-20 h-20 bg-[#f3f2ee] rounded-full mx-auto flex items-center justify-center mb-8">
-          <LayoutDashboard size={32} className="text-black/10" />
-        </div>
-        <h3 className="font-mona text-xl font-black text-black uppercase tracking-tight mb-4">Welcome to your Dashboard</h3>
-        <p className="font-poppins text-sm text-black/40 max-w-sm mx-auto leading-relaxed">
-          Your inventory and order history will appear here once you've synchronized your data.
-        </p>
+      <div className="mt-16 bg-white rounded-[2.5rem] border border-black/5 p-12 text-center min-h-[300px] flex flex-col items-center justify-center">
+        {loading ? (
+             <div className="flex items-center justify-center gap-3">
+               <div className="w-2 h-2 rounded-full bg-black animate-bounce" />
+               <div className="w-2 h-2 rounded-full bg-black animate-bounce [animation-delay:-0.2s]" />
+               <div className="w-2 h-2 rounded-full bg-black animate-bounce [animation-delay:-0.4s]" />
+             </div>
+        ) : (
+          <>
+            <div className="w-20 h-20 bg-[#f3f2ee] rounded-full mx-auto flex items-center justify-center mb-8">
+              <LayoutDashboard size={32} className="text-black/10" />
+            </div>
+            <h3 className="font-mona text-xl font-black text-black uppercase tracking-tight mb-4">Welcome to your Dashboard</h3>
+            <p className="font-poppins text-sm text-black/40 max-w-sm mx-auto leading-relaxed">
+              Your store is currently live. You can manage your products, track orders, and monitor your boutique's performance from here.
+            </p>
+          </>
+        )}
       </div>
     </AdminLayout>
   );
 };
 
-function StatCard({ label, value, subValue }: { label: string, value: string, subValue: string }) {
+function StatCard({ label, value, subValue, icon }: { label: string, value: string, subValue: string, icon: React.ReactNode }) {
   return (
-    <div className="bg-white p-10 rounded-[2.5rem] border border-black/5 shadow-sm">
-      <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30 mb-4">{label}</p>
+    <div className="bg-white p-10 rounded-[2.5rem] border border-black/5 shadow-sm group hover:border-black/20 transition-all">
+      <div className="flex items-center justify-between mb-6">
+        <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">{label}</p>
+        <div className="text-black/10 group-hover:text-black transition-colors">{icon}</div>
+      </div>
       <p className="font-mona text-4xl font-black text-black mb-4">{value}</p>
-      <p className="font-poppins text-[10px] text-black/20 font-bold uppercase tracking-wider">{subValue}</p>
+      <p className="font-poppins text-[10px] text-black/20 font-bold uppercase tracking-wider group-hover:text-black/40 transition-colors">{subValue}</p>
     </div>
   );
 }

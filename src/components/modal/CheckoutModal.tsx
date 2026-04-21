@@ -77,7 +77,11 @@ const CheckoutModal = ({
   const initializePayment = usePaystackPayment(config);
 
   const sendEmailReceipt = useCallback(async (orderId: string) => {
-    const cartHtml = displayItems.map(item => `
+    const currentItems = [...displayItems];
+    const currentTotal = totalPrice;
+    const customer = { ...formData }; // Capture data immediately
+
+    const cartHtml = currentItems.map(item => `
       <tr style="border-bottom: 1px solid #f0f0f0;">
         <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 55%;">${item.product.name}</td>
         <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 15%; text-align: center;">${item.quantity}</td>
@@ -86,16 +90,18 @@ const CheckoutModal = ({
     `).join('');
 
     const templateParams = {
-      customer_name: formData.name,
-      customer_email: formData.email,
-      to_email: formData.email, // Standard fallback
-      customer_address: `${formData.address}, ${formData.city}, ${formData.state}`,
+      customer_name: customer.name,
+      customer_email: customer.email,
+      to_email: customer.email,
+      customer_address: `${customer.address}, ${customer.city}, ${customer.state}`,
       order_id: orderId,
       cart_html: cartHtml,
-      subtotal: totalPrice.toLocaleString(),
+      subtotal: currentTotal.toLocaleString(),
       shipping_cost: "0",
-      total_amount: totalPrice.toLocaleString()
+      total_amount: currentTotal.toLocaleString()
     };
+
+    console.log('Sending receipt to:', customer.email, 'with params:', templateParams);
 
     try {
       await emailjs.send(
