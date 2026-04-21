@@ -42,6 +42,11 @@ const CheckoutModal = ({
   const [isSuccess, setIsSuccess] = useState(false);
   const [createAccount, setCreateAccount] = useState(false);
 
+  // Initialize EmailJS with Public Key
+  useEffect(() => {
+    emailjs.init('FTDSG45GkUUjDvpp4');
+  }, []);
+
   // ── Cumulative Bag Logic ──
   const displayItems = items;
 
@@ -96,7 +101,9 @@ const CheckoutModal = ({
         'service_f3axqod',
         'template_gu7klzn',
         templateParams,
-        'FTDSG45GkUUjDvpp4'
+        {
+          publicKey: 'FTDSG45GkUUjDvpp4',
+        }
       );
       console.log('Email sent successfully');
     } catch (error) {
