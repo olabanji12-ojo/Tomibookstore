@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
+import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
 import type { CartItem, Product } from '../../types';
 
@@ -70,7 +71,44 @@ const CheckoutModal = ({
 
   const initializePayment = usePaystackPayment(config);
 
-  const handlePaystackSuccess = useCallback((_reference: any) => {
+  const sendEmailReceipt = useCallback(async (orderId: string) => {
+    const cartHtml = displayItems.map(item => `
+      <tr style="border-bottom: 1px solid #f0f0f0;">
+        <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 55%;">${item.product.name}</td>
+        <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 15%; text-align: center;">${item.quantity}</td>
+        <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 30%; text-align: right;">NGN ${item.product.price.toLocaleString()}</td>
+      </tr>
+    `).join('');
+
+    const templateParams = {
+      customer_name: formData.name,
+      customer_email: formData.email,
+      customer_address: `${formData.address}, ${formData.city}, ${formData.state}`,
+      order_id: orderId,
+      cart_html: cartHtml,
+      subtotal: totalPrice.toLocaleString(),
+      shipping_cost: "0",
+      total_amount: totalPrice.toLocaleString()
+    };
+
+    try {
+      await emailjs.send(
+        'service_f3axqod',
+        'template_gu7klzn',
+        templateParams,
+        'FTDSG45GkUUjDvpp4'
+      );
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Failed to send email:', error);
+    }
+  }, [formData, displayItems, totalPrice]);
+
+  const handlePaystackSuccess = useCallback((reference: any) => {
+    // 1. Send the email receipt
+    sendEmailReceipt(reference.reference);
+    
+    // 2. Original success logic
     setIsSuccess(true);
     onSuccess();
     Swal.fire({
@@ -81,7 +119,7 @@ const CheckoutModal = ({
       color: '#000000',
       confirmButtonColor: '#000000',
     });
-  }, [onSuccess]);
+  }, [onSuccess, sendEmailReceipt]);
 
   const handlePaystackClose = useCallback(() => {
     Swal.fire({

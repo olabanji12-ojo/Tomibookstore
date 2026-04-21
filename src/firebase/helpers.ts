@@ -9,7 +9,14 @@ import {
   orderBy,
   Timestamp
 } from 'firebase/firestore';
-import { db } from './config';
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut,
+  onAuthStateChanged,
+  type User
+} from 'firebase/auth';
+import { db, auth } from './config';
 import type { Product, Order, OrderStatus } from '../types';
 
 // ==================== CLOUDINARY UPLOAD HELPERS ====================
@@ -163,4 +170,38 @@ export const submitPersonalizationRequest = async (requestData: any) => {
   } catch (error) {
     return { success: false, error };
   }
+};
+// ==================== AUTH HELPERS ====================
+
+export const registerAdmin = async (email: string, pass: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    return { success: true, user: userCredential.user };
+  } catch (error: any) {
+    console.error('Registration failed:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const loginAdmin = async (email: string, pass: string) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+    return { success: true, user: userCredential.user };
+  } catch (error: any) {
+    console.error('Login failed:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const logoutAdmin = async () => {
+  try {
+    await signOut(auth);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {
+  return onAuthStateChanged(auth, callback);
 };

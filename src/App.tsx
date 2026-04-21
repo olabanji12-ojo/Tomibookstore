@@ -10,6 +10,9 @@ import CheckoutModal from './components/modal/CheckoutModal';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { useCart } from './context/CartContext';
+import AdminAuth from './pages/AdminAuth';
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/admin/ProtectedRoute';
 import type { Product } from './types';
 
 const STORAGE_KEYS = {
@@ -78,29 +81,35 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <div className="min-h-screen bg-[#f3f2ee] selection:bg-black selection:text-white">
-        <Navbar 
-          cartCount={totalItems} 
-          onCartClick={handleOpenCart}
-          isAdding={isAddingToCart}
-        />
-
         <Routes>
-          <Route path="/" element={
-            <Home 
-              onQuickView={handleQuickView} 
-            />
+          {/* Main Site Routes */}
+          <Route path="/*" element={
+            <>
+              <Navbar 
+                cartCount={totalItems} 
+                onCartClick={handleOpenCart}
+                isAdding={isAddingToCart}
+              />
+              <Routes>
+                <Route path="/" element={<Home onQuickView={handleQuickView} />} />
+                <Route path="/shop" element={<Shop onQuickView={handleQuickView} />} />
+                <Route path="/personalize" element={<Personalize />} />
+                <Route path="/journal" element={<Journal />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+              <Footer />
+            </>
           } />
-          <Route path="/shop" element={
-            <Shop 
-              onQuickView={handleQuickView} 
-            />
-          } />
-          <Route path="/personalize" element={<Personalize />} />
-          <Route path="/journal" element={<Journal />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
 
-        <Footer />
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminAuth />} />
+          <Route path="/admin/login" element={<AdminAuth />} />
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+        </Routes>
 
         {isModalOpen && (
           <CheckoutModal 
