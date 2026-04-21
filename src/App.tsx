@@ -23,12 +23,13 @@ function App() {
   const isHydrated = useRef(false);
   const { cartItems, addToCart, removeFromCart, updateQuantity, totalItems, clearCart } = useCart();
 
+  const DEFAULT_FORM = { name: '', email: '', phone: '', address: '', city: '', state: '' };
   const [formData, setFormData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.FORM);
-      return saved ? JSON.parse(saved) : { name: '', email: '', phone: '', address: '', city: '', state: '' };
+      return saved ? { ...DEFAULT_FORM, ...JSON.parse(saved) } : DEFAULT_FORM;
     } catch {
-      return { name: '', email: '', phone: '', address: '', city: '', state: '' };
+      return DEFAULT_FORM;
     }
   });
 

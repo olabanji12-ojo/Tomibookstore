@@ -133,15 +133,15 @@ const CheckoutModal = ({
   }, []);
 
   // ── Validation Logic ──────────────────────────────────────────────────────
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email || '');
   
-  const canGoToStep2 = formData.name.trim().length >= 3 && isEmailValid;
+  const canGoToStep2 = (formData.name || '').trim().length >= 3 && isEmailValid;
   const canGoToStep3 = 
     canGoToStep2 && 
-    formData.phone.trim().length >= 10 && 
-    formData.address.trim().length > 5 &&
-    formData.city.trim().length >= 2 &&
-    formData.state.trim().length >= 2;
+    (formData.phone || '').trim().length >= 10 && 
+    (formData.address || '').trim().length > 5 &&
+    (formData.city || '').trim().length >= 2 &&
+    (formData.state || '').trim().length >= 2;
 
   const handlePurchaseButton = (e: React.MouseEvent) => {
     e.preventDefault();
