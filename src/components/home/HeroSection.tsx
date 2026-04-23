@@ -112,8 +112,8 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
 
             {/* Content Overlay Layer */}
             <div className="relative z-10 w-full h-full flex items-start md:items-center pt-24 md:pt-0">
-              <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center md:text-left md:pt-24">
-                <div className="max-w-2xl">
+              <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center pt-10 md:pt-24">
+                <div className="max-w-2xl mx-auto">
                   <motion.div
                     variants={containerVariants}
                     initial="enter"
@@ -130,7 +130,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
 
                     <motion.h1
                       className="text-4xl md:text-6xl lg:text-7xl font-black text-black
-                                 leading-[0.95] tracking-[-0.04em] mb-8 font-serif uppercase flex flex-wrap justify-center md:justify-start"
+                                 leading-[0.95] tracking-[-0.04em] mb-8 font-serif uppercase flex flex-wrap justify-center"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
@@ -149,7 +149,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
 
                     <motion.p
                       variants={letterVariants}
-                      className="text-[12px] md:text-[14px] text-black/70 leading-[1.8] max-w-lg mx-auto md:mx-0 mb-12"
+                      className="text-[12px] md:text-[14px] text-black/70 leading-[1.8] max-w-lg mx-auto mb-12"
                       style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
                     >
                       {slide.description}
