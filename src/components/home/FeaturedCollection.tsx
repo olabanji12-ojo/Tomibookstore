@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import type { Product } from '../../types';
-import { products } from '../../data/books';
 
 interface FeaturedCollectionProps {
+  featuredProducts: Product[];
   onQuickView: (product: Product) => void;
 }
 
-const FeaturedCollection = ({ onQuickView }: FeaturedCollectionProps) => {
+const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectionProps) => {
   return (
     <section className="py-24 bg-[#f3f2ee]">
       <div className="max-w-[1000px] mx-auto px-10">
@@ -18,7 +18,7 @@ const FeaturedCollection = ({ onQuickView }: FeaturedCollectionProps) => {
           </p>
           <div className="relative flex items-center justify-center">
             <div className="absolute w-full h-[1px] bg-black/5 top-1/2 -translate-y-1/2" />
-            <h2 className="font-mona text-2xl md:text-3xl font-black text-black relative bg-[#f3f2ee] px-10 uppercase tracking-tighter">
+            <h2 className="font-serif text-2xl md:text-3xl font-black text-black relative bg-[#f3f2ee] px-10 uppercase tracking-tighter">
               Featured Items
             </h2>
           </div>
@@ -26,7 +26,7 @@ const FeaturedCollection = ({ onQuickView }: FeaturedCollectionProps) => {
 
         {/* Products Grid - Centered 2 columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-24">
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <div key={product.id} className="group cursor-pointer">
               
               {/* Image Frame/Container */}
@@ -37,7 +37,7 @@ const FeaturedCollection = ({ onQuickView }: FeaturedCollectionProps) => {
                 
                 {/* Product Image */}
                 <motion.img
-                  src={product.image}
+                  src={product.image || 'https://via.placeholder.com/400x500?text=No+Image'}
                   alt={product.name}
                   className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
                 />

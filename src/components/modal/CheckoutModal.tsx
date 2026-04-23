@@ -4,6 +4,7 @@ import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react'
 import { usePaystackPayment } from 'react-paystack';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
+import { decrementProductStock } from '../../firebase/helpers';
 import type { CartItem, Product } from '../../types';
 
 interface CheckoutModalProps {
@@ -40,7 +41,6 @@ const CheckoutModal = ({
 }: CheckoutModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [createAccount, setCreateAccount] = useState(false);
 
   // Initialize EmailJS with Public Key
   useEffect(() => {
@@ -131,11 +131,20 @@ const CheckoutModal = ({
     }
   }, [formData, displayItems, totalPrice]);
 
-  const handlePaystackSuccess = useCallback((reference: any) => {
+  const handlePaystackSuccess = useCallback(async (reference: any) => {
     // 1. Send the email receipt
     sendEmailReceipt(reference.reference);
     
-    // 2. Original success logic
+    // 2. Decrement stock for all items
+    try {
+      await Promise.all(
+        displayItems.map(item => decrementProductStock(item.product.id, item.quantity))
+      );
+    } catch (err) {
+      console.error('Failed to update inventory:', err);
+    }
+
+    // 3. Original success logic
     setIsSuccess(true);
     onSuccess();
     Swal.fire({
@@ -146,7 +155,7 @@ const CheckoutModal = ({
       color: '#000000',
       confirmButtonColor: '#000000',
     });
-  }, [onSuccess, sendEmailReceipt]);
+  }, [onSuccess, sendEmailReceipt, displayItems]);
 
   const handlePaystackClose = useCallback(() => {
     Swal.fire({
@@ -235,13 +244,26 @@ const CheckoutModal = ({
                   {/* Quick View Item (If not in cart) */}
                   {showQuickViewHeader && focusedBook && (
                     <div className="flex gap-6 items-start animate-fade-in group/item bg-white/40 p-4 -mx-4 rounded-2xl border border-black/5 shadow-sm">
-                      <div className="w-20 md:w-28 aspect-[4/5] flex-shrink-0 bg-white">
+                    <div className="w-20 md:w-28 flex-shrink-0">
+                      <div className="aspect-[4/5] bg-white overflow-hidden rounded-[2px] shadow-md mb-2">
                         <img 
                           src={focusedBook.image} 
                           alt={focusedBook.name} 
-                          className="w-full h-full object-cover shadow-md rounded-[1px]"
+                          className="w-full h-full object-cover"
                         />
                       </div>
+                      
+                      {/* Mini Gallery for QuickView */}
+                      {focusedBook.images && focusedBook.images.length > 1 && (
+                        <div className="grid grid-cols-4 gap-1">
+                          {focusedBook.images.slice(0, 4).map((img, idx) => (
+                            <div key={idx} className="aspect-square bg-white border border-black/5 overflow-hidden">
+                              <img src={img} alt="" className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity cursor-pointer" />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-4 mb-2">
                           <h4 className="font-mona text-sm font-black text-black leading-snug uppercase tracking-tight">
@@ -496,36 +518,35 @@ const CheckoutModal = ({
 
               {/* Boutique Identity Invitation */}
               <div className="max-w-md w-full bg-black/[0.03] p-10 rounded-[2rem] border border-black/5 mb-12">
-                  <h4 className="font-mona text-sm font-black text-black uppercase tracking-[0.1em] mb-4">Secure Your Experience</h4>
-                  <p className="font-poppins text-xs text-black/50 leading-relaxed mb-10">
-                      An account has been prepared for <span className="text-black font-bold italic">{formData.email}</span>. Set a password to track this delivery and access exclusive future drops.
+                  <h4 className="font-serif text-lg font-black text-black uppercase tracking-tight mb-4">A copy of your receipt has been sent.</h4>
+                  <p className="font-sans text-xs text-black/50 leading-relaxed mb-10">
+                      We've dispatched a confirmation to <span className="text-black font-bold italic">{formData.email}</span>. Your artifacts are being carefully prepared for shipment.
                   </p>
                   
                   <div className="flex flex-col gap-4">
                       {/* Optional WhatsApp Shortcut */}
                       <button 
                         onClick={() => {
-                          const msg = encodeURIComponent(`Hi Goodthingsco! I just placed an order (#${config.reference}) and I'm so excited! Just wanted to say hi.`);
+                          const msg = encodeURIComponent(`Hi Goodthingsco! I just placed an order (#${config?.reference || 'Order'}) and I'm so excited! Just wanted to say hi.`);
                           window.open(`https://wa.me/2348061486696?text=${msg}`, '_blank');
                         }}
-                        className="w-full py-5 bg-[#25D366] text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] hover:opacity-90 transition-all flex items-center justify-center gap-3"
+                        className="w-full py-5 bg-[#25D366] text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] hover:opacity-90 transition-all flex items-center justify-center gap-3 rounded-xl shadow-lg shadow-green-500/20"
                       >
                         <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                         CHAT ON WHATSAPP
                       </button>
 
                       <button 
-                        onClick={() => setCreateAccount(!createAccount)}
-                        className={`w-full py-5 font-mona text-[10px] font-black uppercase tracking-[0.3em] transition-all
-                                   ${createAccount ? 'bg-black text-white' : 'bg-white text-black border border-black/10 hover:border-black'}`}
+                        onClick={onClose}
+                        className="w-full py-5 bg-black text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] hover:bg-neutral-800 transition-all rounded-xl shadow-xl shadow-black/10"
                       >
-                        {createAccount ? 'SET PASSWORD NOW' : 'SECURE MY ACCOUNT'}
+                        CONTINUE SHOPPING
                       </button>
                       <button 
                         onClick={onClose}
-                        className="font-poppins text-[9px] font-bold text-black/30 uppercase tracking-[0.2em] hover:text-black transition-colors"
+                        className="font-sans text-[9px] font-bold text-black/30 uppercase tracking-[0.2em] hover:text-black transition-colors"
                       >
-                        Skip for now, keep shopping
+                        Skip for now, keep seeking good things
                       </button>
                   </div>
               </div>

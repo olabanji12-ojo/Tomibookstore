@@ -102,13 +102,13 @@ const AdminAddProduct = () => {
         </button>
 
         <div className="mb-12">
-          <h1 className="font-mona text-4xl font-black text-black uppercase tracking-tighter">Add New Piece</h1>
+          <h1 className="font-mona text-3xl md:text-4xl font-black text-black uppercase tracking-tighter">Add New Piece</h1>
           <p className="font-poppins text-[10px] text-black/30 font-bold uppercase tracking-[0.2em] mt-2">Introduce a new artifact to the collection</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-12">
           {/* Section: Basic Info */}
-          <section className="bg-white p-12 rounded-[2.5rem] border border-black/5 space-y-10">
+          <section className="bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-black/5 space-y-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-4">
                 <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Product Name *</label>
@@ -148,7 +148,7 @@ const AdminAddProduct = () => {
           </section>
 
           {/* Section: Classification */}
-          <section className="bg-white p-12 rounded-[2.5rem] border border-black/5 space-y-10">
+          <section className="bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-black/5 space-y-10">
             <h3 className="font-mona text-xs font-black uppercase tracking-widest text-black/80">Classification</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -196,27 +196,27 @@ const AdminAddProduct = () => {
               </div>
             )}
             
-            <div className="flex items-center gap-10">
-              <div className="space-y-4 flex-1">
-                <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Opening Stock</label>
-                <input 
-                  type="number"
-                  value={formData.stock}
-                  onChange={e => setFormData({...formData, stock: e.target.value})}
-                  className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none transition-all"
-                />
-              </div>
-              <div className="flex items-center gap-4 mt-8 bg-[#f3f2ee] px-6 py-4 rounded-3xl cursor-pointer" onClick={() => setFormData({...formData, featured: !formData.featured})}>
-                <div className={`w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center ${formData.featured ? 'bg-black border-black' : 'border-black/10'}`}>
-                  {formData.featured && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+                <div className="space-y-4 flex-1">
+                  <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Opening Stock</label>
+                  <input 
+                    type="number"
+                    value={formData.stock}
+                    onChange={e => setFormData({...formData, stock: e.target.value})}
+                    className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none transition-all"
+                  />
                 </div>
-                <span className="font-mona text-[9px] font-black uppercase tracking-widest text-black/60">Featured Piece</span>
+                <div className="flex items-center gap-4 sm:mt-8 bg-[#f3f2ee] px-6 py-4 rounded-3xl cursor-pointer self-start sm:self-auto" onClick={() => setFormData({...formData, featured: !formData.featured})}>
+                  <div className={`w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center ${formData.featured ? 'bg-black border-black' : 'border-black/10'}`}>
+                    {formData.featured && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                  </div>
+                  <span className="font-mona text-[9px] font-black uppercase tracking-widest text-black/60">Featured Piece</span>
+                </div>
               </div>
-            </div>
-          </section>
-
-          {/* Section: Media */}
-          <section className="bg-white p-12 rounded-[2.5rem] border border-black/5 space-y-10">
+            </section>
+  
+            {/* Section: Media */}
+            <section className="bg-white p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-black/5 space-y-10">
             <h3 className="font-mona text-xs font-black uppercase tracking-widest text-black/80">Visual Assets</h3>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">

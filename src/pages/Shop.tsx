@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, LayoutGrid, List, ShoppingBag, ArrowRight, Filter, X } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
+import MetaTags from '../components/shared/MetaTags';
 import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
 import toast from 'react-hot-toast';
@@ -23,6 +24,7 @@ export default function Shop({ onQuickView }: ShopProps) {
   const [selectedCat, setSelectedCat] = useState(catParam?.toUpperCase() || 'ALL');
   const [selectedRitual, setSelectedRitual] = useState('ALL');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState('NEWEST');
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
@@ -40,15 +42,26 @@ export default function Shop({ onQuickView }: ShopProps) {
     if (catParam) setSelectedCat(catParam.toUpperCase());
   }, [catParam]);
 
-  const filtered = products.filter(p => {
-    const name = p.name || 'Untitled Product';
-    const category = p.category || 'Uncategorized';
-    
-    const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCat = selectedCat === 'ALL' || category.toUpperCase() === selectedCat;
-    const matchesRitual = selectedRitual === 'ALL' || (p.functions || []).some(f => f.toUpperCase() === selectedRitual);
-    return matchesSearch && matchesCat && matchesRitual;
-  });
+  const filteredAndSorted = products
+    .filter(p => {
+      const name = p.name || 'Untitled Product';
+      const category = p.category || 'Uncategorized';
+      
+      const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCat = selectedCat === 'ALL' || category.toUpperCase() === selectedCat;
+      const matchesRitual = selectedRitual === 'ALL' || (p.functions || []).some(f => f.toUpperCase() === selectedRitual);
+      return matchesSearch && matchesCat && matchesRitual;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'PRICE_LOW') return a.price - b.price;
+      if (sortBy === 'PRICE_HIGH') return b.price - a.price;
+      if (sortBy === 'NEWEST') {
+        const dateA = a.createdAt?.seconds || 0;
+        const dateB = b.createdAt?.seconds || 0;
+        return dateB - dateA;
+      }
+      return 0;
+    });
 
   if (loading) {
     return (
@@ -63,6 +76,10 @@ export default function Shop({ onQuickView }: ShopProps) {
 
   return (
     <div className="min-h-screen bg-[#f3f2ee] pb-32">
+      <MetaTags 
+        title="Curated Collection" 
+        description="Explore our archive of curated fashion, home decor, and lifestyle pieces."
+      />
       {/* Header */}
       <section className="pt-32 pb-16 px-8 border-b border-black/[0.03]">
         <div className="max-w-[1400px] mx-auto text-center">
@@ -75,7 +92,7 @@ export default function Shop({ onQuickView }: ShopProps) {
               The Archives
             </span>
           </motion.div>
-          <h1 className="font-mona text-6xl md:text-9xl font-black tracking-tighter text-black mb-8 leading-[0.85]">
+          <h1 className="font-serif text-6xl md:text-9xl font-black tracking-tighter text-black mb-8 leading-[0.85]">
             CURATED <br /> COLLECTION
           </h1>
         </div>
@@ -96,7 +113,7 @@ export default function Shop({ onQuickView }: ShopProps) {
             </button>
             <div className="h-4 w-[1px] bg-black/10 hidden md:block" />
             <span className="font-mona text-[9px] font-black tracking-widest text-black/20 uppercase hidden lg:inline">
-              {filtered.length} Items Found
+              {filteredAndSorted.length} Items Found
             </span>
           </div>
 
@@ -167,6 +184,19 @@ export default function Shop({ onQuickView }: ShopProps) {
 
                       {/* Sidebar Content */}
                       <div className="px-10 pb-20 space-y-16">
+                           {/* Sort Section */}
+                           <section>
+                               <div className="flex items-center gap-4 mb-8">
+                                   <div className="h-[1px] flex-1 bg-black/5" />
+                                   <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">Sort By</h4>
+                                   <div className="h-[1px] w-8 bg-black/5" />
+                               </div>
+                               <div className="grid grid-cols-1 gap-1">
+                                   <FilterTab label="Newest Arrivals" active={sortBy === 'NEWEST'} onClick={() => setSortBy('NEWEST')} />
+                                   <FilterTab label="Price: Low to High" active={sortBy === 'PRICE_LOW'} onClick={() => setSortBy('PRICE_LOW')} />
+                                   <FilterTab label="Price: High to Low" active={sortBy === 'PRICE_HIGH'} onClick={() => setSortBy('PRICE_HIGH')} />
+                               </div>
+                           </section>
                           {/* Categories Section */}
                           <section>
                               <div className="flex items-center gap-4 mb-8">
@@ -220,7 +250,7 @@ export default function Shop({ onQuickView }: ShopProps) {
                               onClick={() => setShowFilters(false)}
                               className="w-full bg-black text-white py-6 rounded-2xl font-mona text-[10px] font-black tracking-[0.4em] uppercase hover:bg-black/90 transition-all flex items-center justify-center gap-4 mt-6 overflow-hidden relative group"
                           >
-                              <span className="relative z-10">Show {filtered.length} Items</span>
+                              <span className="relative z-10">Show {filteredAndSorted.length} Items</span>
                               <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                               <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                           </button>
@@ -240,7 +270,7 @@ export default function Shop({ onQuickView }: ShopProps) {
             }
         >
           <AnimatePresence mode="popLayout">
-            {filtered.map((product) => (
+            {filteredAndSorted.map((product) => (
                 <motion.div
                     key={product.id}
                     layout
@@ -304,7 +334,7 @@ export default function Shop({ onQuickView }: ShopProps) {
           </AnimatePresence>
         </motion.div>
 
-        {filtered.length === 0 && (
+        {filteredAndSorted.length === 0 && (
           <div className="text-center py-40">
             <ShoppingBag size={40} className="mx-auto text-black/5 mb-6" />
             <p className="font-mona text-2xl font-black text-black/10 uppercase tracking-[0.3em]">

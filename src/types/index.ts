@@ -64,3 +64,18 @@ export interface CartContextType {
   clearCart: () => void;
   totalItems: number;
 }
+
+export interface PersonalizationRequest {
+  id?: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  productType: string;
+  description: string;
+  imageUrl?: string;
+  status: 'New' | 'Quoted' | 'Approved' | 'In Progress' | 'Completed';
+  quotedPrice?: number;
+  estimatedDays?: number;
+  adminNotes?: string;
+  createdAt: any;
+}

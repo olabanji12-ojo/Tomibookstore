@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { logoutAdmin } from '../../firebase/helpers';
-import { LayoutDashboard, ShoppingBag, PieChart, LogOut, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, PieChart, LogOut, ExternalLink, Menu, X, Layers, Settings } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface AdminLayoutProps {
@@ -10,6 +10,7 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const handleLogout = async () => {
     const result = await logoutAdmin();
@@ -21,8 +22,35 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-[#f3f2ee] flex">
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 h-20 bg-white border-b border-black/5 px-6 flex items-center justify-between z-30">
+        <div className="flex flex-col">
+          <h1 className="font-mona text-[8px] font-black uppercase tracking-[0.4em] text-black/30">
+            Good Things
+          </h1>
+          <p className="font-mona text-[10px] font-black text-black">ADMIN</p>
+        </div>
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="p-3 bg-[#f3f2ee] rounded-xl text-black"
+        >
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {/* Sidebar Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-black/5 flex flex-col fixed inset-y-0 shadow-sm z-20">
+      <aside className={`
+        w-64 bg-white border-r border-black/5 flex flex-col fixed inset-y-0 shadow-sm z-50 transition-transform duration-500 ease-out
+        ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
         <div className="p-8 border-b border-black/5">
           <h1 className="font-mona text-[10px] font-black uppercase tracking-[0.4em] text-black/30 mb-1">
             Good Things
@@ -34,6 +62,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <AdminNavLink to="/admin/dashboard" icon={<LayoutDashboard size={18} />} label="Overview" />
           <AdminNavLink to="/admin/products" icon={<ShoppingBag size={18} />} label="Products" />
           <AdminNavLink to="/admin/orders" icon={<PieChart size={18} />} label="Orders" />
+          <AdminNavLink to="/admin/requests" icon={<Layers size={18} />} label="Requests" />
+          <AdminNavLink to="/admin/settings" icon={<Settings size={18} />} label="Settings" />
         </nav>
 
         <div className="p-6 border-t border-black/5 space-y-4">
@@ -55,7 +85,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 p-12">
+      <main className="flex-1 md:ml-64 p-6 md:p-12 pt-28 md:pt-12">
         <div className="max-w-6xl mx-auto">
           {children}
         </div>

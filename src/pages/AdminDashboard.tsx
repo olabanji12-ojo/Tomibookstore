@@ -16,7 +16,13 @@ const AdminDashboard = () => {
     const fetchStats = async () => {
       const res = await getDashboardStats();
       if (res.success && res.stats) {
-        setStats(res.stats);
+        setStats({
+          totalRevenue: res.stats.todayRevenue,
+          pendingOrders: res.stats.pendingOrders,
+          inventoryCount: res.stats.productsCount,
+          lowStockItems: 0, // Simplified for now
+          newRequests: res.stats.newRequests
+        } as any);
       }
       setLoading(false);
     };
@@ -25,9 +31,9 @@ const AdminDashboard = () => {
 
   return (
     <AdminLayout>
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div className="space-y-1">
-          <h1 className="font-mona text-4xl font-black text-black uppercase tracking-tighter">Overview</h1>
+          <h1 className="font-mona text-3xl md:text-4xl font-black text-black uppercase tracking-tighter">Overview</h1>
           <p className="font-poppins text-[10px] text-black/30 font-bold uppercase tracking-[0.2em]">Operational Pulse</p>
         </div>
         
@@ -39,9 +45,9 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <StatCard 
-          label="Total Revenue (30d)" 
+          label="Today's Revenue" 
           value={`₦${stats.totalRevenue.toLocaleString()}`} 
           icon={<TrendingUp size={16} />}
           subValue="Paid via Paystack" 
@@ -53,14 +59,20 @@ const AdminDashboard = () => {
           subValue="Awaiting fulfillment" 
         />
         <StatCard 
-          label="Boutique Inventory" 
+          label="New Requests" 
+          value={(stats as any).newRequests?.toString() || '0'} 
+          icon={<Package size={16} />}
+          subValue="Form submissions" 
+        />
+        <StatCard 
+          label="Inventory" 
           value={stats.inventoryCount.toString()} 
           icon={<Package size={16} />}
-          subValue={`${stats.lowStockItems} items low on stock`} 
+          subValue="Active pieces" 
         />
       </div>
 
-      <div className="mt-16 bg-white rounded-[2.5rem] border border-black/5 p-12 text-center min-h-[300px] flex flex-col items-center justify-center">
+      <div className="mt-12 md:mt-16 bg-white rounded-[2rem] md:rounded-[2.5rem] border border-black/5 p-8 md:p-12 text-center min-h-[300px] flex flex-col items-center justify-center">
         {loading ? (
              <div className="flex items-center justify-center gap-3">
                <div className="w-2 h-2 rounded-full bg-black animate-bounce" />
@@ -85,7 +97,7 @@ const AdminDashboard = () => {
 
 function StatCard({ label, value, subValue, icon }: { label: string, value: string, subValue: string, icon: React.ReactNode }) {
   return (
-    <div className="bg-white p-10 rounded-[2.5rem] border border-black/5 shadow-sm group hover:border-black/20 transition-all">
+    <div className="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-black/5 shadow-sm group hover:border-black/20 transition-all">
       <div className="flex items-center justify-between mb-6">
         <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">{label}</p>
         <div className="text-black/10 group-hover:text-black transition-colors">{icon}</div>

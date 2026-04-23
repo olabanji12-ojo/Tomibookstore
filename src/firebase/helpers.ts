@@ -7,7 +7,10 @@ import {
   query,
   where,
   orderBy,
-  Timestamp
+  Timestamp,
+  increment,
+  getDoc,
+  setDoc
 } from 'firebase/firestore';
 import { 
   signInWithEmailAndPassword, 
@@ -17,7 +20,16 @@ import {
   type User
 } from 'firebase/auth';
 import { db, auth } from './config';
-import type { Product, Order, OrderStatus } from '../types';
+import type { Product, Order, OrderStatus, PersonalizationRequest } from '../types';
+
+// ==================== UTILS ====================
+
+const generateSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/[^\w ]+/g, '')
+    .replace(/ +/g, '-');
+};
 
 // ==================== CLOUDINARY UPLOAD HELPERS ====================
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -60,6 +72,7 @@ export const addProduct = async (productData: Omit<Product, 'id' | 'createdAt'>)
   try {
     const docRef = await addDoc(collection(db, 'products'), {
       ...productData,
+      slug: productData.slug || generateSlug(productData.name),
       createdAt: Timestamp.now(),
     });
     return { success: true, id: docRef.id };
@@ -79,9 +92,10 @@ export const getProducts = async () => {
         id: doc.id, 
         ...data,
         name: data.name || data.title || 'Untitled Product',
-        image: data.image || (data.images && data.images[0]) || data.imageUrl || '',
+        image: data.image || (data.images && data.images[0]) || data.imageUrl || 'https://via.placeholder.com/400x500?text=No+Image',
         category: data.category || 'Uncategorized',
-        price: Number(data.price) || 0
+        price: Number(data.price) || 0,
+        slug: data.slug || generateSlug(data.name || data.title || ''),
       } as Product);
     });
     return { success: true, products };
@@ -119,6 +133,55 @@ export const getProductBySlug = async (slug: string) => {
   }
 };
 
+export const getProductById = async (id: string) => {
+  try {
+    const { getDoc } = await import('firebase/firestore');
+    const docSnap = await getDoc(doc(db, 'products', id));
+    if (docSnap.exists()) {
+      return { success: true, product: { id: docSnap.id, ...docSnap.data() } as Product };
+    }
+    return { success: false, error: 'Product not found' };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+export const updateProduct = async (id: string, data: Partial<Product>) => {
+  try {
+    // Robust sanitization: Remove any undefined values to prevent Firebase "Unsupported field value: undefined" error
+    const updateData: any = { updatedAt: Timestamp.now() };
+    Object.keys(data).forEach(key => {
+      if ((data as any)[key] !== undefined) {
+        updateData[key] = (data as any)[key];
+      }
+    });
+
+    if (updateData.name && !updateData.slug) {
+      updateData.slug = generateSlug(updateData.name);
+    }
+    
+    await updateDoc(doc(db, 'products', id), updateData);
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating product:', error);
+    return { success: false, error };
+  }
+};
+
+export const decrementProductStock = async (id: string, quantity: number) => {
+  try {
+    const productRef = doc(db, 'products', id);
+    await updateDoc(productRef, {
+      stock: increment(-quantity),
+      updatedAt: Timestamp.now()
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Error decrementing stock:', error);
+    return { success: false, error };
+  }
+};
+
 export const deleteProduct = async (id: string) => {
   try {
     const { deleteDoc } = await import('firebase/firestore');
@@ -127,6 +190,75 @@ export const deleteProduct = async (id: string) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     return { success: false, error };
+  }
+};
+
+// ==================== PERSONALIZATION HELPERS ====================
+
+export const createPersonalizationRequest = async (requestData: Omit<PersonalizationRequest, 'id' | 'createdAt' | 'status'>) => {
+  try {
+    const docRef = await addDoc(collection(db, 'personalization_requests'), {
+      ...requestData,
+      status: 'New',
+      createdAt: Timestamp.now(),
+    });
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error('Error creating request:', error);
+    return { success: false, error };
+  }
+};
+
+export const getPersonalizationRequests = async () => {
+  try {
+    const q = query(collection(db, 'personalization_requests'), orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(q);
+    const requests: PersonalizationRequest[] = [];
+    querySnapshot.forEach((doc) => {
+      requests.push({ id: doc.id, ...doc.data() } as PersonalizationRequest);
+    });
+    return { success: true, requests };
+  } catch (error) {
+    console.error('Error getting requests:', error);
+    return { success: false, requests: [] };
+  }
+};
+
+// ==================== DASHBOARD STATS ====================
+
+export const getDashboardStats = async () => {
+  try {
+    const [productsRes, ordersRes, requestsRes] = await Promise.all([
+      getProducts(),
+      getOrders(),
+      getPersonalizationRequests()
+    ]);
+
+    const pendingOrders = ordersRes.orders?.filter(o => o.status === 'Pending').length || 0;
+    const newRequests = requestsRes.requests?.filter(r => r.status === 'New').length || 0;
+    const productsCount = productsRes.products?.length || 0;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayRevenue = ordersRes.orders
+      ?.filter(o => {
+        const orderDate = o.createdAt?.toDate();
+        return orderDate && orderDate >= today;
+      })
+      .reduce((sum, o) => sum + o.total, 0) || 0;
+
+    return {
+      success: true,
+      stats: {
+        todayRevenue,
+        pendingOrders,
+        newRequests,
+        productsCount
+      }
+    };
+  } catch (error) {
+    console.error('Error getting dashboard stats:', error);
+    return { success: false, stats: null };
   }
 };
 
@@ -184,17 +316,27 @@ export const submitPersonalizationRequest = async (requestData: any) => {
 };
 // ==================== AUTH HELPERS ====================
 
-export const registerAdmin = async (email: string, pass: string) => {
+export const registerUser = async (email: string, pass: string, fullName: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-    return { success: true, user: userCredential.user };
+    const user = userCredential.user;
+    
+    // Create user profile in Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      fullName,
+      email,
+      role: 'client', // Default role
+      createdAt: Timestamp.now()
+    });
+    
+    return { success: true, user };
   } catch (error: any) {
     console.error('Registration failed:', error);
     return { success: false, error: error.message };
   }
 };
 
-export const loginAdmin = async (email: string, pass: string) => {
+export const loginUser = async (email: string, pass: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     return { success: true, user: userCredential.user };
@@ -217,43 +359,46 @@ export const subscribeToAuthChanges = (callback: (user: User | null) => void) =>
   return onAuthStateChanged(auth, callback);
 };
 
-// ==================== DASHBOARD STATS ====================
-
-export const getDashboardStats = async () => {
+export const getUserRole = async (uid: string) => {
   try {
-    const [productsRes, ordersRes] = await Promise.all([
-      getProducts(),
-      getOrders()
-    ]);
+    const userDoc = await getDoc(doc(db, 'users', uid));
+    if (userDoc.exists()) {
+      return { success: true, role: userDoc.data().role };
+    }
+    return { success: false, role: 'client' };
+  } catch (error) {
+    return { success: false, role: 'client' };
+  }
+};
 
-    const products = productsRes.products || [];
-    const orders = ordersRes.orders || [];
+// ==================== SETTINGS HELPERS ====================
 
-    const pendingOrders = orders.filter(o => o.status === 'Pending').length;
-    const lowStockItems = products.filter(p => Number(p.stock || 0) < 5).length;
-    
-    // Simple revenue calculation (last 30 days)
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    
-    const revenue = orders
-      .filter(o => {
-        const orderDate = o.createdAt?.toDate ? o.createdAt.toDate() : new Date();
-        return orderDate >= thirtyDaysAgo && o.status !== 'Cancelled';
-      })
-      .reduce((sum, o) => sum + o.total, 0);
-
-    return {
-      success: true,
-      stats: {
-        totalRevenue: revenue,
-        pendingOrders,
-        inventoryCount: products.length,
-        lowStockItems
-      }
+export const getSiteSettings = async () => {
+  try {
+    const docRef = doc(db, 'settings', 'global');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { success: true, settings: docSnap.data() };
+    }
+    // Default fallback settings
+    return { 
+      success: true, 
+      settings: {
+        manifesto: "\"We only stock what we love. Everything else is just noise.\"",
+        hero_tagline: "Thoughtful goods for inspired living.",
+        hero_headline: "CURATED FOR LIFE"
+      } 
     };
   } catch (error) {
-    console.error('Error getting dashboard stats:', error);
-    return { success: false, stats: null };
+    return { success: false, error };
+  }
+};
+
+export const updateSiteSettings = async (data: any) => {
+  try {
+    await setDoc(doc(db, 'settings', 'global'), { ...data, updatedAt: Timestamp.now() }, { merge: true });
+    return { success: true };
+  } catch (error) {
+    return { success: false, error };
   }
 };

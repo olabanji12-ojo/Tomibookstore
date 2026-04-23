@@ -3,7 +3,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Layers, User, DollarSign, ChevronDown, ChevronUp, Clock, CloudUpload, Gift, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { submitPersonalizationRequest, uploadProductImages } from '../firebase/helpers';
+import { createPersonalizationRequest, uploadProductImages } from '../firebase/helpers';
 
 type Form = {
   productType: string;
@@ -104,16 +104,19 @@ export default function Personalize() {
     const loadingToastId = toast.loading('Sending your vision to our team...');
 
     try {
-      let imageUrls: string[] = [];
+      let imageUrl: string | undefined = undefined;
       if (files.length > 0) {
         const uploadRes = await uploadProductImages(files);
-        if (uploadRes.success) imageUrls = uploadRes.urls;
+        if (uploadRes.success) imageUrl = uploadRes.urls[0]; // Taking first as main reference
       }
 
-      await submitPersonalizationRequest({
-        ...form,
-        referenceImages: imageUrls,
-        updatedAt: new Date()
+      await createPersonalizationRequest({
+        customerName: form.name,
+        customerEmail: form.email,
+        customerPhone: form.phone,
+        productType: form.productType,
+        description: `${form.description} | Occasion: ${form.occasion} | Budget: ${form.budget} | Qty: ${form.quantity} | Timeline: ${form.timeline} | Notes: ${form.notes}`,
+        imageUrl: imageUrl,
       });
 
       toast.dismiss(loadingToastId);

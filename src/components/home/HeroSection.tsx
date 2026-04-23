@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import type { Product } from '../../types';
-import { products as HERO_PRODUCTS } from '../../data/books';
 
 const INTRO_SLIDE = {
   id: 'intro',
@@ -12,8 +11,6 @@ const INTRO_SLIDE = {
   price: 0,
   isIntro: true
 };
-
-const ALL_SLIDES = [INTRO_SLIDE, ...HERO_PRODUCTS];
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 
@@ -51,15 +48,22 @@ const letterVariants = {
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
 interface HeroSectionProps {
+  featuredProducts: Product[];
   onQuickView: (product: Product) => void;
+  headline?: string;
+  tagline?: string;
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
-const HeroSection = ({ onQuickView }: HeroSectionProps) => {
+const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroSectionProps) => {
   const [current, setCurrent]       = useState(0);
   const [autoPlay, setAutoPlay]     = useState(true);
 
+  const ALL_SLIDES = [
+    { ...INTRO_SLIDE, name: headline || INTRO_SLIDE.name, description: tagline || INTRO_SLIDE.description },
+    ...featuredProducts
+  ];
   const slide = ALL_SLIDES[current];
 
   const next = useCallback(
@@ -98,7 +102,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
             {/* Background Image Layer */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src={slide.image}
+                src={slide.image || '/brand_intro.png'}
                 alt=""
                 className="w-full h-full object-cover"
               />
@@ -126,7 +130,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
 
                     <motion.h1
                       className="text-4xl md:text-6xl lg:text-7xl font-black text-black
-                                 leading-[0.95] tracking-[-0.04em] mb-8 font-mona uppercase flex flex-wrap justify-center md:justify-start"
+                                 leading-[0.95] tracking-[-0.04em] mb-8 font-serif uppercase flex flex-wrap justify-center md:justify-start"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
@@ -236,7 +240,7 @@ const HeroSection = ({ onQuickView }: HeroSectionProps) => {
 
                   <h1
                     className="text-4xl md:text-5xl lg:text-6xl font-black text-black
-                               leading-[1.05] tracking-[-0.03em] mb-6 font-mona uppercase"
+                               leading-[1.05] tracking-[-0.03em] mb-6 font-serif uppercase"
                   >
                     {slide.name}
                   </h1>

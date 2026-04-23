@@ -14,7 +14,10 @@ import AdminAuth from './pages/AdminAuth';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProducts from './pages/AdminProducts';
 import AdminAddProduct from './pages/AdminAddProduct';
+import AdminEditProduct from './pages/AdminEditProduct';
 import AdminOrders from './pages/AdminOrders';
+import AdminRequests from './pages/AdminRequests';
+import AdminSettings from './pages/AdminSettings';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import type { Product } from './types';
 
@@ -123,9 +126,24 @@ function App() {
               <AdminAddProduct />
             </ProtectedRoute>
           } />
+          <Route path="/admin/products/edit/:id" element={
+            <ProtectedRoute>
+              <AdminEditProduct />
+            </ProtectedRoute>
+          } />
           <Route path="/admin/orders" element={
             <ProtectedRoute>
               <AdminOrders />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/requests" element={
+            <ProtectedRoute>
+              <AdminRequests />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/settings" element={
+            <ProtectedRoute>
+              <AdminSettings />
             </ProtectedRoute>
           } />
         </Routes>

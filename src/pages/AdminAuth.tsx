@@ -1,28 +1,29 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { loginAdmin, registerAdmin } from '../firebase/helpers';
+import { loginUser, registerUser } from '../firebase/helpers';
 import toast from 'react-hot-toast';
 
 const AdminAuth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) return toast.error('Please fill all fields');
+    if (!email || !password || (!isLogin && !fullName)) return toast.error('Please fill all fields');
     
     setLoading(true);
     const result = isLogin 
-      ? await loginAdmin(email, password)
-      : await registerAdmin(email, password);
+      ? await loginUser(email, password)
+      : await registerUser(email, password, fullName);
     setLoading(false);
 
     if (result.success) {
-      toast.success(isLogin ? 'Welcome back.' : 'Account secured.');
+      toast.success(isLogin ? 'Welcome back.' : 'Account created.');
       navigate('/admin/dashboard');
     } else {
       toast.error(result.error);
@@ -45,14 +46,29 @@ const AdminAuth = () => {
           </h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {!isLogin && (
+            <div className="space-y-2">
+              <label className="font-poppins text-[9px] font-bold uppercase tracking-[0.3em] text-black/30 block ml-1">
+                Full Name
+              </label>
+              <input 
+                type="text"
+                placeholder="Jane Doe"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full bg-black/[0.02] border-b border-black/5 py-4 px-1 font-poppins text-sm focus:border-black outline-none transition-all placeholder:text-black/10"
+              />
+            </div>
+          )}
+
           <div className="space-y-2">
             <label className="font-poppins text-[9px] font-bold uppercase tracking-[0.3em] text-black/30 block ml-1">
-              Admin Identity
+              Email Identity
             </label>
             <input 
               type="email"
-              placeholder="email@goodthingsco.online"
+              placeholder="email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-black/[0.02] border-b border-black/5 py-4 px-1 font-poppins text-sm focus:border-black outline-none transition-all placeholder:text-black/10"
@@ -61,7 +77,7 @@ const AdminAuth = () => {
 
           <div className="space-y-2">
             <label className="font-poppins text-[9px] font-bold uppercase tracking-[0.3em] text-black/30 block ml-1">
-              Secret Key
+              Secure Password
             </label>
             <input 
               type="password"
@@ -75,9 +91,9 @@ const AdminAuth = () => {
           <button 
             type="submit"
             disabled={loading}
-            className="w-full py-6 bg-black text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 disabled:opacity-50"
+            className="w-full py-6 bg-black text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 disabled:opacity-50 mt-4"
           >
-            {loading ? 'Processing...' : isLogin ? 'Unlock Dashboard' : 'Create Admin Access'}
+            {loading ? 'Processing...' : isLogin ? 'Unlock Dashboard' : 'Create Access'}
           </button>
         </form>
 
@@ -86,7 +102,7 @@ const AdminAuth = () => {
             onClick={() => setIsLogin(!isLogin)}
             className="font-poppins text-[10px] text-black/40 hover:text-black transition-colors uppercase tracking-widest font-bold"
           >
-            {isLogin ? "Don't have access? Register" : "Already have access? Login"}
+            {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
           </button>
         </div>
       </motion.div>

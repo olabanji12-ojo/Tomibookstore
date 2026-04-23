@@ -20,8 +20,9 @@ const wordVariants = {
   }
 };
 
-const Philosophy = () => {
-  const manifesto = "\"We only stock what we love. Everything else is just noise.\"";
+const Philosophy = ({ manifesto }: { manifesto?: string }) => {
+  const defaultManifesto = "\"We only stock what we love. Everything else is just noise.\"";
+  const displayManifesto = manifesto || defaultManifesto;
 
   return (
     <section className="py-32 md:py-48 bg-[#ede9e1]">
@@ -41,9 +42,9 @@ const Philosophy = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="font-mona text-3xl md:text-5xl lg:text-6xl font-black text-black leading-[1.1] uppercase tracking-tighter italic flex flex-wrap justify-center"
+            className="font-serif text-3xl md:text-5xl lg:text-6xl font-black text-black leading-[1.1] uppercase tracking-tighter italic flex flex-wrap justify-center"
           >
-            {manifesto.split(' ').map((word, i) => (
+            {displayManifesto.split(' ').map((word, i) => (
               <motion.span
                 key={i}
                 variants={wordVariants}

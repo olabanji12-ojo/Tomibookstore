@@ -39,7 +39,7 @@ const AdminOrders = () => {
     <AdminLayout>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div className="space-y-1">
-          <h1 className="font-mona text-4xl font-black text-black uppercase tracking-tighter">Order History</h1>
+          <h1 className="font-mona text-3xl md:text-4xl font-black text-black uppercase tracking-tighter">Order History</h1>
           <p className="font-poppins text-[10px] text-black/30 font-bold uppercase tracking-[0.2em]">Transaction Tracking</p>
         </div>
         
@@ -73,9 +73,9 @@ const AdminOrders = () => {
           </div>
         ) : (
           filteredOrders.map((order) => (
-            <div key={order.id} className="bg-white rounded-[2.5rem] border border-black/5 overflow-hidden shadow-sm group">
+            <div key={order.id} className="bg-white rounded-[2rem] md:rounded-[2.5rem] border border-black/5 overflow-hidden shadow-sm group">
               {/* Order Header */}
-              <div className="p-8 md:p-12 border-b border-black/5 flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="p-6 md:p-12 border-b border-black/5 flex flex-col md:flex-row md:items-center justify-between gap-8">
                 <div className="flex items-center gap-6">
                   <div className="w-14 h-14 bg-black text-white rounded-2xl flex items-center justify-center">
                     <ShoppingBag size={24} />
@@ -122,7 +122,7 @@ const AdminOrders = () => {
               {/* Order Body */}
               <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-black/5">
                 {/* Items */}
-                <div className="lg:col-span-2 p-12">
+                <div className="lg:col-span-2 p-6 md:p-12">
                    <div className="space-y-6">
                      <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30 mb-8">Purchase Summary</p>
                      {order.items.map((item, idx) => (
@@ -136,13 +136,13 @@ const AdminOrders = () => {
                      ))}
                      <div className="pt-8 mt-8 border-t border-dashed border-black/10 flex justify-between items-center">
                         <p className="font-mona text-[11px] font-black text-black uppercase tracking-[0.2em]">Total Transaction</p>
-                        <p className="font-mona text-2xl font-black text-black uppercase tracking-tighter">₦{order.total.toLocaleString()}</p>
+                        <p className="font-mona text-xl md:text-2xl font-black text-black uppercase tracking-tighter">₦{order.total.toLocaleString()}</p>
                      </div>
                    </div>
                 </div>
 
                 {/* Customer Info */}
-                <div className="bg-black/[0.01] p-12 space-y-8">
+                <div className="bg-black/[0.01] p-6 md:p-12 space-y-8">
                   <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Delivery Dossier</p>
                   
                   <div className="space-y-6">
