@@ -158,7 +158,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     <motion.button 
                       variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-4 bg-black text-white px-10 py-5 md:px-14 md:py-6 rounded-full font-mona text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto md:mx-0"
+                      className="flex items-center justify-center gap-4 bg-black text-white px-10 py-5 md:px-14 md:py-6 rounded-full font-mona text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto"
                     >
                       Discover Good things
                       <motion.span
@@ -170,7 +170,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     </motion.button>
                     
                     {/* Dots for Intro */}
-                    <div className="flex items-center gap-3 mt-16 md:mt-24 justify-center md:justify-start">
+                    <div className="flex items-center gap-3 mt-16 md:mt-24 justify-center">
                       {ALL_SLIDES.map((_, i: number) => (
                         <button
                           key={i}
