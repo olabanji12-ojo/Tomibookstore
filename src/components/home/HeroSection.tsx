@@ -5,8 +5,8 @@ import type { Product } from '../../types';
 
 const INTRO_SLIDE = {
   id: 'intro',
-  name: 'Thoughtful goods for inspired living',
-  description: 'Designed to help you live with purpose, give with meaning and enjoy everyday moments.',
+  name: 'Intentional objects for curated living',
+  description: 'A sanctuary of thoughtful pieces, designed to help you live with purpose and find beauty in the everyday.',
   image: '/brand_intro.png',
   price: 0,
   isIntro: true
@@ -122,14 +122,14 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                   >
                     <motion.p
                       variants={letterVariants}
-                      className="text-[10px] tracking-[0.5em] uppercase text-black/40 mb-10 font-sans font-bold"
+                      className="text-[9px] md:text-[11px] tracking-[0.4em] uppercase text-black/50 mb-8 md:mb-10 font-sans font-bold"
                     >
-                      Good Things Come to Those Who Seek
+                      Est. 2026 — Curated Sanctuary
                     </motion.p>
 
                     <motion.h1
-                      className="text-5xl md:text-8xl lg:text-9xl font-black text-black
-                                 leading-[0.9] tracking-[-0.05em] mb-12 font-display uppercase flex flex-wrap justify-center"
+                      className="text-5xl md:text-8xl lg:text-[120px] font-medium text-black
+                                 leading-[0.95] tracking-[-0.03em] mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
@@ -148,7 +148,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
 
                     <motion.p
                       variants={letterVariants}
-                      className="text-[13px] md:text-[15px] text-black/60 leading-[1.9] max-w-lg mx-auto mb-16 font-sans font-medium"
+                      className="text-[14px] md:text-[16px] text-black/40 leading-relaxed max-w-md mx-auto mb-14 md:mb-16 font-sans font-medium italic"
                     >
                       {slide.description}
                     </motion.p>
@@ -156,9 +156,9 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     <motion.button 
                       variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-6 border border-black/15 text-black px-12 py-5 md:px-16 md:py-6 rounded-full font-sans text-[11px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl group cursor-pointer mx-auto"
+                      className="flex items-center justify-center gap-4 border border-black/10 text-black px-10 py-4 md:px-14 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all group cursor-pointer mx-auto bg-white/10 backdrop-blur-md shadow-sm"
                     >
-                      Discover Good things
+                      Enter Archives
                       <motion.span
                         animate={{ x: [0, 4, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

@@ -42,7 +42,7 @@ const Philosophy = ({ manifesto }: { manifesto?: string }) => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-black leading-[1] uppercase tracking-tighter flex flex-wrap justify-center italic"
+            className="font-display text-4xl md:text-6xl lg:text-7xl font-medium text-black leading-[1.05] tracking-tight flex flex-wrap justify-center italic"
           >
             {displayManifesto.split(' ').map((word, i) => (
               <motion.span

@@ -18,8 +18,8 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
           </p>
           <div className="relative flex items-center justify-center">
             <div className="absolute w-full h-[1px] bg-black/5 top-1/2 -translate-y-1/2" />
-            <h2 className="font-serif text-2xl md:text-3xl font-black text-black relative bg-[#f3f2ee] px-10 uppercase tracking-tighter">
-              Featured Items
+            <h2 className="font-serif text-2xl md:text-3xl font-medium text-black relative bg-[#f3f2ee] px-8 tracking-tight italic">
+              Featured Selection
             </h2>
           </div>
         </div>
@@ -75,15 +75,15 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
                    <div className="flex justify-between items-baseline mb-2">
                      <h3 
                        onClick={() => onQuickView(product)}
-                       className="font-display text-xl md:text-2xl font-bold text-black hover:text-black/60 transition-colors duration-300 cursor-pointer"
+                       className="font-display text-xl md:text-2xl font-medium text-black hover:text-black/60 transition-colors duration-300 cursor-pointer italic"
                      >
                        {product.name}
                      </h3>
-                     <p className="font-sans text-[11px] font-black text-black/90">
+                     <p className="font-sans text-[12px] font-black text-black/80">
                        ₦{product.price.toLocaleString()}
                      </p>
                    </div>
-                   <p className="font-sans text-[10px] tracking-[0.2em] text-black/30 uppercase font-bold">
+                   <p className="font-sans text-[9px] tracking-[0.2em] text-black/20 uppercase font-bold">
                      {product.author || product.category}
                    </p>
                  </div>

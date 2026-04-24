@@ -51,10 +51,10 @@ const EntryPaths = () => {
 
               {/* Text Content */}
               <div className="text-center md:text-left">
-                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-black/30 mb-3">
+                <p className="font-sans text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-black/20 mb-3">
                   {path.subtitle}
                 </p>
-                <h3 className="font-display text-2xl font-bold text-black uppercase tracking-tighter group-hover:opacity-60 transition-opacity">
+                <h3 className="font-display text-2xl md:text-3xl font-medium text-black tracking-tight group-hover:opacity-40 transition-opacity italic">
                   {path.title}
                 </h3>
               </div>
