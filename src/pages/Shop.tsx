@@ -271,6 +271,12 @@ export default function Shop({ onQuickView }: ShopProps) {
         >
           <AnimatePresence mode="popLayout">
             {filteredAndSorted.map((product) => (
+                <motion.div
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
                     className={`w-full group transition-all duration-500 ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-80 border-b border-black/5 pb-12' : ''}`}
                 >
                     {/* Image Area */}
