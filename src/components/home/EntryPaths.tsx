@@ -26,7 +26,7 @@ const EntryPaths = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-32 md:py-48 bg-white">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
           {ENTRY_PATHS.map((path, index) => (
@@ -40,7 +40,7 @@ const EntryPaths = () => {
               onClick={() => navigate(`/shop?category=${path.category}`)}
             >
               {/* Image Container (4:5 Ratio) */}
-              <div className="aspect-[4/5] overflow-hidden relative grayscale-[30%] group-hover:grayscale-0 transition-all duration-700">
+              <div className="aspect-[3/4] overflow-hidden relative grayscale-[30%] group-hover:grayscale-0 transition-all duration-700">
                 <img 
                   src={path.image} 
                   alt={path.title}
@@ -51,10 +51,10 @@ const EntryPaths = () => {
 
               {/* Text Content */}
               <div className="text-center md:text-left">
-                <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.2em] text-black/30 mb-2">
+                <p className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] text-black/30 mb-3">
                   {path.subtitle}
                 </p>
-                <h3 className="font-mona text-xl font-black text-black uppercase tracking-tighter group-hover:opacity-60 transition-opacity">
+                <h3 className="font-display text-2xl font-bold text-black uppercase tracking-tighter group-hover:opacity-60 transition-opacity">
                   {path.title}
                 </h3>
               </div>

@@ -168,3 +168,46 @@ function App() {
 }
 
 export default App;
+
+
+{/* <style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
+</style> */}
+
+
+// .libre-bodoni-<uniquifier> {
+//   font-family: "Libre Bodoni", serif;
+//   font-optical-sizing: auto;
+//   font-weight: <weight>;
+//   font-style: normal;
+// }
+
+// Libre Bordoni for headlines
+// Cormorant (just for accents or quotes)
+// inter for body
+
+{/* <style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
+</style> */}
+
+
+// .cormorant-<uniquifier> {
+//   font-family: "Cormorant", serif;
+//   font-optical-sizing: auto;
+//   font-weight: <weight>;
+//   font-style: normal;
+// }
+
+{/* <style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
+</style> */}
+
+
+// .inter-<uniquifier> {
+//   font-family: "Inter", sans-serif;
+//   font-optical-sizing: auto;
+//   font-weight: <weight>;
+//   font-style: normal;
+// }
+
+// are those 3 fonts from the same family??

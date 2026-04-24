@@ -122,15 +122,14 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                   >
                     <motion.p
                       variants={letterVariants}
-                      className="text-[9px] tracking-[0.4em] uppercase text-black/50 mb-8"
-                      style={{ fontFamily: 'Poppins, sans-serif' }}
+                      className="text-[10px] tracking-[0.5em] uppercase text-black/40 mb-10 font-sans font-bold"
                     >
                       Good Things Come to Those Who Seek
                     </motion.p>
 
                     <motion.h1
-                      className="text-4xl md:text-6xl lg:text-7xl font-black text-black
-                                 leading-[0.95] tracking-[-0.04em] mb-8 font-serif uppercase flex flex-wrap justify-center"
+                      className="text-5xl md:text-8xl lg:text-9xl font-black text-black
+                                 leading-[0.9] tracking-[-0.05em] mb-12 font-display uppercase flex flex-wrap justify-center"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
@@ -149,8 +148,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
 
                     <motion.p
                       variants={letterVariants}
-                      className="text-[12px] md:text-[14px] text-black/70 leading-[1.8] max-w-lg mx-auto mb-12"
-                      style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
+                      className="text-[13px] md:text-[15px] text-black/60 leading-[1.9] max-w-lg mx-auto mb-16 font-sans font-medium"
                     >
                       {slide.description}
                     </motion.p>
@@ -158,7 +156,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     <motion.button 
                       variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-4 bg-black text-white px-10 py-5 md:px-14 md:py-6 rounded-full font-mona text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto"
+                      className="flex items-center justify-center gap-6 bg-black text-white px-12 py-6 md:px-16 md:py-8 rounded-full font-sans text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto"
                     >
                       Discover Good things
                       <motion.span
@@ -232,36 +230,33 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                   exit="exit"
                 >
                   <p
-                    className="text-[9px] tracking-[0.4em] uppercase text-black/25 mb-8"
-                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                    className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-8 font-sans font-bold"
                   >
                     Stories that stay with you
                   </p>
 
                   <h1
-                    className="text-4xl md:text-5xl lg:text-6xl font-black text-black
-                               leading-[1.05] tracking-[-0.03em] mb-6 font-serif uppercase"
+                    className="text-5xl md:text-6xl lg:text-8xl font-black text-black
+                               leading-[1] tracking-[-0.04em] mb-8 font-display uppercase"
                   >
                     {slide.name}
                   </h1>
 
                   <p
-                    className="text-[13px] text-black/50 leading-[1.8] max-w-sm mx-auto md:mx-0 mb-10"
-                    style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400 }}
+                    className="text-[14px] text-black/50 leading-[1.8] max-w-sm mx-auto md:mx-0 mb-12 font-sans"
                   >
                     {slide.description}
                   </p>
 
-                  <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 mb-12">
+                  <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14 mb-16">
                     <p
-                      className="text-[14px] font-black text-black/80"
-                      style={{ fontFamily: 'Poppins, sans-serif' }}
+                      className="text-[16px] font-black text-black/80 font-sans"
                     >
                       ₦{slide.price.toLocaleString()}
                     </p>
                     <button 
                       onClick={() => onQuickView(slide as Product)}
-                      className="flex-1 md:flex-none flex items-center justify-center gap-4 bg-black text-white px-12 py-5 rounded-full font-mona text-[10px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 group cursor-pointer"
+                      className="flex-1 md:flex-none flex items-center justify-center gap-6 bg-black text-white px-14 py-6 rounded-full font-sans text-[10px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 group cursor-pointer"
                     >
                       Experience Selection
                       <motion.span

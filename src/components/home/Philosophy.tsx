@@ -25,14 +25,14 @@ const Philosophy = ({ manifesto }: { manifesto?: string }) => {
   const displayManifesto = manifesto || defaultManifesto;
 
   return (
-    <section className="py-32 md:py-48 bg-[#ede9e1]">
+    <section className="py-40 md:py-64 bg-[#ede9e1]">
       <div className="max-w-[1000px] mx-auto px-8 md:px-12 text-center">
         <div>
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-poppins text-[10px] font-bold tracking-[0.4em] uppercase text-black/20 block mb-12"
+            className="font-sans text-[11px] font-bold tracking-[0.5em] uppercase text-black/30 block mb-16"
           >
             The Curation Manifesto
           </motion.span>
@@ -42,7 +42,7 @@ const Philosophy = ({ manifesto }: { manifesto?: string }) => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="font-serif text-3xl md:text-5xl lg:text-6xl font-black text-black leading-[1.1] uppercase tracking-tighter italic flex flex-wrap justify-center"
+            className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-black leading-[1] uppercase tracking-tighter flex flex-wrap justify-center italic"
           >
             {displayManifesto.split(' ').map((word, i) => (
               <motion.span

@@ -265,8 +265,8 @@ export default function Shop({ onQuickView }: ShopProps) {
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-12" 
-                : "flex flex-col gap-6"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 md:gap-24 lg:gap-32" 
+                : "flex flex-col gap-12"
             }
         >
           <AnimatePresence mode="popLayout">
@@ -277,45 +277,40 @@ export default function Shop({ onQuickView }: ShopProps) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className={`group bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-black/[0.03] hover:border-black/10 transition-all duration-500 shadow-sm hover:shadow-xl ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-64' : ''}`}
+                    className={`group transition-all duration-500 ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-80 border-b border-black/5 pb-12' : ''}`}
                 >
                     {/* Image Area */}
                     <div 
-                        className={`relative overflow-hidden bg-black/5 cursor-pointer ${viewMode === 'list' ? 'w-full md:w-64 flex-shrink-0 h-48 md:h-full' : 'aspect-[4/5]'}`}
+                        className={`relative overflow-hidden bg-white cursor-pointer ${viewMode === 'list' ? 'w-full md:w-80 flex-shrink-0 h-64 md:h-full' : 'aspect-[3/4]'}`}
                         onClick={() => onQuickView(product)}
                     >
                         <img 
                             src={product.image || (product.images && product.images[0])} 
                             alt={product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
-                        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
-                            <span className="bg-black/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[8px] font-black tracking-widest uppercase">
-                                Quick View
-                            </span>
-                        </div>
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.02] transition-colors duration-500" />
                     </div>
 
                     {/* Content Area */}
-                    <div className="p-4 md:p-8 flex flex-col justify-between flex-1">
+                    <div className={`flex flex-col justify-between flex-1 ${viewMode === 'list' ? 'p-4 md:p-12' : 'pt-8'}`}>
                         <div>
-                            <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-1 md:gap-4 mb-2">
-                                <span className="font-mona text-[8px] md:text-[10px] font-black text-black/20 uppercase tracking-[0.2em]">
+                            <div className="flex justify-between items-center mb-3">
+                                <span className="font-sans text-[10px] font-bold text-black/30 uppercase tracking-[0.2em]">
                                     {product.category}
                                 </span>
-                                <span className="font-poppins text-[10px] md:text-xs font-bold text-black opacity-60">
+                                <span className="font-sans text-[11px] font-black text-black">
                                     ₦{(product.price || 0).toLocaleString()}
                                 </span>
                             </div>
                             <h3 
-                                className={`font-mona font-black text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-xl md:text-3xl' : 'text-sm md:text-xl'}`}
+                                className={`font-display font-bold text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-3xl md:text-5xl' : 'text-lg md:text-2xl'}`}
                                 onClick={() => onQuickView(product)}
                             >
                                 {product.name}
                             </h3>
                             {viewMode === 'list' && (
-                                <p className="font-poppins text-sm text-black/40 mt-3 line-clamp-2 max-w-xl">
+                                <p className="font-sans text-[14px] text-black/50 mt-6 md:mt-8 line-clamp-3 max-w-2xl leading-relaxed">
                                     {product.description}
                                 </p>
                             )}
@@ -323,10 +318,10 @@ export default function Shop({ onQuickView }: ShopProps) {
 
                         <button 
                             onClick={() => onQuickView(product)}
-                            className="w-full mt-6 py-4 bg-black text-white font-mona text-[9px] font-black uppercase tracking-[0.3em] rounded-xl hover:bg-neutral-800 transition-all shadow-sm flex items-center justify-center gap-2 group/btn"
+                            className="w-full mt-10 md:mt-12 py-5 border border-black/10 text-black font-sans text-[9px] font-black uppercase tracking-[0.4em] rounded-full hover:bg-black hover:text-white transition-all flex items-center justify-center gap-3 group/btn"
                         >
                             View Details
-                            <ArrowRight size={10} className="group-hover/btn:translate-x-1 transition-transform" />
+                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 </motion.div>

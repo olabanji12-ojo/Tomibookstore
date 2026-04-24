@@ -1,19 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@100..900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Cormorant:ital,wght@0,300..700;1,300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "DM Serif Display", serif;
-  --font-sans: "Outfit", sans-serif;
-  --font-mona: "Mona Sans", sans-serif;
-  --font-poppins: "Outfit", sans-serif; /* Alias for smoother transition */
+  --font-display: "Libre Bodoni", serif;
+  --font-accent: "Cormorant", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  /* Legacy/Compatibility Mappings */
+  --font-serif: "Libre Bodoni", serif;
+  --font-mona: "Inter", sans-serif;
+  --font-poppins: "Inter", sans-serif;
 }
 
 body {
-  font-family: "Outfit", sans-serif;
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
   background-color: #f3f2ee;
-  color: #000000;
+  color: #1a1a1a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  font-family: "Libre Bodoni", serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h4, h5, h6 {
+  font-family: "Cormorant", serif;
+  font-weight: 500;
 }
 
 button {
@@ -23,3 +39,4 @@ button {
 :root {
   background-color: #f3f2ee;
 }
+
