@@ -18,22 +18,21 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
           </p>
           <div className="relative flex items-center justify-center">
             <div className="absolute w-full h-[1px] bg-black/5 top-1/2 -translate-y-1/2" />
-            <h2 className="font-serif text-2xl md:text-3xl font-medium text-black relative bg-[#f3f2ee] px-8 tracking-tight italic">
+            <h2 className="font-serif text-2xl md:text-3xl font-medium text-black relative bg-[#f3f2ee] px-6 tracking-tight italic">
               Featured Selection
             </h2>
           </div>
         </div>
 
-        {/* Products Grid - Editorial Asymmetrical Logic */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-y-16 sm:gap-x-12 lg:gap-x-0 items-start">
+        {/* Products Grid - Ultra-Compressed Editorial Asymmetrical Logic */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-y-6 sm:gap-x-4 lg:gap-x-0 items-start">
           {featuredProducts.map((product, idx) => {
-             // Editorial mapping for first 4 items (asymmetrical)
-             // Default to standard spans for items beyond 4
+             // Editorial mapping for first 4 items (ultra-compressed offsets)
              const layouts = [
                { span: 'lg:col-span-7', start: 'lg:col-start-1', aspect: 'aspect-[4/5]', mt: 'lg:mt-0' },
-               { span: 'lg:col-span-4', start: 'lg:col-start-9', aspect: 'aspect-[2/3]', mt: 'lg:mt-40' },
-               { span: 'lg:col-span-5', start: 'lg:col-start-2', aspect: 'aspect-square', mt: 'lg:mt-[-80px]' },
-               { span: 'lg:col-span-6', start: 'lg:col-start-7', aspect: 'aspect-[4/5]', mt: 'lg:mt-[-40px]' }
+               { span: 'lg:col-span-4', start: 'lg:col-start-9', aspect: 'aspect-[2/3]', mt: 'lg:mt-8' },
+               { span: 'lg:col-span-5', start: 'lg:col-start-2', aspect: 'aspect-square', mt: 'lg:mt-[-15px]' },
+               { span: 'lg:col-span-6', start: 'lg:col-start-7', aspect: 'aspect-[4/5]', mt: 'lg:mt-[-5px]' }
              ];
              const layout = layouts[idx % layouts.length];
 
@@ -64,7 +63,7 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
                         onQuickView(product);
                       }}
                    >
-                     <button className="w-full py-5 bg-black text-white font-sans text-[10px] font-black uppercase tracking-[0.4em] rounded-full hover:bg-neutral-800 transition-all shadow-2xl">
+                     <button className="w-full py-5 bg-black text-white font-sans text-[10px] font-black uppercase tracking-[0.4em] rounded-full hover:bg-neutral-900 transition-all shadow-2xl">
                        View Archives
                      </button>
                    </div>

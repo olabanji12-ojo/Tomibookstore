@@ -156,7 +156,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     <motion.button 
                       variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-4 border border-black/10 text-black px-10 py-4 md:px-14 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all group cursor-pointer mx-auto bg-white/10 backdrop-blur-md shadow-sm"
+                      className="flex items-center justify-center gap-4 bg-black text-white px-10 py-4 md:px-14 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-neutral-800 transition-all group cursor-pointer mx-auto shadow-2xl"
                     >
                       Enter Archives
                       <motion.span

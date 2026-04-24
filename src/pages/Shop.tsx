@@ -265,8 +265,8 @@ export default function Shop({ onQuickView }: ShopProps) {
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "w-full grid grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-10 sm:gap-12 md:gap-24 lg:gap-32" 
-                : "w-full flex flex-col gap-12 md:gap-32"
+                ? "w-full grid grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-8 sm:gap-4 md:gap-6 lg:gap-8" 
+                : "w-full flex flex-col gap-8 md:gap-16"
             }
         >
           <AnimatePresence mode="popLayout">
@@ -318,7 +318,7 @@ export default function Shop({ onQuickView }: ShopProps) {
 
                         <button 
                             onClick={() => onQuickView(product)}
-                            className="w-full mt-6 md:mt-12 py-3.5 md:py-5 border border-black/10 text-black font-sans text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] rounded-full hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2 md:gap-3 group/btn"
+                            className="w-full mt-6 md:mt-12 py-3.5 md:py-5 bg-black text-white font-sans text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] rounded-full hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 md:gap-3 group/btn shadow-xl"
                         >
                             View Details
                             <ArrowRight className="w-3 h-3 md:w-[12px] md:h-[12px] group-hover/btn:translate-x-1 transition-transform" />
