@@ -261,27 +261,21 @@ export default function Shop({ onQuickView }: ShopProps) {
       </AnimatePresence>
 
       {/* Product Display */}
-      <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-20">
+      <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-20">
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-12 md:gap-24 lg:gap-32 px-2 md:px-0" 
-                : "flex flex-col gap-16 md:gap-32 px-4 md:px-0"
+                ? "w-full grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 sm:gap-12 md:gap-24 lg:gap-32" 
+                : "w-full flex flex-col gap-16 md:gap-32"
             }
         >
           <AnimatePresence mode="popLayout">
             {filteredAndSorted.map((product) => (
-                <motion.div
-                    key={product.id}
-                    layout
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className={`group transition-all duration-500 ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-80 border-b border-black/5 pb-12' : ''}`}
+                    className={`w-full group transition-all duration-500 ${viewMode === 'list' ? 'flex flex-col md:flex-row h-auto md:h-80 border-b border-black/5 pb-12' : ''}`}
                 >
                     {/* Image Area */}
                     <div 
-                        className={`relative overflow-hidden bg-white cursor-pointer ${viewMode === 'list' ? 'w-full md:w-80 flex-shrink-0 h-64 md:h-full' : 'aspect-[3/4]'}`}
+                        className={`w-full relative overflow-hidden bg-white cursor-pointer ${viewMode === 'list' ? 'md:w-80 flex-shrink-0 h-64 md:h-full' : 'aspect-[3/4]'}`}
                         onClick={() => onQuickView(product)}
                     >
                         <img 
