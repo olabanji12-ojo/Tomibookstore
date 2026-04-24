@@ -265,8 +265,8 @@ export default function Shop({ onQuickView }: ShopProps) {
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 md:gap-24 lg:gap-32" 
-                : "flex flex-col gap-12"
+                ? "grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-12 md:gap-24 lg:gap-32 px-2 md:px-0" 
+                : "flex flex-col gap-16 md:gap-32 px-4 md:px-0"
             }
         >
           <AnimatePresence mode="popLayout">
@@ -293,18 +293,18 @@ export default function Shop({ onQuickView }: ShopProps) {
                     </div>
 
                     {/* Content Area */}
-                    <div className={`flex flex-col justify-between flex-1 ${viewMode === 'list' ? 'p-4 md:p-12' : 'pt-8'}`}>
+                    <div className={`flex flex-col justify-between flex-1 ${viewMode === 'list' ? 'p-4 md:p-12' : 'pt-4 pb-4 md:pt-8'}`}>
                         <div>
-                            <div className="flex justify-between items-center mb-3">
-                                <span className="font-sans text-[10px] font-bold text-black/30 uppercase tracking-[0.2em]">
+                            <div className="flex justify-between items-center mb-1.5 md:mb-3">
+                                <span className="font-sans text-[8px] md:text-[10px] font-bold text-black/30 uppercase tracking-[0.2em]">
                                     {product.category}
                                 </span>
-                                <span className="font-sans text-[11px] font-black text-black">
+                                <span className="font-sans text-[9px] md:text-[11px] font-black text-black">
                                     ₦{(product.price || 0).toLocaleString()}
                                 </span>
                             </div>
                             <h3 
-                                className={`font-display font-bold text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-3xl md:text-5xl' : 'text-lg md:text-2xl'}`}
+                                className={`font-display font-bold text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-3xl md:text-5xl' : 'text-xs md:text-2xl'}`}
                                 onClick={() => onQuickView(product)}
                             >
                                 {product.name}

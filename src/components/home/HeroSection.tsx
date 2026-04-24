@@ -86,7 +86,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
     <section
       id="home"
       style={{ backgroundColor: '#f3f2ee' }}
-      className="relative w-full min-h-[calc(100vh-129px)] flex items-center overflow-hidden"
+      className="relative w-full min-h-[100dvh] md:min-h-screen flex items-center overflow-hidden"
     >
       <AnimatePresence mode="wait">
         {(slide as any).isIntro ? (
@@ -111,8 +111,8 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
             </div>
 
             {/* Content Overlay Layer */}
-            <div className="relative z-10 w-full h-full flex items-start md:items-center pt-24 md:pt-0">
-              <div className="w-full max-w-[1400px] mx-auto px-12 md:px-20 text-center pt-10 md:pt-24">
+            <div className="relative z-10 w-full h-full flex items-center">
+              <div className="w-full max-w-[1400px] mx-auto px-10 md:px-20 text-center pb-20 md:pb-0">
                 <div className="max-w-2xl mx-auto">
                   <motion.div
                     variants={containerVariants}
@@ -156,7 +156,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     <motion.button 
                       variants={letterVariants}
                       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-6 bg-black text-white px-12 py-6 md:px-16 md:py-8 rounded-full font-sans text-[11px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-2xl group cursor-pointer mx-auto"
+                      className="flex items-center justify-center gap-6 border border-black/15 text-black px-12 py-5 md:px-16 md:py-6 rounded-full font-sans text-[11px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl group cursor-pointer mx-auto"
                     >
                       Discover Good things
                       <motion.span
@@ -194,9 +194,9 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full max-w-[1400px] mx-auto px-12 md:px-20"
+            className="w-full max-w-[1400px] mx-auto px-10 md:px-20"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-20 md:py-0 pt-28 md:pt-32 min-h-[calc(100vh-129px)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center py-24 md:py-0 min-h-screen">
               <div className="order-1 md:order-2 flex justify-center items-center">
                 <motion.div
                   key={slide.id + '-cover'}
@@ -256,7 +256,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     </p>
                     <button 
                       onClick={() => onQuickView(slide as Product)}
-                      className="flex-1 md:flex-none flex items-center justify-center gap-6 bg-black text-white px-14 py-6 rounded-full font-sans text-[10px] font-black uppercase tracking-[0.4em] hover:bg-neutral-800 transition-all shadow-xl shadow-black/10 group cursor-pointer"
+                      className="flex-1 md:flex-none flex items-center justify-center gap-6 border border-black/15 text-black px-14 py-5 rounded-full font-sans text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all shadow-xl shadow-black/10 group cursor-pointer"
                     >
                       Experience Selection
                       <motion.span
