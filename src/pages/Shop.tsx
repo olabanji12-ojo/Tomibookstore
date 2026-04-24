@@ -81,67 +81,67 @@ export default function Shop({ onQuickView }: ShopProps) {
         description="Explore our archive of curated fashion, home decor, and lifestyle pieces."
       />
       {/* Header */}
-      <section className="pt-32 pb-16 px-8 border-b border-black/[0.03]">
+      <section className="pt-24 pb-12 px-4 md:px-8 border-b border-black/[0.03]">
         <div className="max-w-[1400px] mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-block py-2 px-4 bg-black/5 rounded-full mb-8"
+            className="inline-block py-2 px-4 bg-black/5 rounded-full mb-6"
           >
-            <span className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/40">
+            <span className="font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black/40">
               The Archives
             </span>
           </motion.div>
-          <h1 className="font-serif text-6xl md:text-9xl font-black tracking-tighter text-black mb-8 leading-[0.85]">
-            CURATED <br /> COLLECTION
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-9xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
+            CURATED <br className="md:hidden" /> COLLECTION
           </h1>
         </div>
       </section>
 
       {/* Toolbar */}
-      <section className="sticky top-[95px] z-40 bg-[#f3f2ee]/80 backdrop-blur-xl border-b border-black/[0.03] py-5 px-8">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="sticky top-[70px] md:top-[95px] z-40 bg-[#f3f2ee]/80 backdrop-blur-xl border-b border-black/[0.03] py-4 px-4 md:px-8">
+        <div className="max-w-[1400px] mx-auto flex flex-row items-center justify-between gap-4 md:gap-6">
           
           {/* Left: Refine Toggle */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <button 
                 onClick={() => setShowFilters(true)}
-                className="flex items-center gap-3 font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/60 hover:text-black transition-colors"
+                className="flex items-center gap-2 md:gap-3 font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black/60 hover:text-black transition-colors"
             >
-                <Filter size={14} />
-                Refine
+                <Filter size={12} />
+                <span className="hidden xs:inline">Refine</span>
             </button>
-            <div className="h-4 w-[1px] bg-black/10 hidden md:block" />
+            <div className="h-4 w-[1px] bg-black/10 hidden sm:block" />
             <span className="font-mona text-[9px] font-black tracking-widest text-black/20 uppercase hidden lg:inline">
-              {filteredAndSorted.length} Items Found
+              {filteredAndSorted.length} Items
             </span>
           </div>
 
           {/* Center: Search */}
-          <div className="relative group flex-1 md:max-w-md mx-4">
-              <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/20 group-focus-within:text-black transition-colors" />
+          <div className="relative group flex-1 max-w-[200px] md:max-w-md mx-2 md:mx-4">
+              <Search size={12} className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-black/20 group-focus-within:text-black transition-colors" />
               <input 
                 type="text"
-                placeholder="Search archives..."
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-black/5 border border-transparent focus:bg-white focus:border-black/10 rounded-full py-2.5 pl-10 pr-6 font-poppins text-xs outline-none transition-all w-full"
+                className="bg-black/5 border border-transparent focus:bg-white focus:border-black/10 rounded-full py-2 md:py-2.5 pl-8 md:pl-10 pr-4 md:pr-6 font-poppins text-[10px] md:text-xs outline-none transition-all w-full"
               />
           </div>
 
           {/* Right: View Toggles */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 md:gap-4">
               <button 
                 onClick={() => setViewMode('grid')}
-                className={`p-2 transition-colors ${viewMode === 'grid' ? 'text-black' : 'text-black/15 hover:text-black/40'}`}
+                className={`p-1.5 md:p-2 transition-colors ${viewMode === 'grid' ? 'text-black' : 'text-black/15 hover:text-black/40'}`}
               >
-                  <LayoutGrid size={18} />
+                  <LayoutGrid className="w-4 h-4 md:w-[18px] md:h-[18px]" />
               </button>
               <button 
                 onClick={() => setViewMode('list')}
-                className={`p-2 transition-colors ${viewMode === 'list' ? 'text-black' : 'text-black/15 hover:text-black/40'}`}
+                className={`p-1.5 md:p-2 transition-colors ${viewMode === 'list' ? 'text-black' : 'text-black/15 hover:text-black/40'}`}
               >
-                  <List size={18} />
+                  <List className="w-4 h-4 md:w-[18px] md:h-[18px]" />
               </button>
           </div>
         </div>
@@ -261,12 +261,12 @@ export default function Shop({ onQuickView }: ShopProps) {
       </AnimatePresence>
 
       {/* Product Display */}
-      <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-20">
+      <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-20">
         <motion.div 
             layout
             className={viewMode === 'grid' 
-                ? "w-full grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 sm:gap-12 md:gap-24 lg:gap-32" 
-                : "w-full flex flex-col gap-16 md:gap-32"
+                ? "w-full grid grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-10 sm:gap-12 md:gap-24 lg:gap-32" 
+                : "w-full flex flex-col gap-12 md:gap-32"
             }
         >
           <AnimatePresence mode="popLayout">
@@ -281,7 +281,7 @@ export default function Shop({ onQuickView }: ShopProps) {
                 >
                     {/* Image Area */}
                     <div 
-                        className={`w-full relative overflow-hidden bg-white cursor-pointer ${viewMode === 'list' ? 'md:w-80 flex-shrink-0 h-64 md:h-full' : 'aspect-[3/4]'}`}
+                        className={`w-full relative overflow-hidden bg-white cursor-pointer ${viewMode === 'list' ? 'md:w-80 flex-shrink-0 h-48 md:h-full' : 'aspect-[3/4]'}`}
                         onClick={() => onQuickView(product)}
                     >
                         <img 
@@ -293,24 +293,24 @@ export default function Shop({ onQuickView }: ShopProps) {
                     </div>
 
                     {/* Content Area */}
-                    <div className={`flex flex-col justify-between flex-1 ${viewMode === 'list' ? 'p-4 md:p-12' : 'pt-4 pb-4 md:pt-8'}`}>
+                    <div className={`flex flex-col justify-between flex-1 ${viewMode === 'list' ? 'p-6 md:p-12' : 'pt-4 pb-2 md:pt-8'}`}>
                         <div>
-                            <div className="flex justify-between items-center mb-1.5 md:mb-3">
-                                <span className="font-sans text-[8px] md:text-[10px] font-bold text-black/30 uppercase tracking-[0.2em]">
+                            <div className="flex justify-between items-center mb-1 md:mb-3">
+                                <span className="font-sans text-[7px] md:text-[10px] font-bold text-black/30 uppercase tracking-[0.1em] md:tracking-[0.2em]">
                                     {product.category}
                                 </span>
-                                <span className="font-sans text-[9px] md:text-[11px] font-black text-black">
+                                <span className="font-sans text-[8px] md:text-[11px] font-black text-black">
                                     ₦{(product.price || 0).toLocaleString()}
                                 </span>
                             </div>
                             <h3 
-                                className={`font-display font-bold text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-3xl md:text-5xl' : 'text-xs md:text-2xl'}`}
+                                className={`font-display font-bold text-black tracking-tight leading-tight group-hover:text-black/60 transition-colors cursor-pointer ${viewMode === 'list' ? 'text-2xl md:text-5xl' : 'text-[11px] md:text-2xl'}`}
                                 onClick={() => onQuickView(product)}
                             >
                                 {product.name}
                             </h3>
                             {viewMode === 'list' && (
-                                <p className="font-sans text-[14px] text-black/50 mt-6 md:mt-8 line-clamp-3 max-w-2xl leading-relaxed">
+                                <p className="font-sans text-[13px] md:text-[14px] text-black/50 mt-4 md:mt-8 line-clamp-2 md:line-clamp-3 max-w-2xl leading-relaxed">
                                     {product.description}
                                 </p>
                             )}
@@ -318,10 +318,10 @@ export default function Shop({ onQuickView }: ShopProps) {
 
                         <button 
                             onClick={() => onQuickView(product)}
-                            className="w-full mt-10 md:mt-12 py-5 border border-black/10 text-black font-sans text-[9px] font-black uppercase tracking-[0.4em] rounded-full hover:bg-black hover:text-white transition-all flex items-center justify-center gap-3 group/btn"
+                            className="w-full mt-6 md:mt-12 py-3.5 md:py-5 border border-black/10 text-black font-sans text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] rounded-full hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2 md:gap-3 group/btn"
                         >
                             View Details
-                            <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
+                            <ArrowRight className="w-3 h-3 md:w-[12px] md:h-[12px] group-hover/btn:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 </motion.div>
