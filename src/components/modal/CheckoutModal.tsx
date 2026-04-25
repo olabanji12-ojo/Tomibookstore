@@ -582,7 +582,7 @@ const CheckoutModal = ({
   );
 };
 
-// ── Reusable Component ───────────────────────────────────────────────────────
+// ── Reusable Component ─────────────────────────────────────────────────────
 
 function InputField({ label, placeholder, value, onChange, type = "text" }: any) {
     return (
