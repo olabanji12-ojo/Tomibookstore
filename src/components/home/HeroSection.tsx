@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const HERO_PHRASES = [
   { id: 1, text: "Live inspired, every day" },
-  { id: 2, text: "Thoughful goods" },
+  { id: 2, text: "Thoughtful goods" },
   { id: 3, text: "Meaningful Custom Work" },
   { id: 4, text: "Design at Scale" }
 ];
@@ -19,7 +19,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % HERO_PHRASES.length);
-    }, 6000); // Slightly longer to allow for typing feel
+    }, 6000); 
     return () => clearInterval(timer);
   }, []);
 
@@ -31,7 +31,11 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
     }),
     exit: {
       opacity: 0,
-      transition: { staggerChildren: 0.02, staggerDirection: -1 }
+      transition: { 
+        staggerChildren: 0.02, 
+        staggerDirection: -1,
+        transitionEnd: { display: "none" }
+      }
     }
   };
 
@@ -56,7 +60,8 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
     },
   };
 
-  const currentText = (headline && current === 0) ? headline : HERO_PHRASES[current].text;
+  // Prioritize HERO_PHRASES but allow settings to act as a fallback if desired.
+  const currentText = HERO_PHRASES[current].text;
 
   return (
     <section
@@ -78,7 +83,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
       </div>
 
       {/* Typing Text Container */}
-      <div className="relative z-10 w-full max-w-[90vw] md:max-w-6xl mx-auto px-6 text-center">
+      <div className="relative z-10 w-full max-w-[95vw] md:max-w-6xl mx-auto px-4 text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -96,22 +101,26 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
             </motion.p>
             
             <motion.h2 
-              className="font-serif text-5xl sm:text-7xl md:text-[8vw] font-medium text-black leading-[1.1] tracking-tighter italic flex flex-wrap justify-center overflow-hidden"
+              className="font-serif text-[10vw] sm:text-7xl md:text-[8vw] font-medium text-black leading-[1.1] tracking-tighter italic flex flex-wrap justify-center"
             >
-              {currentText.split("").map((char, index) => (
-                <motion.span
-                   key={index}
-                   variants={child}
-                   className={char === " " ? "mr-[0.25em]" : ""}
-                >
-                  {char}
-                </motion.span>
+              {currentText.split(" ").map((word, wordIndex) => (
+                <span key={wordIndex} className="whitespace-nowrap mx-[0.15em] flex">
+                  {word.split("").map((char, charIndex) => (
+                    <motion.span
+                       key={charIndex}
+                       variants={child}
+                       className="inline-block"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               ))}
             </motion.h2>
 
-            {tagline && (
+            {(tagline || (current === 0 && headline)) && (
               <motion.p variants={child} className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto">
-                {tagline}
+                {tagline || headline}
               </motion.p>
             )}
 
