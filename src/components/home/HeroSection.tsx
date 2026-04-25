@@ -19,7 +19,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % HERO_PHRASES.length);
-    }, 6000); 
+    }, 4500); 
     return () => clearInterval(timer);
   }, []);
 
