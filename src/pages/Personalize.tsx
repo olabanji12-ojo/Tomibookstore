@@ -176,10 +176,11 @@ export default function Personalize() {
                 </span>
             </motion.div>
           <h1 className="font-mona text-[11vw] md:text-8xl font-black tracking-tighter text-black mb-8 leading-[0.9]">
-            THE CONCIERGE <br /> PORTAL
+            Some things <br /> deserve care.
           </h1>
           <p className="font-poppins text-lg md:text-xl text-black/40 max-w-3xl mx-auto leading-relaxed">
-            Collaborate with our designers to bring your unique lifestyle visions to life. From custom hampers to personalized fashion pieces, we specialize in the intentional.
+            Event gifting. Custom packaging. Branded merchandise. <br className="hidden md:block" />
+            Designed around your moment, made with intention.
           </p>
         </div>
       </section>
@@ -225,6 +226,22 @@ export default function Personalize() {
             </div>
 
             <div className="space-y-3">
+                <label className="font-mona text-[10px] font-black text-black/30 tracking-widest uppercase ml-1">The Process</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-4">
+                  {[
+                    "You share your idea",
+                    "We shape it with you",
+                    "We create something meaningful"
+                  ].map((step, i) => (
+                    <div key={i} className="bg-black/5 p-6 rounded-2xl">
+                      <p className="font-mona text-[8px] font-black tracking-widest text-black/20 mb-2">0{i+1}</p>
+                      <p className="font-sans text-[11px] font-bold text-black/60 uppercase leading-snug">{step}</p>
+                    </div>
+                  ))}
+                </div>
+            </div>
+
+            <div className="space-y-3 mt-12">
                 <label className="font-mona text-[10px] font-black text-black/30 tracking-widest uppercase ml-1">Your Vision *</label>
                 <textarea
                     name="description"
@@ -371,7 +388,7 @@ export default function Personalize() {
               </>
             ) : (
               <>
-                FINALIZE & SEND VISION
+                START YOUR PROJECT
                 <ArrowRight size={16} />
               </>
             )}

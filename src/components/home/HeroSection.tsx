@@ -5,8 +5,8 @@ import type { Product } from '../../types';
 
 const INTRO_SLIDE = {
   id: 'intro',
-  name: 'Intentional objects for curated living',
-  description: 'A sanctuary of thoughtful pieces, designed to help you live with purpose and find beauty in the everyday.',
+  name: 'Live inspired. Choose good things.',
+  description: 'Thoughtful products. Custom pieces. Creative direction.',
   image: '/brand_intro.png',
   price: 0,
   isIntro: true
@@ -128,8 +128,8 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     </motion.p>
 
                     <motion.h1
-                      className="text-5xl md:text-8xl lg:text-[120px] font-medium text-black
-                                 leading-[0.95] tracking-[-0.03em] mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
+                      className="text-4xl md:text-6xl lg:text-[80px] font-medium text-black
+                                 leading-[1.1] tracking-[-0.02em] mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
@@ -153,19 +153,29 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                       {slide.description}
                     </motion.p>
 
-                    <motion.button 
-                      variants={letterVariants}
-                      onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                      className="flex items-center justify-center gap-4 bg-black text-white px-10 py-4 md:px-14 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-neutral-800 transition-all group cursor-pointer mx-auto shadow-2xl"
-                    >
-                      Enter Archives
-                      <motion.span
-                        animate={{ x: [0, 4, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+                      <motion.button 
+                        variants={letterVariants}
+                        onClick={() => window.location.href = '/shop'}
+                        className="flex items-center justify-center bg-black text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-neutral-800 transition-all group cursor-pointer shadow-xl"
                       >
-                        →
-                      </motion.span>
-                    </motion.button>
+                        Shop Ready
+                      </motion.button>
+                      <motion.button 
+                        variants={letterVariants}
+                        onClick={() => window.location.href = '/personalize'}
+                        className="flex items-center justify-center bg-white text-black border border-black/10 px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all group cursor-pointer shadow-xl"
+                      >
+                        Create Something
+                      </motion.button>
+                      <motion.button 
+                        variants={letterVariants}
+                        onClick={() => window.location.href = '/contact'}
+                        className="flex items-center justify-center bg-[#ede9e1] text-black/60 border border-black/5 px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:text-black transition-all group cursor-pointer shadow-sm"
+                      >
+                        Get Direction
+                      </motion.button>
+                    </div>
                     
                     {/* Dots for Intro */}
                     <div className="flex items-center gap-3 mt-16 md:mt-24 justify-center">

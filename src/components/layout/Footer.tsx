@@ -13,8 +13,7 @@ const Footer = () => {
               <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-32 w-auto object-contain -ml-2" />
             </Link>
             <p className="font-poppins text-xs text-black/50 leading-relaxed max-w-[200px]">
-              The uniform of intent. <br />
-              Premium lifestyle & boutique curations.
+              Live inspired. Choose good things.
             </p>
           </div>
 

@@ -93,7 +93,7 @@ export default function Shop({ onQuickView }: ShopProps) {
             </span>
           </motion.div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-9xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
-            CURATED <br className="md:hidden" /> COLLECTION
+            CHOOSE <br className="md:hidden" /> GOOD THINGS.
           </h1>
         </div>
       </section>
@@ -320,7 +320,7 @@ export default function Shop({ onQuickView }: ShopProps) {
                             onClick={() => onQuickView(product)}
                             className="w-full mt-6 md:mt-12 py-3.5 md:py-5 bg-black text-white font-sans text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] rounded-full hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 md:gap-3 group/btn shadow-xl"
                         >
-                            View Details
+                            Add to your life
                             <ArrowRight className="w-3 h-3 md:w-[12px] md:h-[12px] group-hover/btn:translate-x-1 transition-transform" />
                         </button>
                     </div>

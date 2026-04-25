@@ -82,12 +82,12 @@ const Contact = () => {
         {/* Header Section */}
         <div className="text-center mb-20 md:mb-32">
           <h1 className="font-mona text-4xl md:text-6xl font-black text-black uppercase tracking-tight mb-6">
-            Get In Touch
+            Live with intention.
           </h1>
-          <p className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto leading-relaxed">
-            Have a question about an order or a bulk purchase? <br className="hidden md:block"/> 
-            We're here to help you curate your perfect collection.
+          <p className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto leading-relaxed px-4">
+            We help you bring clarity and meaning to what you’re creating.
           </p>
+
           <div className="w-16 h-px bg-black/10 mx-auto mt-10" />
         </div>
 
@@ -184,6 +184,7 @@ const Contact = () => {
                 >
                   <option>Order Inquiry</option>
                   <option>Bulk Purchase</option>
+                  <option>Creative Direction</option>
                   <option>Media/Press</option>
                 </select>
               </div>
