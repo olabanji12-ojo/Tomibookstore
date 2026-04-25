@@ -12,8 +12,6 @@ const INTRO_SLIDE = {
   isIntro: true
 };
 
-// ─── Animation Variants ────────────────────────────────────────────────────────
-
 const textVariants = {
   enter:  { y: 24, opacity: 0 },
   center: { y: 0,  opacity: 1, transition: { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] } },
@@ -45,33 +43,28 @@ const letterVariants = {
   exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
 };
 
-// ─── Props ─────────────────────────────────────────────────────────────────────
-
 interface HeroSectionProps {
-  featuredProducts: Product[];
-  onQuickView: (product: Product) => void;
+  featuredProducts?: Product[];
+  onQuickView?: (product: Product) => void;
   headline?: string;
   tagline?: string;
 }
 
-// ─── Component ─────────────────────────────────────────────────────────────────
-
-const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroSectionProps) => {
+const HeroSection = ({ featuredProducts = [], onQuickView = () => {}, headline, tagline }: HeroSectionProps) => {
   const [current, setCurrent]       = useState(0);
   const [autoPlay, setAutoPlay]     = useState(true);
 
   const ALL_SLIDES = [
     { ...INTRO_SLIDE, name: headline || INTRO_SLIDE.name, description: tagline || INTRO_SLIDE.description },
-    ...featuredProducts
+    ...(featuredProducts || [])
   ];
   const slide = ALL_SLIDES[current];
 
   const next = useCallback(
     () => setCurrent((p) => (p + 1) % ALL_SLIDES.length),
-    []
+    [ALL_SLIDES.length]
   );
 
-  // ── Auto-play: Dynamic interval ─────────────────────────────────────────────
   useEffect(() => {
     if (!autoPlay) return;
     const duration = current === 0 ? 5000 : 4000;
@@ -79,7 +72,6 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
     return () => clearInterval(id);
   }, [autoPlay, next, current]);
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
   const handleDot  = (i: number) => { setCurrent(i); setAutoPlay(false); };
 
   return (
@@ -90,7 +82,6 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
     >
       <AnimatePresence mode="wait">
         {(slide as any).isIntro ? (
-          // ─── Intro Slide Layout (Full Background) ─────────────────
           <motion.div
             key="intro-slide"
             initial={{ opacity: 0 }}
@@ -99,18 +90,15 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
             transition={{ duration: 0.8 }}
             className="absolute inset-0 w-full h-full"
           >
-            {/* Background Image Layer */}
             <div className="absolute inset-0 w-full h-full">
               <img
                 src={slide.image || '/brand_intro.png'}
                 alt=""
                 className="w-full h-full object-cover"
               />
-              {/* Very subtle vignette to ensure text contrast while keeping image clear */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent md:from-black/10" />
             </div>
 
-            {/* Content Overlay Layer */}
             <div className="relative z-10 w-full h-full flex items-center">
               <div className="w-full max-w-[1400px] mx-auto px-10 md:px-20 text-center pb-20 md:pb-0">
                 <div className="max-w-4xl mx-auto">
@@ -120,8 +108,6 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     animate="center"
                     exit="exit"
                   >
-
-
                     <motion.h1
                       className="text-3xl md:text-5xl lg:text-7xl font-medium text-black
                                  leading-[1.2] tracking-tight mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
@@ -147,32 +133,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     >
                       {slide.description}
                     </motion.p>
-
-                    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-                      <motion.button 
-                        variants={letterVariants}
-                        onClick={() => window.location.href = '/shop'}
-                        className="flex items-center justify-center bg-black text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-neutral-800 transition-all group cursor-pointer shadow-xl"
-                      >
-                        Shop Ready
-                      </motion.button>
-                      <motion.button 
-                        variants={letterVariants}
-                        onClick={() => window.location.href = '/personalize'}
-                        className="flex items-center justify-center bg-white text-black border border-black/10 px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all group cursor-pointer shadow-xl"
-                      >
-                        Create Something
-                      </motion.button>
-                      <motion.button 
-                        variants={letterVariants}
-                        onClick={() => window.location.href = '/contact'}
-                        className="flex items-center justify-center bg-[#ede9e1] text-black/60 border border-black/5 px-8 py-4 md:px-10 md:py-5 rounded-full font-sans text-[10px] font-bold uppercase tracking-[0.2em] hover:text-black transition-all group cursor-pointer shadow-sm"
-                      >
-                        Get Direction
-                      </motion.button>
-                    </div>
                     
-                    {/* Dots for Intro */}
                     <div className="flex items-center gap-3 mt-16 md:mt-24 justify-center">
                       {ALL_SLIDES.map((_, i: number) => (
                         <button
@@ -192,7 +153,6 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
             </div>
           </motion.div>
         ) : (
-          // ─── Product Slide Layout (Split Grid) ─────────────────────
           <motion.div
             key={slide.id}
             initial={{ opacity: 0 }}
@@ -273,7 +233,6 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     </button>
                   </div>
 
-                  {/* Dots for Products */}
                   <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">
                     {ALL_SLIDES.map((_, i: number) => (
                       <button

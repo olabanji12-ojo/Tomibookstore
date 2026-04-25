@@ -87,6 +87,9 @@ export default function Shop({ onQuickView }: ShopProps) {
           <h1 className="font-serif text-4xl sm:text-5xl md:text-9xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
             CHOOSE <br className="md:hidden" /> GOOD THINGS.
           </h1>
+          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
+            Thoughtful goods for inspired living.
+          </p>
         </div>
       </section>
 

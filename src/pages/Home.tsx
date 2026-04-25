@@ -6,6 +6,7 @@ import HeroSection from '../components/home/HeroSection';
 import Philosophy from '../components/home/Philosophy';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
+import BrandPillars from '../components/home/BrandPillars';
 import { getProducts, getSiteSettings } from '../firebase/helpers';
 import type { Product } from '../types';
 
@@ -67,7 +68,10 @@ const Home = ({ onQuickView }: HomeProps) => {
       {/* 02. Philosophy */}
       <Philosophy manifesto={settings?.manifesto} />
 
-      {/* 03. Selection Trigger */}
+      {/* 03. Brand Pillars - SHOP, CREATE, READ, DESIGN */}
+      <BrandPillars />
+
+      {/* 04. Selection Trigger (Featured Selection) */}
       <section className="bg-[#ede9e1] py-32 px-10 text-center">
         <div className="max-w-[1000px] mx-auto">
           <button 
@@ -108,10 +112,8 @@ const Home = ({ onQuickView }: HomeProps) => {
         </div>
       </section>
 
-      {/* 04. Trust Section */}
+      {/* 05. Trust Section */}
       <TrustSection />
-
-      {/* 05. Newsletter is already at bottom of Footer.tsx */}
     </main>
   );
 };

@@ -54,7 +54,11 @@ const JournalCard = ({ post }: { post: Post }) => (
   </motion.article>
 );
 
-export default function Journal() {
+interface JournalProps {
+  onQuickView: (product: Product) => void;
+}
+
+export default function Journal({ onQuickView }: JournalProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [books, setBooks] = useState<Product[]>([]);
   const [activeCat, setActiveCat] = useState<'ALL' | string>('ALL');
@@ -150,7 +154,7 @@ export default function Journal() {
             READ
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed px-4">
-            A visual anthology of curated spaces, sustainable fashion, and the stories behind the good things we create.
+            Words for daily inspiration.
           </p>
         </div>
       </section>
@@ -193,12 +197,12 @@ export default function Journal() {
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-8">
                     <p className="font-mona text-2xl font-black text-black">₦{book.price.toLocaleString()}</p>
-                    <Link 
-                      to={`/product/${book.slug}`}
-                      className="inline-flex items-center gap-4 bg-black text-white px-10 py-5 rounded-full font-mona text-[11px] font-black tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all shadow-xl"
+                    <button 
+                      onClick={() => onQuickView(book)}
+                      className="inline-flex items-center gap-4 bg-black text-white px-10 py-5 rounded-full font-mona text-[11px] font-black tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all shadow-xl cursor-pointer"
                     >
                       ADD TO LIFE
-                    </Link>
+                    </button>
                 </div>
               </div>
             </motion.div>

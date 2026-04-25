@@ -101,7 +101,7 @@ function App() {
                 <Route path="/" element={<Home onQuickView={handleQuickView} />} />
                 <Route path="/shop" element={<Shop onQuickView={handleQuickView} />} />
                 <Route path="/personalize" element={<Personalize />} />
-                <Route path="/journal" element={<Journal />} />
+                <Route path="/journal" element={<Journal onQuickView={handleQuickView} />} />
                 <Route path="/contact" element={<Contact />} />
               </Routes>
               <Footer />

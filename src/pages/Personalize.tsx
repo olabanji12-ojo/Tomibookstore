@@ -175,12 +175,11 @@ export default function Personalize() {
                     Bespoke Creations
                 </span>
             </motion.div>
-          <h1 className="font-mona text-[11vw] md:text-8xl font-black tracking-tighter text-black mb-8 leading-[0.9]">
-            Some things <br /> deserve care.
+          <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-10 leading-[0.9]">
+            CREATE
           </h1>
-          <p className="font-poppins text-lg md:text-xl text-black/40 max-w-3xl mx-auto leading-relaxed">
-            Event gifting. Custom packaging. Branded merchandise. <br className="hidden md:block" />
-            Designed around your moment, made with intention.
+          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
+            Thoughtfully made for intentional brands and events.
           </p>
         </div>
       </section>
