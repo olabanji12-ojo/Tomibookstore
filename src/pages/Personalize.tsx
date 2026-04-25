@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, User, DollarSign, ChevronDown, ChevronUp, Clock, CloudUpload, Gift, ArrowRight } from 'lucide-react';
+import { Layers, User, Wallet, ChevronDown, ChevronUp, Clock, CloudUpload, Gift, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { createPersonalizationRequest, uploadProductImages } from '../firebase/helpers';
 
@@ -257,7 +257,7 @@ export default function Personalize() {
           <Accordion 
             number="02"
             title="Logistics & Budget" 
-            icon={<DollarSign size={18} />}
+            icon={<Wallet size={18} />}
             isOpen={openSection === 'logistics'}
             onToggle={() => setOpenSection(openSection === 'logistics' ? '' : 'logistics')}
           >

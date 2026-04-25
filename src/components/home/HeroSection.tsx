@@ -120,12 +120,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     animate="center"
                     exit="exit"
                   >
-                    <motion.p
-                      variants={letterVariants}
-                      className="text-[9px] md:text-[11px] tracking-[0.4em] uppercase text-black/50 mb-8 md:mb-10 font-sans font-bold"
-                    >
-                      Est. 2026 — Curated Sanctuary
-                    </motion.p>
+
 
                     <motion.h1
                       className="text-3xl md:text-5xl lg:text-7xl font-medium text-black

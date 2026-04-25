@@ -83,15 +83,7 @@ export default function Shop({ onQuickView }: ShopProps) {
       {/* Header */}
       <section className="pt-24 pb-12 px-4 md:px-8 border-b border-black/[0.03]">
         <div className="max-w-[1400px] mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-block py-2 px-4 bg-black/5 rounded-full mb-6"
-          >
-            <span className="font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black/40">
-              The Archives
-            </span>
-          </motion.div>
+
           <h1 className="font-serif text-4xl sm:text-5xl md:text-9xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
             CHOOSE <br className="md:hidden" /> GOOD THINGS.
           </h1>
@@ -187,24 +179,22 @@ export default function Shop({ onQuickView }: ShopProps) {
                            {/* Sort Section */}
                            <section>
                                <div className="flex items-center gap-4 mb-8">
-                                   <div className="h-[1px] flex-1 bg-black/5" />
                                    <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">Sort By</h4>
-                                   <div className="h-[1px] w-8 bg-black/5" />
+                                   <div className="h-[1px] flex-1 bg-black/5" />
                                </div>
-                               <div className="grid grid-cols-1 gap-1">
-                                   <FilterTab label="Newest Arrivals" active={sortBy === 'NEWEST'} onClick={() => setSortBy('NEWEST')} />
-                                   <FilterTab label="Price: Low to High" active={sortBy === 'PRICE_LOW'} onClick={() => setSortBy('PRICE_LOW')} />
-                                   <FilterTab label="Price: High to Low" active={sortBy === 'PRICE_HIGH'} onClick={() => setSortBy('PRICE_HIGH')} />
+                               <div className="flex flex-wrap gap-4">
+                                   <FilterTab label="Newest" active={sortBy === 'NEWEST'} onClick={() => setSortBy('NEWEST')} />
+                                   <FilterTab label="Price Low" active={sortBy === 'PRICE_LOW'} onClick={() => setSortBy('PRICE_LOW')} />
+                                   <FilterTab label="Price High" active={sortBy === 'PRICE_HIGH'} onClick={() => setSortBy('PRICE_HIGH')} />
                                </div>
                            </section>
                           {/* Categories Section */}
                           <section>
-                              <div className="flex items-center gap-4 mb-8">
-                                  <div className="h-[1px] flex-1 bg-black/5" />
-                                  <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">By Department</h4>
-                                  <div className="h-[1px] w-8 bg-black/5" />
-                              </div>
-                              <div className="grid grid-cols-1 gap-1">
+                               <div className="flex items-center gap-4 mb-8">
+                                   <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">By Department</h4>
+                                   <div className="h-[1px] flex-1 bg-black/5" />
+                               </div>
+                               <div className="flex flex-wrap gap-4 text-left justify-start">
                                   <FilterTab 
                                       label="All Items" 
                                       active={selectedCat === 'ALL'} 
@@ -223,12 +213,11 @@ export default function Shop({ onQuickView }: ShopProps) {
 
                           {/* Rituals Section */}
                           <section>
-                              <div className="flex items-center gap-4 mb-8">
-                                  <div className="h-[1px] flex-1 bg-black/5" />
-                                  <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">By Ritual</h4>
-                                  <div className="h-[1px] w-8 bg-black/5" />
-                              </div>
-                              <div className="grid grid-cols-2 gap-3">
+                               <div className="flex items-center gap-4 mb-8">
+                                   <h4 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">By Ritual</h4>
+                                   <div className="h-[1px] flex-1 bg-black/5" />
+                               </div>
+                               <div className="flex flex-wrap gap-4 text-left justify-start">
                                   <RitualCard 
                                       label="ALL" 
                                       active={selectedRitual === 'ALL'} 
@@ -348,12 +337,12 @@ function FilterTab({ label, active, onClick }: { label: string; active: boolean;
     return (
         <button 
             onClick={onClick}
-            className={`flex items-center justify-between py-6 border-b border-black/[0.03] transition-all group ${active ? 'pl-4 pr-2 bg-black/5' : 'hover:pl-4'}`}
+            className={`flex items-center gap-2 py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black/30 hover:border-black/20 hover:text-black/60'}`}
         >
-            <span className={`font-mona text-xs font-black tracking-widest uppercase transition-colors ${active ? 'text-black' : 'text-black/30 group-hover:text-black/60'}`}>
+            <span className="font-mona text-[10px] font-black tracking-widest uppercase">
                 {label}
             </span>
-            {active && <div className="w-1.5 h-1.5 bg-black rounded-full" />}
+            {active && <div className="w-1 h-1 bg-white rounded-full" />}
         </button>
     );
 }
@@ -362,7 +351,7 @@ function RitualCard({ label, active, onClick }: { label: string; active: boolean
     return (
         <button 
             onClick={onClick}
-            className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${active ? 'bg-black border-black text-white shadow-lg' : 'bg-white border-black/5 text-black/40 hover:border-black/20 hover:shadow-md'}`}
+            className={`flex items-center justify-center py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black/40 hover:border-black/20 hover:text-black/80'}`}
         >
             <span className="font-mona text-[10px] font-black tracking-[0.2em] uppercase">
                 {label}

@@ -5,10 +5,10 @@ const Footer = () => {
   return (
     <footer className="bg-[#ede9e1] py-24 px-8 md:px-12 border-t border-black/[0.03]">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-12 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-12 text-center">
           
           {/* Column 1: Brand */}
-          <div className="flex flex-col gap-6 items-center md:items-start">
+          <div className="flex flex-col gap-6 items-center">
             <Link to="/" className="hover:opacity-70 transition-opacity">
               <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-32 w-auto object-contain -ml-2" />
             </Link>
@@ -18,7 +18,7 @@ const Footer = () => {
           </div>
 
           {/* Column 2: Quick Links */}
-          <div className="flex flex-col gap-8 items-center md:items-start">
+          <div className="flex flex-col gap-8 items-center">
             <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/30">
               QUICK LINKS
             </h3>
@@ -29,11 +29,11 @@ const Footer = () => {
           </div>
 
           {/* Column 3: Socials */}
-          <div className="flex flex-col gap-8 items-center md:items-start">
+          <div className="flex flex-col gap-8 items-center">
             <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/30">
               CONNECT
             </h3>
-            <div className="flex justify-center md:justify-start gap-5">
+            <div className="flex justify-center gap-5">
               {/* Instagram: Authentic SVG logo */}
               <a 
                 href="https://www.instagram.com/shopgoodthingsco?igsh=cG12ZG5hMTkzN2U3" 
@@ -71,15 +71,15 @@ const Footer = () => {
           </div>
 
           {/* Column 4: Newsletter */}
-          <div className="flex flex-col gap-8 items-center md:items-start">
+          <div className="flex flex-col gap-8 items-center">
             <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/30">
               NEWSLETTER
             </h3>
-            <div className="w-full max-w-sm md:max-w-none relative group">
+            <div className="w-full max-w-sm relative group">
               <input 
                 type="email" 
                 placeholder="Join the curated list"
-                className="w-full bg-transparent border-b border-black/10 py-3 pr-10 font-poppins text-sm focus:border-black outline-none transition-colors"
+                className="w-full bg-transparent border-b border-black/10 py-3 font-poppins text-sm focus:border-black outline-none transition-colors text-center"
                 style={{ fontSize: '16px' }}
               />
               <button className="absolute right-0 bottom-3 text-black/20 hover:text-black transition-colors cursor-pointer">
@@ -90,9 +90,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-24 pt-10 border-t border-black/5 flex flex-col items-center gap-4 text-center">
+        <div className="mt-20 pt-10 border-t border-black/5 flex flex-col items-center gap-2 text-center">
           <p className="font-poppins text-[9px] tracking-[0.2em] uppercase text-black/30 font-bold">
-            © 2026 GOOD THINGS CO LTD. Built by Olabanji.
+            © 2026 GOOD THINGS CO LTD.
+          </p>
+          <p className="font-poppins text-[9px] tracking-[0.2em] uppercase text-black/20 font-bold">
+            Built by Olabanji.
           </p>
         </div>
       </div>

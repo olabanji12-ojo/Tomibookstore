@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Filter } from 'lucide-react';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import type { Product } from '../types';
 
 type Post = {
   id: string;
@@ -55,27 +56,46 @@ const JournalCard = ({ post }: { post: Post }) => (
 
 export default function Journal() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [books, setBooks] = useState<Product[]>([]);
   const [activeCat, setActiveCat] = useState<'ALL' | string>('ALL');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
       try {
-        const q = query(
+        // Fetch Blog Posts
+        const qPosts = query(
           collection(db, 'gallery_posts'),
           where('published', '==', true),
           orderBy('createdAt', 'desc')
         );
-        const snap = await getDocs(q);
-        const data = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Post));
-        setPosts(data);
+        const snapPosts = await getDocs(qPosts);
+        const dataPosts = snapPosts.docs.map((d) => ({ id: d.id, ...d.data() } as Post));
+        setPosts(dataPosts);
+
+        // Fetch Books from Products
+        const qBooks = query(
+          collection(db, 'products'),
+          where('category', '==', 'books'),
+          orderBy('createdAt', 'desc')
+        );
+        const snapBooks = await getDocs(qBooks);
+        const dataBooks = snapBooks.docs.map((d) => {
+            const data = d.data();
+            return {
+                id: d.id,
+                ...data,
+                image: data.image || (data.images && data.images[0]) || 'https://via.placeholder.com/400x500?text=No+Image'
+            } as Product;
+        });
+        setBooks(dataBooks);
       } catch (e) {
         console.error(e);
       } finally {
         setLoading(false);
       }
     };
-    fetchPosts();
+    fetchData();
   }, []);
 
   const categories = ['ALL', ...Array.from(new Set(posts.map((p) => p.category.toUpperCase())))];
@@ -106,15 +126,72 @@ export default function Journal() {
                 className="inline-block py-2 px-4 bg-black/5 rounded-full mb-6 md:mb-8"
             >
                 <span className="font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black/40">
-                    The Journal
+                    Read
                 </span>
             </motion.div>
           <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-8 md:mb-10 leading-[0.9] md:leading-[0.85]">
-            INTENTIONAL <br /> LIVING
+            READ
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed px-4">
             A visual anthology of curated spaces, sustainable fashion, and the stories behind the good things we create.
           </p>
+        </div>
+      </section>
+
+      {/* Featured Books Section */}
+      <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-24 md:mb-32">
+        <div className="flex items-center gap-4 mb-12">
+            <h2 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">Featured Works</h2>
+            <div className="h-[1px] flex-1 bg-black/5" />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+          {books.map((book) => (
+            <motion.div 
+              key={book.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-black/5 flex flex-col md:flex-row gap-8 md:gap-12 group hover:shadow-2xl transition-all duration-700"
+            >
+              {/* Vertical Book Frame */}
+              <div className="w-full md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl relative shrink-0">
+                <img 
+                  src={book.image} 
+                  alt={book.name} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                />
+                <div className="absolute inset-0 bg-black/5" />
+              </div>
+              
+              <div className="flex flex-col justify-center">
+                <span className="font-mona text-[9px] font-black tracking-[0.3em] uppercase text-black/20 mb-4 block">
+                  {book.author || 'Published Work'}
+                </span>
+                <h3 className="font-mona text-3xl md:text-4xl font-black text-black mb-6 tracking-tight leading-none group-hover:text-black/60 transition-colors">
+                  {book.name}
+                </h3>
+                <p className="font-poppins text-black/40 text-sm leading-relaxed mb-8 line-clamp-4">
+                  {book.description}
+                </p>
+                <div className="flex flex-wrap items-center gap-6">
+                    <p className="font-mona text-xl font-black text-black">₦{book.price.toLocaleString()}</p>
+                    <Link 
+                      to={`/product/${book.slug}`}
+                      className="inline-flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full font-mona text-[10px] font-black tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all"
+                    >
+                      ADD TO LIFE
+                    </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+          
+          {books.length === 0 && !loading && (
+             <div className="col-span-full py-20 border-2 border-dashed border-black/5 rounded-[2.5rem] flex flex-col items-center justify-center text-center">
+                <p className="font-mona text-[10px] font-black text-black/20 uppercase tracking-widest">No books currently featured.</p>
+             </div>
+          )}
         </div>
       </section>
 
@@ -123,7 +200,7 @@ export default function Journal() {
         <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-center gap-3 md:gap-10">
           <div className="flex items-center gap-3 mr-4 hidden md:flex">
             <Filter size={14} className="text-black/30" />
-            <span className="font-mona text-[10px] font-black tracking-widest text-black/30 uppercase">Filter</span>
+            <span className="font-mona text-[10px] font-black tracking-widest text-black/30 uppercase">Filter Stories</span>
           </div>
           {categories.map((cat) => (
             <button

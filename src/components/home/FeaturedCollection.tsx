@@ -11,18 +11,7 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
     <section className="py-24 bg-[#f3f2ee]">
       <div className="max-w-[1000px] mx-auto px-10">
         
-        {/* Header Section */}
-        <div className="text-center mb-16 relative">
-          <p className="font-poppins text-[9px] font-bold tracking-[0.4em] uppercase text-black/30 mb-2">
-            The Current Series
-          </p>
-          <div className="relative flex items-center justify-center">
-            <div className="absolute w-full h-[1px] bg-black/5 top-1/2 -translate-y-1/2" />
-            <h2 className="font-serif text-2xl md:text-3xl font-medium text-black relative bg-[#f3f2ee] px-6 tracking-tight italic">
-              Featured Selection
-            </h2>
-          </div>
-        </div>
+
 
         {/* Products Grid - Ultra-Compressed Editorial Asymmetrical Logic */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-y-6 sm:gap-x-4 lg:gap-x-0 items-start">

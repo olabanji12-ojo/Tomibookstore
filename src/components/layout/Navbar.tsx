@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'SHOP', href: '/shop' },
-  { label: 'PERSONALIZE', href: '/personalize' },
-  { label: 'JOURNAL', href: '/journal' },
-  { label: 'CONTACT', href: '/contact' },
+  { label: 'Shop Ready', href: '/shop' },
+  { label: 'Create something', href: '/personalize' },
+  { label: 'Read', href: '/journal' },
+  { label: 'Get direction', href: '/contact' },
 ];
 
 interface NavbarProps {
