@@ -61,7 +61,8 @@ export default function Shop({ onQuickView }: ShopProps) {
         return dateB - dateA;
       }
       return 0;
-    });
+    })
+    .filter(p => (p.category || '').toLowerCase() !== 'books');
 
   if (loading) {
     return (
