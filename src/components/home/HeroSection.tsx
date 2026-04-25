@@ -113,7 +113,7 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
             {/* Content Overlay Layer */}
             <div className="relative z-10 w-full h-full flex items-center">
               <div className="w-full max-w-[1400px] mx-auto px-10 md:px-20 text-center pb-20 md:pb-0">
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-4xl mx-auto">
                   <motion.div
                     variants={containerVariants}
                     initial="enter"
@@ -128,8 +128,8 @@ const HeroSection = ({ featuredProducts, onQuickView, headline, tagline }: HeroS
                     </motion.p>
 
                     <motion.h1
-                      className="text-4xl md:text-6xl lg:text-[80px] font-medium text-black
-                                 leading-[1.1] tracking-[-0.02em] mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
+                      className="text-3xl md:text-5xl lg:text-7xl font-medium text-black
+                                 leading-[1.2] tracking-tight mb-10 md:mb-12 font-display flex flex-wrap justify-center italic"
                     >
                       {slide.name.split(' ').map((word, wIdx) => (
                         <span key={wIdx} className="inline-block whitespace-nowrap mr-[0.3em]">
