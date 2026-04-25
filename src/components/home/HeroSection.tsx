@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const HERO_PHRASES = [
-  { id: 1, text: "Thoughtful goods for inspired living" },
-  { id: 2, text: "Thoughtfully made for intentional brands and events" },
-  { id: 3, text: "Words for daily inspiration" },
-  { id: 4, text: "Inspiring experiences at scale, for businesses, spaces and projects" }
+  { id: 1, text: "Live inspired, every day" },
+  { id: 2, text: "Thoughful goods" },
+  { id: 3, text: "Meaningful Custom Work" },
+  { id: 4, text: "Design at Scale" }
 ];
 
 interface HeroSectionProps {
