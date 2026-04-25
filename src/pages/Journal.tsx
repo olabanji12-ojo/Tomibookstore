@@ -62,9 +62,11 @@ export default function Journal() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      console.log('--- Starting Read Page Fetch ---');
+
+      // 1. Fetch Blog Posts (Independent)
       try {
-        console.log('Fetching Read page data...');
-        // Fetch Blog Posts
         const qPosts = query(
           collection(db, 'gallery_posts'),
           where('published', '==', true),
@@ -73,14 +75,20 @@ export default function Journal() {
         const snapPosts = await getDocs(qPosts);
         const dataPosts = snapPosts.docs.map((d) => ({ id: d.id, ...d.data() } as Post));
         setPosts(dataPosts);
+        console.log('✅ Gallery Posts loaded:', dataPosts.length);
+      } catch (e) {
+        console.error('❌ Error fetching gallery_posts:', e);
+        // We keep posts empty but don't crash
+      }
 
-        // Fetch Books from Products (removed orderBy to prevent index issues)
+      // 2. Fetch Books from Products (Independent)
+      try {
         const qBooks = query(
           collection(db, 'products'),
           where('category', 'in', ['books', 'Books'])
         );
         const snapBooks = await getDocs(qBooks);
-        console.log('Found books count:', snapBooks.size);
+        console.log('✅ Books loaded:', snapBooks.size);
         
         const dataBooks = snapBooks.docs.map((d) => {
             const data = d.data();
@@ -91,7 +99,6 @@ export default function Journal() {
             } as Product;
         })
         .sort((a, b) => {
-            // Manual sort as backup to orderBy
             const dateA = a.createdAt?.toDate() || new Date(0);
             const dateB = b.createdAt?.toDate() || new Date(0);
             return dateB.getTime() - dateA.getTime();
@@ -99,9 +106,10 @@ export default function Journal() {
         
         setBooks(dataBooks);
       } catch (e) {
-        console.error('Error fetching Read data:', e);
+        console.error('❌ Error fetching products (books):', e);
       } finally {
         setLoading(false);
+        console.log('--- Read Page Fetch Complete ---');
       }
     };
     fetchData();
