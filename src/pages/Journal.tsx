@@ -63,6 +63,7 @@ export default function Journal() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('Fetching Read page data...');
         // Fetch Blog Posts
         const qPosts = query(
           collection(db, 'gallery_posts'),
@@ -73,13 +74,14 @@ export default function Journal() {
         const dataPosts = snapPosts.docs.map((d) => ({ id: d.id, ...d.data() } as Post));
         setPosts(dataPosts);
 
-        // Fetch Books from Products
+        // Fetch Books from Products (removed orderBy to prevent index issues)
         const qBooks = query(
           collection(db, 'products'),
-          where('category', '==', 'books'),
-          orderBy('createdAt', 'desc')
+          where('category', 'in', ['books', 'Books'])
         );
         const snapBooks = await getDocs(qBooks);
+        console.log('Found books count:', snapBooks.size);
+        
         const dataBooks = snapBooks.docs.map((d) => {
             const data = d.data();
             return {
@@ -87,10 +89,17 @@ export default function Journal() {
                 ...data,
                 image: data.image || (data.images && data.images[0]) || 'https://via.placeholder.com/400x500?text=No+Image'
             } as Product;
+        })
+        .sort((a, b) => {
+            // Manual sort as backup to orderBy
+            const dateA = a.createdAt?.toDate() || new Date(0);
+            const dateB = b.createdAt?.toDate() || new Date(0);
+            return dateB.getTime() - dateA.getTime();
         });
+        
         setBooks(dataBooks);
       } catch (e) {
-        console.error(e);
+        console.error('Error fetching Read data:', e);
       } finally {
         setLoading(false);
       }
