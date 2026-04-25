@@ -7,7 +7,14 @@ const HERO_PHRASES = [
   { id: 3, text: "Words for daily inspiration" }
 ];
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  featuredProducts?: any[];
+  onQuickView?: (product: any) => void;
+  headline?: string;
+  tagline?: string;
+}
+
+const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -52,10 +59,16 @@ const HeroSection = () => {
             </h1>
             
             <h2 className="font-serif text-5xl sm:text-7xl md:text-[10vw] font-medium text-black leading-[1] tracking-tighter italic">
-              {HERO_PHRASES[current].text}
+              {headline && current === 0 ? headline : HERO_PHRASES[current].text}
             </h2>
 
-            <div className="pt-12 md:pt-20">
+            {tagline && (
+              <p className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto">
+                {tagline}
+              </p>
+            )}
+
+            <div className="pt-10 md:pt-16">
                <motion.div 
                  animate={{ y: [0, 10, 0] }}
                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
