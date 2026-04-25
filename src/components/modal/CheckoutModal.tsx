@@ -4,7 +4,7 @@ import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react'
 import { usePaystackPayment } from 'react-paystack';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
-import { decrementProductStock } from '../../firebase/helpers';
+import { decrementProductStock, createOrder } from '../../firebase/helpers';
 import type { CartItem, Product } from '../../types';
 
 interface CheckoutModalProps {
@@ -108,18 +108,22 @@ const CheckoutModal = ({
       const customerEmailPromise = emailjs.send(
         'service_f3axqod',
         'template_gu7klzn',
-        templateParams,
+        {
+          ...templateParams,
+          subject_line: "Your Good Things Co. Order Confirmation"
+        },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
       );
 
-      // 2. Send alert to Owner (Same template, but explicitly targeted)
+      // 2. Send distinct Alert to Owner
       const ownerEmailPromise = emailjs.send(
         'service_f3axqod',
         'template_gu7klzn',
         { 
           ...templateParams, 
-          customer_name: `SALES ALERT: ${customer.name}`, 
-          to_email: 'emmanuelojo291@gmail.com' 
+          customer_name: `[NEW SALE] ${customer.name}`,
+          to_email: 'emmanuelojo291@gmail.com',
+          subject_line: "🚨 NEW ORDER RECEIVED - ACTION REQUIRED"
         },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
       );
@@ -135,13 +139,31 @@ const CheckoutModal = ({
     // 1. Send the email receipt
     sendEmailReceipt(reference.reference);
     
-    // 2. Decrement stock for all items
+    // 2. Log Order to Firestore & Decrement stock
     try {
-      await Promise.all(
-        displayItems.map(item => decrementProductStock(item.product.id, item.quantity))
-      );
+      const orderData = {
+        orderId: reference.reference, // Use Paystack ref as order ID
+        customerName: formData.name,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        shippingAddress: `${formData.address}, ${formData.city}, ${formData.state}`,
+        items: displayItems.map(item => ({
+          productId: item.product.id,
+          productName: item.product.name,
+          quantity: item.quantity,
+          price: item.product.price
+        })),
+        total: totalPrice,
+        status: 'Pending' as const,
+        paymentRef: reference.reference
+      };
+
+      await Promise.all([
+        createOrder(orderData),
+        ...displayItems.map(item => decrementProductStock(item.product.id, item.quantity))
+      ]);
     } catch (err) {
-      console.error('Failed to update inventory:', err);
+      console.error('Failed to finalize order details:', err);
     }
 
     // 3. Original success logic
