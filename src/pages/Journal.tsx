@@ -140,22 +140,22 @@ export default function Journal() {
 
       {/* Featured Books Section */}
       <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-24 md:mb-32">
-        <div className="flex items-center gap-4 mb-12">
+        <div className="flex flex-col items-center gap-4 mb-16">
             <h2 className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/30">Featured Works</h2>
-            <div className="h-[1px] flex-1 bg-black/5" />
+            <div className="h-[1px] w-24 bg-black/10" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+        <div className="flex flex-col items-center gap-12 md:gap-20">
           {books.map((book) => (
             <motion.div 
               key={book.id}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-black/5 flex flex-col md:flex-row gap-8 md:gap-12 group hover:shadow-2xl transition-all duration-700"
+              className="w-full max-w-4xl bg-white rounded-[2.5rem] p-8 md:p-16 border border-black/5 flex flex-col items-center text-center gap-10 group hover:shadow-2xl transition-all duration-700"
             >
               {/* Vertical Book Frame */}
-              <div className="w-full md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl relative shrink-0">
+              <div className="w-56 md:w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] relative shrink-0">
                 <img 
                   src={book.image} 
                   alt={book.name} 
@@ -164,21 +164,21 @@ export default function Journal() {
                 <div className="absolute inset-0 bg-black/5" />
               </div>
               
-              <div className="flex flex-col justify-center">
-                <span className="font-mona text-[9px] font-black tracking-[0.3em] uppercase text-black/20 mb-4 block">
+              <div className="max-w-2xl">
+                <span className="font-mona text-[9px] font-black tracking-[0.3em] uppercase text-black/20 mb-6 block">
                   {book.author || 'Published Work'}
                 </span>
-                <h3 className="font-mona text-3xl md:text-4xl font-black text-black mb-6 tracking-tight leading-none group-hover:text-black/60 transition-colors">
+                <h3 className="font-mona text-4xl md:text-6xl font-black text-black mb-8 tracking-tighter leading-none group-hover:text-black/60 transition-colors">
                   {book.name}
                 </h3>
-                <p className="font-poppins text-black/40 text-sm leading-relaxed mb-8 line-clamp-4">
+                <p className="font-poppins text-black/40 text-sm md:text-base leading-relaxed mb-10">
                   {book.description}
                 </p>
-                <div className="flex flex-wrap items-center gap-6">
-                    <p className="font-mona text-xl font-black text-black">₦{book.price.toLocaleString()}</p>
+                <div className="flex flex-wrap items-center justify-center gap-8">
+                    <p className="font-mona text-2xl font-black text-black">₦{book.price.toLocaleString()}</p>
                     <Link 
                       to={`/product/${book.slug}`}
-                      className="inline-flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full font-mona text-[10px] font-black tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all"
+                      className="inline-flex items-center gap-4 bg-black text-white px-10 py-5 rounded-full font-mona text-[11px] font-black tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all shadow-xl"
                     >
                       ADD TO LIFE
                     </Link>
