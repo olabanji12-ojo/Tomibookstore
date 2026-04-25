@@ -59,8 +59,6 @@ const Home = ({ onQuickView }: HomeProps) => {
       />
       {/* 01. Hero */}
       <HeroSection 
-        featuredProducts={featuredProducts} 
-        onQuickView={onQuickView} 
         headline={settings?.hero_headline}
         tagline={settings?.hero_tagline}
       />
