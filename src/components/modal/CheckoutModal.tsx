@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, ShoppingBag, Trash2, Truck, Rocket } from 'lucide-react';
+import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2, Truck, Rocket } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
@@ -36,11 +36,13 @@ const CheckoutModal = ({
   mode,
   focusedBook,
   items, 
+  onUpdateQuantity,
   onRemove,
   formData, 
   onFormDataChange,
   onClose, 
   onSuccess,
+  onAddToCart,
 }: CheckoutModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -257,31 +259,54 @@ const CheckoutModal = ({
                 <div className="flex items-center gap-4 mb-10">
                   <ShoppingBag size={18} strokeWidth={1.5} className="text-black/30" />
                   <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/40">
-                    Selection ({displayItems.length})
+                    Selection ({displayItems.length + (showQuickViewHeader ? 1 : 0)})
                   </h3>
                 </div>
 
                 <div className="space-y-8">
+                  {/* Quick View Item (If not in cart) */}
+                  {showQuickViewHeader && focusedBook && (
+                    <div className="flex gap-6 items-start animate-fade-in group/item bg-white/40 p-4 -mx-4 rounded-2xl border border-black/5 shadow-sm">
+                      <div className="w-16 h-20 flex-shrink-0 bg-white">
+                        <img src={focusedBook.image} alt={focusedBook.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                         <h4 className="font-mona text-xs font-black text-black leading-none mb-3 uppercase truncate">{focusedBook.name}</h4>
+                         <button
+                           onClick={() => onAddToCart(focusedBook)}
+                           className="w-full py-3 bg-black text-white font-mona text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center gap-2"
+                         >
+                           <Plus size={12} />
+                           Add — ₦{focusedBook.price.toLocaleString()}
+                         </button>
+                      </div>
+                    </div>
+                  )}
+
                   {displayItems.map((item) => (
-                    <div key={item.product.id} className="flex gap-6 items-start">
+                    <div key={item.product.id} className="flex gap-6 items-start group/item">
                       <div className="w-16 h-20 flex-shrink-0 bg-white">
                         <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover shadow-md rounded-[1px]" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-4 mb-2">
                           <h4 className="font-mona text-xs font-black text-black leading-snug uppercase tracking-tight truncate">{item.product.name}</h4>
-                          <button onClick={() => onRemove(item.product.id)} className="text-black/10 hover:text-black"><Trash2 size={12} /></button>
+                          <button onClick={() => onRemove(item.product.id)} className="text-black/10 hover:text-black transition-colors"><Trash2 size={12} /></button>
                         </div>
                         <div className="flex items-center justify-between mt-4">
-                           <span className="font-poppins text-[10px] text-black/40 uppercase font-black tracking-widest">Qty: {item.quantity}</span>
-                           <span className="font-poppins text-xs font-bold text-black">₦{(item.product.price * item.quantity).toLocaleString()}</span>
+                            <div className="flex items-center gap-4 border border-black/5 bg-white px-3 py-1.5 rounded-full shadow-sm">
+                                <button onClick={() => onUpdateQuantity(item.product.id, -1)} className="text-black/30 hover:text-black"><Minus size={10} strokeWidth={3} /></button>
+                                <span className="font-poppins text-[10px] font-bold text-black min-w-[12px] text-center">{item.quantity}</span>
+                                <button onClick={() => onUpdateQuantity(item.product.id, 1)} className="text-black/30 hover:text-black"><Plus size={10} strokeWidth={3} /></button>
+                            </div>
+                            <span className="font-poppins text-xs font-bold text-black">₦{(item.product.price * item.quantity).toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-black/5 space-y-4">
+                <div className="mt-12 pt-8 border-t border-black/5 space-y-4 font-sans">
                   <div className="flex justify-between items-center text-black/40">
                     <span className="font-poppins text-[10px] font-bold uppercase tracking-widest">Subtotal</span>
                     <span className="font-poppins text-[12px] font-bold">₦{subtotal.toLocaleString()}</span>
@@ -328,7 +353,7 @@ const CheckoutModal = ({
                           <InputField label="FullName" placeholder="e.g. Kolawole Davies" value={formData.name} onChange={(val: string) => onFormDataChange({...formData, name: val})} />
                           <InputField label="Contact Email" type="email" placeholder="you@domain.com" value={formData.email} onChange={(val: string) => onFormDataChange({...formData, email: val})} />
                         </div>
-                        <button onClick={() => setCurrentStep(2)} disabled={!canGoToStep2} className="w-full h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase disabled:opacity-20 mt-12">Continue to Logistics</button>
+                        <button onClick={() => setCurrentStep(2)} disabled={!canGoToStep2} className="w-full h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase disabled:opacity-20 mt-12 shadow-xl shadow-black/10">Continue to Logistics</button>
                       </motion.div>
                     )}
 
@@ -392,7 +417,7 @@ const CheckoutModal = ({
                                     <p className="font-mona text-xs font-black text-black uppercase tracking-tight">{formData.name}</p>
                                     <p className="font-poppins text-[10px] text-black/60 leading-relaxed mt-1">{formData.address}, {formData.city}, {formData.state}</p>
                                 </div>
-                                <button onClick={() => setCurrentStep(2)} className="font-poppins text-[10px] font-bold uppercase tracking-widest text-black/40 underline underline-offset-4">Edit</button>
+                                <button onClick={() => setCurrentStep(2)} className="font-poppins text-[10px] font-bold uppercase tracking-widest text-black/40 underline underline-offset-4 cursor-pointer">Edit</button>
                             </div>
                             <div className="h-px bg-black/5" />
                             <div className="flex justify-between items-center">
@@ -400,13 +425,13 @@ const CheckoutModal = ({
                                     <p className="font-poppins text-[9px] font-bold uppercase tracking-[0.3em] text-black/30 mb-1">Logistics</p>
                                     <p className="font-poppins text-[10px] text-black/60">{shippingMethod.name} ({shippingMethod.price > 0 ? `₦${shippingMethod.price.toLocaleString()}` : 'Free'})</p>
                                 </div>
-                                <button onClick={() => setCurrentStep(2)} className="font-poppins text-[10px] font-bold uppercase tracking-widest text-black/40 underline underline-offset-4">Edit</button>
+                                <button onClick={() => setCurrentStep(2)} className="font-poppins text-[10px] font-bold uppercase tracking-widest text-black/40 underline underline-offset-4 cursor-pointer">Edit</button>
                             </div>
                         </div>
 
                         <div className="flex gap-4">
                           <button onClick={() => setCurrentStep(2)} className="px-8 h-16 border border-black/10 font-poppins text-[10px] font-black uppercase tracking-[0.3em] text-black/40">Back</button>
-                          <button onClick={handlePurchaseButton} className="flex-1 h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase transition-all shadow-xl shadow-black/20">PURCHASE — ₦{totalPrice.toLocaleString()}</button>
+                          <button onClick={handlePurchaseButton} className="flex-1 h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase transition-all shadow-xl shadow-black/20 cursor-pointer">PURCHASE — ₦{totalPrice.toLocaleString()}</button>
                         </div>
                       </motion.div>
                     )}
@@ -415,7 +440,7 @@ const CheckoutModal = ({
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center bg-white h-full">
+            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center bg-white h-full font-mona">
               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.6 }}>
                 <CheckCircle2 size={80} strokeWidth={1} className="text-black mb-10" />
               </motion.div>
