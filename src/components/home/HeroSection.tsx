@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const HERO_PHRASES = [
-  { id: 1, text: "Thoughtful goods" },
-  { id: 2, text: "Meaningful Custom Work" },
-  { id: 3, text: "Design at Scale" }
+  "Thoughtful goods",
+  "Meaningful Custom Work",
+  "Design at Scale"
 ];
 
 interface HeroSectionProps {
@@ -13,52 +13,41 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
-  const [current, setCurrent] = useState(0);
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % HERO_PHRASES.length);
-    }, 4500); 
-    return () => clearInterval(timer);
-  }, []);
+    const handleType = () => {
+      const currentFullText = HERO_PHRASES[currentPhraseIndex];
+      
+      if (!isDeleting) {
+        // TYPING PHASE
+        setDisplayText(currentFullText.substring(0, displayText.length + 1));
+        setTypingSpeed(100); // Regular typing speed
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.04 * i },
-    }),
-    exit: {
-      opacity: 0,
-      transition: { 
-        staggerChildren: 0.02, 
-        staggerDirection: -1,
+        if (displayText === currentFullText) {
+          // Finished typing, pause before deleting
+          setTypingSpeed(2500); // Wait 2.5 seconds at full text
+          setIsDeleting(true);
+        }
+      } else {
+        // DELETING PHASE
+        setDisplayText(currentFullText.substring(0, displayText.length - 1));
+        setTypingSpeed(50); // Faster backspacing
+
+        if (displayText === "") {
+          setIsDeleting(false);
+          setCurrentPhraseIndex((prev) => (prev + 1) % HERO_PHRASES.length);
+          setTypingSpeed(500); // Short pause before typing next
+        }
       }
-    }
-  };
+    };
 
-  const child = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 20,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
-
-  const currentText = HERO_PHRASES[current].text;
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, currentPhraseIndex, typingSpeed]);
 
   return (
     <section
@@ -87,42 +76,26 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
            initial={{ opacity: 0, y: 10 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 1, delay: 0.2 }}
-           className="mb-6 md:mb-10"
+           className="mb-8 md:mb-12"
         >
-            <p className="font-mona text-[10px] md:text-[12px] font-black tracking-[0.5em] uppercase text-black/30 mb-4 md:mb-8">
+            <p className="font-mona text-[10px] md:text-[12px] font-black tracking-[0.5em] uppercase text-black/30 mb-6 md:mb-10">
                Good Things Co.
             </p>
-            <h1 className="font-serif text-4xl sm:text-6xl md:text-[6vw] font-medium text-black leading-tight tracking-tight italic">
+            <h1 className="font-serif text-5xl sm:text-7xl md:text-[7vw] font-medium text-black leading-tight tracking-tight italic">
                {headline || "Live inspired, every day."}
             </h1>
         </motion.div>
 
-        {/* 2. DYNAMIC SUB-TEXT (Typing Animation) */}
-        <div className="min-h-[1.5em] flex items-start justify-center">
-            <AnimatePresence mode="wait">
-            <motion.div
-                key={current}
-                variants={container}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="flex flex-wrap justify-center pointer-events-none"
-            >
-                {currentText.split(" ").map((word, wordIndex) => (
-                    <span key={wordIndex} className="whitespace-nowrap mx-[0.2em] flex">
-                    {word.split("").map((char, charIndex) => (
-                        <motion.span
-                        key={charIndex}
-                        variants={child}
-                        className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-[4vw] font-light text-black/40 italic leading-none"
-                        >
-                        {char}
-                        </motion.span>
-                    ))}
-                    </span>
-                ))}
-            </motion.div>
-            </AnimatePresence>
+        {/* 2. DYNAMIC SUB-TEXT (Typewriter & Backspace) */}
+        <div className="min-h-[1.5em] flex items-center justify-center">
+            <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-[4vw] font-light text-black/50 italic leading-none relative">
+                {displayText}
+                <motion.span 
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                  className="inline-block w-[2px] h-[0.9em] bg-black/30 ml-1 align-middle"
+                />
+            </h2>
         </div>
 
         {/* 3. OPTIONAL SETTINGS TAGLINE */}
@@ -131,7 +104,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto mt-12"
+            className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto mt-14"
           >
             {tagline}
           </motion.p>
@@ -141,15 +114,15 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-            className="pt-16 md:pt-24"
+            transition={{ delay: 1 }}
+            className="pt-20 md:pt-28"
         >
             <motion.div 
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 className="inline-flex flex-col items-center gap-4 text-black/20"
             >
-                <span className="font-mona text-[9px] font-black tracking-widest uppercase">Explore Content</span>
+                <span className="font-mona text-[9px] font-black tracking-widest uppercase">Explore Narrative</span>
                 <div className="w-[1px] h-12 bg-black/10" />
             </motion.div>
         </motion.div>
