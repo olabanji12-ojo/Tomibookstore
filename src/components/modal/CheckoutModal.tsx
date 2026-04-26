@@ -91,6 +91,7 @@ const CheckoutModal = ({
     const currentShipping = shippingMethod;
     const customer = { ...formData };
 
+    // 1. Prepare HTML list for legacy templates
     const cartHtml = currentItems.map(item => `
       <tr style="border-bottom: 1px solid #f0f0f0;">
         <td style="padding: 12px 5px; font-family: 'Poppins', sans-serif; font-size: 14px; width: 55%;">${item.product.name}</td>
@@ -99,46 +100,57 @@ const CheckoutModal = ({
       </tr>
     `).join('');
 
-    const templateParams = {
+    // 2. Prepare Items Array for loop-based templates
+    const itemsArray = currentItems.map(item => ({
+       name: item.product.name,
+       quantity: item.quantity,
+       price: (item.product.price * item.quantity).toLocaleString(),
+       image_url: item.product.image
+    }));
+
+    const commonParams = {
+      order_id: orderId,
       customer_name: customer.name,
       customer_email: customer.email,
-      to_email: customer.email,
       customer_address: `${customer.address}, ${customer.city}, ${customer.state}`,
-      order_id: orderId,
-      cart_html: cartHtml,
+      customer_phone: customer.phone,
       subtotal: currentSubtotal.toLocaleString(),
       shipping_cost: currentShipping.price.toLocaleString(),
-      total_amount: currentTotal.toLocaleString()
+      shipping_method: currentShipping.name,
+      total_amount: currentTotal.toLocaleString(),
+      cart_html: cartHtml, // Legacy support
+      items: itemsArray,   // New logic support
+      orders: itemsArray   // Compatibility with your provided HTML {{#orders}}
     };
 
     try {
-      // 1. Send receipt to Customer
-      const customerEmailPromise = emailjs.send(
+      // 📦 STEP 1: SEND TO CUSTOMER (Template A)
+      await emailjs.send(
         'service_f3axqod',
         'template_gu7klzn',
         {
-          ...templateParams,
-          subject_line: "Your Good Things Co. Order Confirmation"
+          ...commonParams,
+          to_email: customer.email, 
+          subject_line: "Order Confirmation - Good Things Co."
         },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
       );
 
-      // 2. Send distinct Alert to Owner
-      const ownerEmailPromise = emailjs.send(
+      // 🚨 STEP 2: SEND TO OWNER / YOU (New Template B)
+      await emailjs.send(
         'service_f3axqod',
-        'template_gu7klzn',
+        'template_nvh2rjo', // Updated to your new Template ID
         { 
-          ...templateParams, 
-          customer_name: `[NEW SALE] ${customer.name}`,
-          to_email: 'emmanuelojo291@gmail.com',
-          subject_line: `🚨 NEW ORDER (#${orderId}) - ${currentShipping.name}`
+          ...commonParams, 
+          to_email: 'emmanuelojo291@gmail.com', // Your admin email
+          subject_line: `[FULFILLMENT REQ] Order #${orderId}`
         },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
       );
 
-      await Promise.all([customerEmailPromise, ownerEmailPromise]);
+      console.log('Dual branding emails successfully dispatched.');
     } catch (error) {
-      console.error('Failed to send emails:', error);
+      console.error('Email pipeline error:', error);
     }
   }, [formData, displayItems, subtotal, totalPrice, shippingMethod]);
 
