@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import type { Product } from '../../types';
 
 interface FeaturedCollectionProps {
