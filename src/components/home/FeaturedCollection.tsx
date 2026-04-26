@@ -18,24 +18,24 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
 
   return (
     <div className="w-full">
-      {/* Bento Grid Layout - Responsive 7:5 Split for ALL devices */}
-      <div className="grid grid-cols-12 gap-3 md:gap-6 items-stretch">
+      {/* Bento Grid Layout - Refined for zero overlap */}
+      <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
         
         {/* Left: Large Vertical Feature (Spans 7/12 cols) */}
         <div 
           onClick={() => onQuickView(mainProduct)}
           className="col-span-7 relative group cursor-pointer"
         >
-          <div className="aspect-[3/4] h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
+          <div className="aspect-[4/5] sm:aspect-[3/4] w-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
              <img 
                src={displayImages[0]} 
                alt={mainProduct.name}
                className="w-full h-full object-cover"
              />
              
-             {/* Mobile-Friendly Label */}
-             <div className="absolute inset-x-0 bottom-6 md:bottom-10 px-4 md:px-8 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                <div className="bg-white/80 backdrop-blur-md py-3 md:py-4 rounded-xl md:rounded-2xl text-center font-mona text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em]">
+             {/* Interaction Label */}
+             <div className="absolute inset-x-0 bottom-4 md:bottom-10 px-4 md:px-8 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="bg-white/80 backdrop-blur-md py-3 md:py-4 rounded-xl md:rounded-2xl text-center font-mona text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] shadow-lg">
                    View Archives
                 </div>
              </div>
@@ -43,14 +43,14 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
         </div>
 
         {/* Right: Stacked Features (Spans 5/12 cols) */}
-        <div className="col-span-5 flex flex-col gap-3 md:gap-6">
+        <div className="col-span-5 flex flex-col gap-4 md:gap-8 min-w-0">
           
           {/* Top Right Square */}
           <div 
             onClick={() => onQuickView(mainProduct)}
-            className="aspect-square relative group cursor-pointer"
+            className="aspect-square w-full relative group cursor-pointer"
           >
-            <div className="h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
+            <div className="w-full h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
                <img 
                  src={displayImages[1]} 
                  alt=""
@@ -62,19 +62,19 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
           {/* Bottom Right Square */}
           <div 
             onClick={() => onQuickView(mainProduct)}
-            className="aspect-square relative group cursor-pointer"
+            className="aspect-square w-full relative group cursor-pointer"
           >
-            <div className="h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
+            <div className="w-full h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
                <img 
                  src={displayImages[2]} 
                  alt=""
                  className="w-full h-full object-cover"
                />
                
-               {/* Premium Badge Overlay (Visible on all devices) */}
-               <div className="absolute bottom-4 md:bottom-10 left-4 md:left-10">
-                  <div className="bg-black/10 backdrop-blur-md border border-white/20 px-3 md:px-6 py-1.5 md:py-2 rounded-full">
-                     <span className="font-mona text-[7px] md:text-[10px] font-black text-white uppercase tracking-widest whitespace-nowrap">
+               {/* Fixed Badge Overlay */}
+               <div className="absolute bottom-3 md:bottom-10 left-3 md:left-10">
+                  <div className="bg-black/20 backdrop-blur-md border border-white/20 px-3 md:px-6 py-1.5 md:py-2 rounded-full">
+                     <span className="font-mona text-[6px] md:text-[10px] font-black text-white uppercase tracking-widest whitespace-nowrap">
                         {mainProduct.category || 'Featured'}
                      </span>
                   </div>
