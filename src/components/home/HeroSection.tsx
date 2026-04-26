@@ -93,7 +93,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
                Good Things Co.
             </p>
             <h1 className="font-serif text-4xl sm:text-6xl md:text-[6vw] font-medium text-black leading-tight tracking-tight italic">
-               Live inspired, every day.
+               {headline || "Live inspired, every day."}
             </h1>
         </motion.div>
 
