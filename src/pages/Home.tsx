@@ -24,9 +24,10 @@ const Home = ({ onQuickView }: HomeProps) => {
         getSiteSettings()
       ]);
       
-      if (prodRes.success) {
+      if (prodRes.success && prodRes.products.length > 0) {
         const featured = prodRes.products.filter(p => p.featured);
-        setFeaturedProducts(featured);
+        // Fallback: Use the first product if no features are set in DB
+        setFeaturedProducts(featured.length > 0 ? featured : [prodRes.products[0]]);
       }
       if (setRes.success) {
         setSettings(setRes.settings);

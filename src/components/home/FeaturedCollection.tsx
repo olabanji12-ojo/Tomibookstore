@@ -24,9 +24,9 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
         {/* Left: Large Vertical Feature (Spans 7/12 cols) */}
         <div 
           onClick={() => onQuickView(mainProduct)}
-          className="col-span-12 md:col-span-7 relative group cursor-pointer"
+          className="col-span-7 relative group cursor-pointer"
         >
-          <div className="aspect-[3/4] md:h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
+          <div className="aspect-[3/4] h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
              <img 
                src={displayImages[0]} 
                alt={mainProduct.name}
@@ -43,7 +43,7 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
         </div>
 
         {/* Right: Stacked Features (Spans 5/12 cols) */}
-        <div className="col-span-12 md:col-span-5 flex flex-col gap-3 md:gap-6">
+        <div className="col-span-5 flex flex-col gap-3 md:gap-6">
           
           {/* Top Right Square */}
           <div 
