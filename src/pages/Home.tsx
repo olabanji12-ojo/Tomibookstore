@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import MetaTags from '../components/shared/MetaTags';
 import HeroSection from '../components/home/HeroSection';
-
 import Philosophy from '../components/home/Philosophy';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
@@ -18,7 +16,6 @@ const Home = ({ onQuickView }: HomeProps) => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [showCollection, setShowCollection] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
