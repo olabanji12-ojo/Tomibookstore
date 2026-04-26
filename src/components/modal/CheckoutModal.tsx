@@ -130,7 +130,7 @@ const CheckoutModal = ({
         'template_gu7klzn',
         {
           ...commonParams,
-          to_email: customer.email, 
+          email: customer.email, // Use 'email' key to match dashboard {{email}}
           subject_line: "Order Confirmation - Good Things Co."
         },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
@@ -139,10 +139,10 @@ const CheckoutModal = ({
       // 🚨 STEP 2: SEND TO OWNER / YOU (New Template B)
       await emailjs.send(
         'service_f3axqod',
-        'template_nvh2rjo', // Updated to your new Template ID
+        'template_nvh2rjo', 
         { 
           ...commonParams, 
-          to_email: 'emmanuelojo291@gmail.com', // Your admin email
+          email: 'emmanuelojo291@gmail.com', // Match dashboard {{email}}
           subject_line: `[FULFILLMENT REQ] Order #${orderId}`
         },
         { publicKey: 'FTDSG45GkUUjDvpp4' }
