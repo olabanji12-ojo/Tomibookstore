@@ -91,8 +91,8 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
             <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-[4vw] font-light text-black/50 italic leading-none relative">
                 {displayText}
                 <motion.span 
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
                   className="inline-block w-[2px] h-[0.9em] bg-black/30 ml-1 align-middle"
                 />
             </h2>
