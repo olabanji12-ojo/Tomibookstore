@@ -59,7 +59,7 @@ const Home = ({ onQuickView }: HomeProps) => {
       />
       {/* 01. Hero */}
       <HeroSection 
-        headline={settings?.hero_headline}
+        headline="Live inspired, every day."
         tagline={settings?.hero_tagline}
       />
       
