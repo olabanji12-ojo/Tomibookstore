@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, ChevronDown, ChevronUp, Package, Truck, CheckCircle, Phone, MapPin, Mail, Calendar } from 'lucide-react';
+import { ShoppingBag, ChevronDown, ChevronUp, Package, Truck, CheckCircle, Phone, MapPin, Mail } from 'lucide-react';
 import { db } from '../../firebase/config';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import MetaTags from '../../components/shared/MetaTags';

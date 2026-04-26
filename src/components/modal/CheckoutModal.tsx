@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, ShoppingBag, Plus, Minus, Trash2, Truck, Rocket } from 'lucide-react';
+import { X, CheckCircle2, ShoppingBag, Plus, Trash2, Truck, Rocket } from 'lucide-react';
 import { usePaystackPayment } from 'react-paystack';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
