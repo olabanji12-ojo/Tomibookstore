@@ -18,19 +18,23 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
 
   return (
     <div className="w-full">
-      {/* Bento Grid Layout - Refined for zero overlap */}
-      <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
+      {/* 
+         Bento Master Grid: 
+         - Using a fixed aspect ratio for the WHOLE container (aspect-[4/3]) 
+         - This ensures left height ALWAYS equals right total height
+      */}
+      <div className="grid grid-cols-12 gap-3 md:gap-6 aspect-[4/5] sm:aspect-[4/3] w-full">
         
-        {/* Left: Large Vertical Feature (Spans 7/12 cols) */}
+        {/* Left Master Image (Full Height) */}
         <div 
           onClick={() => onQuickView(mainProduct)}
-          className="col-span-7 relative group cursor-pointer"
+          className="col-span-7 h-full relative group cursor-pointer"
         >
-          <div className="aspect-[4/5] sm:aspect-[3/4] w-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
+          <div className="w-full h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
              <img 
                src={displayImages[0]} 
                alt={mainProduct.name}
-               className="w-full h-full object-cover"
+               className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
              />
              
              {/* Interaction Label */}
@@ -42,33 +46,33 @@ const FeaturedCollection = ({ featuredProducts, onQuickView }: FeaturedCollectio
           </div>
         </div>
 
-        {/* Right: Stacked Features (Spans 5/12 cols) */}
-        <div className="col-span-5 flex flex-col gap-4 md:gap-8 min-w-0">
+        {/* Right Stacked Column (Flex to match left height) */}
+        <div className="col-span-5 h-full flex flex-col gap-3 md:gap-6">
           
-          {/* Top Right Square */}
+          {/* Top Right */}
           <div 
             onClick={() => onQuickView(mainProduct)}
-            className="aspect-square w-full relative group cursor-pointer"
+            className="flex-1 min-h-0 relative group cursor-pointer"
           >
             <div className="w-full h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
                <img 
                  src={displayImages[1]} 
                  alt=""
-                 className="w-full h-full object-cover"
+                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                />
             </div>
           </div>
 
-          {/* Bottom Right Square */}
+          {/* Bottom Right */}
           <div 
             onClick={() => onQuickView(mainProduct)}
-            className="aspect-square w-full relative group cursor-pointer"
+            className="flex-1 min-h-0 relative group cursor-pointer"
           >
             <div className="w-full h-full bg-white/40 rounded-[1.5rem] md:rounded-[4rem] overflow-hidden border border-black/[0.03] shadow-sm transition-all duration-700">
                <img 
                  src={displayImages[2]} 
                  alt=""
-                 className="w-full h-full object-cover"
+                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                />
                
                {/* Fixed Badge Overlay */}
