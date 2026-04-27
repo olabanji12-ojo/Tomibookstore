@@ -54,9 +54,7 @@ const Home = ({ onQuickView }: HomeProps) => {
         description="Thoughtful goods for inspired living. Designed to help you live with purpose and enjoy everyday moments."
       />
       {/* 01. Hero */}
-      <HeroSection 
-        headline="Live inspired, every day."
-      />
+      <HeroSection />
       
 
 

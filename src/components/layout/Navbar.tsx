@@ -23,31 +23,35 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
   return (
     <header className="sticky top-0 z-50 w-full bg-[#f3f2ee]">
       <div className="border-b border-black/[0.04]">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-8 h-[95px] flex items-center justify-between">
+        <div className="w-full px-8 md:px-24 h-[95px] flex items-center justify-between">
           
-          <Link to="/" className="hover:opacity-70 transition-opacity">
-            <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-28 md:h-32 w-auto object-contain" />
-          </Link>
+          {/* 1. LEFT: LOGO */}
+          <div className="flex-1 flex justify-start">
+            <Link to="/" className="hover:opacity-70 transition-opacity">
+              <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-28 md:h-32 w-auto object-contain" />
+            </Link>
+          </div>
 
-          {/* Right Side: Navigation & Cart */}
-          <div className="flex items-center gap-6 md:gap-14 font-poppins h-full">
-            <nav className="hidden md:flex items-center gap-14">
-              {NAV_LINKS.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  to={href}
-                  className="text-[10px] tracking-[0.3em] uppercase font-bold text-black/45 hover:text-black transition-all duration-300 relative group"
-                >
-                  {label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
-                </Link>
-              ))}
-            </nav>
+          {/* 2. CENTER: NAV LINKS (Perfectly centered) */}
+          <nav className="hidden lg:flex items-center justify-center gap-10 xl:gap-14 flex-1">
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                to={href}
+                className="text-[10px] tracking-[0.3em] uppercase font-bold text-black/45 hover:text-black transition-all duration-300 relative group"
+              >
+                {label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black transition-all group-hover:w-full"></span>
+              </Link>
+            ))}
+          </nav>
 
+          {/* 3. RIGHT: CART & MOBILE MENU */}
+          <div className="flex-1 flex items-center justify-end gap-6 md:gap-14 font-poppins h-full">
             {/* Cart Link (Always Visible) */}
             <button 
               onClick={onCartClick}
-              className={`flex items-center gap-2 md:gap-3 text-[10px] tracking-[0.3em] uppercase font-bold transition-all duration-500 cursor-pointer md:border-l border-black/10 md:pl-14 relative h-full
+              className={`flex items-center gap-2 md:gap-3 text-[10px] tracking-[0.3em] uppercase font-bold transition-all duration-500 cursor-pointer lg:border-l border-black/10 lg:pl-14 relative h-full
                           ${isAdding ? 'text-green-600' : 'text-black hover:opacity-60'}`}
             >
               <AnimatePresence>
@@ -81,7 +85,7 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
 
             {/* Mobile Menu Trigger */}
             <button 
-              className="md:hidden p-2 -mr-2 text-black/60 cursor-pointer"
+              className="lg:hidden p-2 -mr-2 text-black/60 cursor-pointer"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X size={22} strokeWidth={1.2} /> : <Menu size={22} strokeWidth={1.2} />}

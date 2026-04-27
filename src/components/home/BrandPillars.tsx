@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronDown, ChevronUp } from 'lucide-react';
 import ExploreCategories from './ExploreCategories';
@@ -44,25 +44,17 @@ const PillarCard = ({
   isExpanded?: boolean, 
   onToggle?: () => void 
 }) => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "center center", "end start"]
-  });
-
-  const scaleRaw = useTransform(scrollYProgress, [0, 0.5, 1], [0.92, 1.05, 0.92]);
-  const scale = useSpring(scaleRaw, { stiffness: 100, damping: 20 });
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0.4, 0.7, 1, 0.7, 0.4]);
-  const shadow = useTransform(scrollYProgress, [0.4, 0.5, 0.6], 
-    ["rgba(0,0,0,0)", "0 40px 80px -15px rgba(0,0,0,0.1)", "rgba(0,0,0,0)"]
-  );
-
   const isHomePillar = pillar.title === 'Shop';
 
   return (
     <motion.div 
-      ref={containerRef}
-      style={{ scale, opacity, boxShadow: shadow }}
+      initial={{ opacity: 0, scale: 0.98, y: 30 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        duration: 0.9, 
+        ease: [0.21, 1.11, 0.81, 0.99] // Subtle spring-like curve
+      }}
       className="relative w-full z-10"
     >
       <div 
