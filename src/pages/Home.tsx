@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MetaTags from '../components/shared/MetaTags';
 import HeroSection from '../components/home/HeroSection';
-import Philosophy from '../components/home/Philosophy';
+
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
 import BrandPillars from '../components/home/BrandPillars';
@@ -63,8 +63,7 @@ const Home = ({ onQuickView }: HomeProps) => {
         tagline={settings?.hero_tagline}
       />
       
-      {/* 02. Philosophy */}
-      <Philosophy manifesto={settings?.manifesto} />
+
 
       {/* 03. Brand Pillars - SHOP, CREATE, READ, DESIGN */}
       <BrandPillars />

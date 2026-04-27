@@ -69,7 +69,7 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
       </div>
 
       {/* Hero Content Container */}
-      <div className="relative z-10 w-full max-w-[95vw] md:max-w-6xl mx-auto px-4 text-center flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-[95vw] md:max-w-6xl mx-auto px-4 text-center flex flex-col items-center pt-20 md:pt-32">
         
         {/* 1. STATIC HEADLINE */}
         <motion.div
@@ -78,10 +78,8 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
            transition={{ duration: 1, delay: 0.2 }}
            className="mb-8 md:mb-12"
         >
-            <p className="font-mona text-[10px] md:text-[12px] font-black tracking-[0.5em] uppercase text-black/30 mb-6 md:mb-10">
-               Good Things Co.
-            </p>
-            <h1 className="font-serif text-5xl sm:text-7xl md:text-[7vw] font-medium text-black leading-tight tracking-tight italic">
+
+            <h1 className="font-serif text-5xl sm:text-7xl md:text-[8vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter">
                {headline || "Live inspired, every day."}
             </h1>
         </motion.div>
@@ -98,34 +96,9 @@ const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
             </h2>
         </div>
 
-        {/* 3. OPTIONAL SETTINGS TAGLINE */}
-        {tagline && (
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="font-poppins text-sm md:text-base text-black/40 max-w-lg mx-auto mt-14"
-          >
-            {tagline}
-          </motion.p>
-        )}
 
-        {/* 4. EXPLORE INDICATOR */}
-        <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="pt-20 md:pt-28"
-        >
-            <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="inline-flex flex-col items-center gap-4 text-black/20"
-            >
-                <span className="font-mona text-[9px] font-black tracking-widest uppercase">Explore Narrative</span>
-                <div className="w-[1px] h-12 bg-black/10" />
-            </motion.div>
-        </motion.div>
+
+
       </div>
       
       {/* Ghost Texture Background */}

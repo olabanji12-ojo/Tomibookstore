@@ -5,17 +5,17 @@ const TRUST_REASONS = [
   {
     icon: Truck,
     title: 'Express Delivery',
-    description: 'Carefully packaged and delivered within 48 hours across Lagos.'
+    description: 'Carefully packaged and delivered\nwithin 48 hours across Lagos.'
   },
   {
     icon: ShieldCheck,
     title: 'Hand-picked Quality',
-    description: 'Every piece is vetted by our curator for authenticity and feel.'
+    description: 'Every piece is vetted by our curator\nfor authenticity and feel.'
   },
   {
     icon: Star,
     title: 'Secure Checkout',
-    description: 'Safe and seamless transactions via Paystack integration.'
+    description: 'Safe and seamless transactions\nvia Paystack integration.'
   }
 ];
 
@@ -40,7 +40,7 @@ const TrustSection = () => {
                 <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black">
                   {item.title}
                 </h3>
-                <p className="font-poppins text-[13px] text-black/40 leading-relaxed font-light">
+                <p className="font-poppins text-[13px] text-black/40 leading-relaxed font-light whitespace-pre-line">
                   {item.description}
                 </p>
               </div>

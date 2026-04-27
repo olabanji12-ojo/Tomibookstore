@@ -141,15 +141,7 @@ export default function Journal({ onQuickView }: JournalProps) {
       {/* Editorial Header */}
       <section className="pt-32 md:pt-40 pb-16 md:pb-20 px-4 md:px-8">
         <div className="max-w-[1400px] mx-auto text-center">
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-block py-2 px-4 bg-black/5 rounded-full mb-6 md:mb-8"
-            >
-                <span className="font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black/40">
-                    Read
-                </span>
-            </motion.div>
+
           <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-8 md:mb-10 leading-[0.9] md:leading-[0.85]">
             READ
           </h1>
