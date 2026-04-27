@@ -9,10 +9,9 @@ const HERO_PHRASES = [
 
 interface HeroSectionProps {
   headline?: string;
-  tagline?: string;
 }
 
-const HeroSection = ({ headline, tagline }: HeroSectionProps) => {
+const HeroSection = ({ headline }: HeroSectionProps) => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);

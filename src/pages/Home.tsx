@@ -6,7 +6,7 @@ import HeroSection from '../components/home/HeroSection';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
 import BrandPillars from '../components/home/BrandPillars';
-import { getProducts, getSiteSettings } from '../firebase/helpers';
+import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
 
 interface HomeProps {
@@ -15,24 +15,20 @@ interface HomeProps {
 
 const Home = ({ onQuickView }: HomeProps) => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [settings, setSettings] = useState<any>(null);
+
   const [loading, setLoading] = useState(true);
   const [showCollection, setShowCollection] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
-      const [prodRes, setRes] = await Promise.all([
-        getProducts(),
-        getSiteSettings()
+      const [prodRes] = await Promise.all([
+        getProducts()
       ]);
       
       if (prodRes.success && prodRes.products.length > 0) {
         const featured = prodRes.products.filter(p => p.featured);
         // Fallback: Use the first product if no features are set in DB
         setFeaturedProducts(featured.length > 0 ? featured : [prodRes.products[0]]);
-      }
-      if (setRes.success) {
-        setSettings(setRes.settings);
       }
       setLoading(false);
     };
@@ -60,7 +56,6 @@ const Home = ({ onQuickView }: HomeProps) => {
       {/* 01. Hero */}
       <HeroSection 
         headline="Live inspired, every day."
-        tagline={settings?.hero_tagline}
       />
       
 
