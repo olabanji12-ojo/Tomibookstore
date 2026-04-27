@@ -7,7 +7,7 @@ import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
 import toast from 'react-hot-toast';
 
-const categories = ['FASHION', 'ACCESSORIES', 'GIFTS', 'HOME', 'PACKAGING'];
+const categories = ['FASHION', 'BAGS & ACCESSORIES', 'GIFTING', 'HOME', 'OFFICE'];
 const rituals = ['WORK', 'PLAY', 'FANCY', 'SLEEP', 'EAT'];
 
 interface ShopProps {
@@ -89,7 +89,7 @@ export default function Shop({ onQuickView }: ShopProps) {
             CHOOSE <br className="md:hidden" /> GOOD THINGS.
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
-            Thoughtful goods for inspired living.
+            Everyday pieces you can use, wear, give, and live with.
           </p>
         </div>
       </section>

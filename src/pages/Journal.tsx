@@ -119,7 +119,7 @@ export default function Journal({ onQuickView }: JournalProps) {
     fetchData();
   }, []);
 
-  const categories = ['ALL', ...Array.from(new Set(posts.map((p) => p.category.toUpperCase())))];
+  const categories = ['ALL', 'INSPIRATION', 'GIFTING', 'STYLE & LIVING', 'BOOKS', 'BEHIND THE BRAND'];
 
   const filteredPosts = activeCat === 'ALL' 
     ? posts 
@@ -146,7 +146,7 @@ export default function Journal({ onQuickView }: JournalProps) {
             READ
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed px-4">
-            Words for daily inspiration.
+            Ideas and inspiration for living and building with delight and possibility every day.
           </p>
         </div>
       </section>

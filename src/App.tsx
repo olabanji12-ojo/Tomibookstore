@@ -7,6 +7,7 @@ import Personalize from './pages/Personalize';
 import Journal from './pages/Journal';
 import Shop from './pages/Shop';
 import CheckoutModal from './components/modal/CheckoutModal';
+import About from './pages/About';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { useCart } from './context/CartContext';
@@ -29,7 +30,17 @@ function App() {
   const isHydrated = useRef(false);
   const { cartItems, addToCart, removeFromCart, updateQuantity, totalItems, clearCart } = useCart();
 
-  const DEFAULT_FORM = { name: '', email: '', phone: '', address: '', city: '', state: '' };
+  const DEFAULT_FORM = { 
+    name: '', 
+    email: '', 
+    phone: '', 
+    address: '', 
+    city: 'Ikeja', 
+    state: 'Lagos',
+    country: 'Nigeria',
+    company: '',
+    apartment: ''
+  };
   const [formData, setFormData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.FORM);
@@ -80,7 +91,10 @@ function App() {
 
   const handlePaymentSuccess = () => {
     clearCart();
-    setFormData({ name: '', email: '', phone: '', address: '', city: '', state: '' });
+    setFormData({ 
+      name: '', email: '', phone: '', address: '', city: 'Ikeja', state: 'Lagos', 
+      country: 'Nigeria', company: '', apartment: '' 
+    });
     localStorage.removeItem(STORAGE_KEYS.FORM);
   };
 
@@ -102,6 +116,7 @@ function App() {
                 <Route path="/shop" element={<Shop onQuickView={handleQuickView} />} />
                 <Route path="/personalize" element={<Personalize />} />
                 <Route path="/journal" element={<Journal onQuickView={handleQuickView} />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
               </Routes>
               <Footer />

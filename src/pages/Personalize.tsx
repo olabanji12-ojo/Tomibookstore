@@ -179,7 +179,7 @@ export default function Personalize() {
             CREATE
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
-            Thoughtfully made for intentional brands and events.
+            Tailor made concepts for brands, businesses, and events.
           </p>
         </div>
       </section>
@@ -205,11 +205,12 @@ export default function Personalize() {
                         className="w-full bg-[#f3f2ee]/50 border border-black/5 rounded-xl px-5 py-4 font-poppins text-sm focus:bg-white focus:border-black outline-none transition-all appearance-none cursor-pointer"
                     >
                         <option value="">Select Category</option>
-                        <option value="fashion">Fashion & Apparel</option>
-                        <option value="accessory">Lifestyle Accessories</option>
-                        <option value="home">Home & Decor</option>
-                        <option value="gift">Curated Gift Sets</option>
-                        <option value="packaging">Boutique Packaging</option>
+                        <option value="apparel">Apparel & Uniforms</option>
+                        <option value="packaging">Packaging</option>
+                        <option value="merchandise">Merchandise</option>
+                        <option value="gift">Gifting</option>
+                        <option value="signage">Signage & Displays</option>
+                        <option value="interiors">Interiors & Styling</option>
                     </select>
                 </div>
                 <div className="space-y-3">

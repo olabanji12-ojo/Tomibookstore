@@ -7,7 +7,8 @@ const NAV_LINKS = [
   { label: 'Shop', href: '/shop' },
   { label: 'Create', href: '/personalize' },
   { label: 'Read', href: '/journal' },
-  { label: 'Design', href: '/contact' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 interface NavbarProps {

@@ -82,10 +82,13 @@ const Contact = () => {
         {/* Header Section */}
         <div className="text-center mb-20 md:mb-32">
           <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black text-black uppercase tracking-tighter mb-8 leading-[0.9]">
-            DESIGN
+            CONTACT
           </h1>
-          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
-            Inspiring experiences at scale, <br className="hidden md:block" /> for businesses, spaces, and projects.
+          <p className="font-poppins text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-6">
+            We’d love to hear from you.
+          </p>
+          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed italic">
+            An idea, a question, or something you’d like to create — <br /> let’s begin.
           </p>
 
           <div className="w-16 h-px bg-black/10 mx-auto mt-10" />

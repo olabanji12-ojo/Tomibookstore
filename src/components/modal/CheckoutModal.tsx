@@ -20,6 +20,9 @@ interface CheckoutModalProps {
     address: string;
     city: string;
     state: string;
+    country: string;
+    company: string;
+    apartment: string;
   };
   onFormDataChange: (data: any) => void;
   onClose: () => void;
@@ -397,10 +400,30 @@ const CheckoutModal = ({
 
                           <div className="space-y-8 pt-6 border-t border-black/5">
                             <InputField label="WhatsApp Number" type="tel" placeholder="+234..." value={formData.phone} onChange={(val: string) => onFormDataChange({...formData, phone: val})} />
+                            
+                            <div className="space-y-3 group">
+                                <label className="font-poppins text-[9px] font-bold uppercase tracking-[0.5em] text-black/30">Country/Region</label>
+                                <select 
+                                    value={formData.country} 
+                                    onChange={(e) => onFormDataChange({...formData, country: e.target.value})}
+                                    className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none appearance-none cursor-pointer"
+                                >
+                                    <option value="Nigeria">Nigeria</option>
+                                    <option value="Ghana">Ghana</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="US">United States</option>
+                                </select>
+                            </div>
+
+                            <InputField label="Company (optional)" placeholder="e.g. Good Things Co." value={formData.company} onChange={(val: string) => onFormDataChange({...formData, company: val})} />
+
                             <div className="space-y-3">
                                 <label className="font-poppins text-[9px] font-bold uppercase tracking-[0.5em] text-black/30">Shipping Address</label>
                                 <textarea value={formData.address} onChange={(e) => onFormDataChange({...formData, address: e.target.value})} placeholder="Street name and number" className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none resize-none" rows={2} />
                             </div>
+
+                            <InputField label="Apartment, suite, etc. (optional)" placeholder="e.g. Suite 402" value={formData.apartment} onChange={(val: string) => onFormDataChange({...formData, apartment: val})} />
+
                             <div className="grid grid-cols-2 gap-10">
                                 <InputField label="City" placeholder="e.g. Ikeja" value={formData.city} onChange={(val: string) => onFormDataChange({...formData, city: val})} />
                                 <InputField label="State" placeholder="e.g. Lagos" value={formData.state} onChange={(val: string) => onFormDataChange({...formData, state: val})} />
