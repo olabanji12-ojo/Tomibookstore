@@ -62,10 +62,7 @@ const PillarCard = ({
         className={`rounded-[3rem] p-12 md:p-28 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
                    ${isExpanded ? 'h-auto pb-32' : 'aspect-[4/5] md:aspect-[5/3] items-center justify-center text-center'}`}
       >
-        {/* Pillar ID */}
-        <div className="absolute top-10 md:top-14 left-1/2 -translate-x-1/2">
-           <span className="font-mona text-[10px] md:text-[12px] font-black text-black/10 tracking-[0.5em] uppercase">{pillar.id}</span>
-        </div>
+        {/* Pillar ID - REMOVED */}
 
         {/* Arrow Indicator (Only if not toggling) */}
         {!onToggle && (

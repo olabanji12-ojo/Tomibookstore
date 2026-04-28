@@ -8,7 +8,7 @@ interface MetaTagsProps {
 const MetaTags = ({ title, description }: MetaTagsProps) => {
     useEffect(() => {
         // Set document title
-        const fullTitle = `${title} | Good Things Co. Boutique`;
+        const fullTitle = `${title} | Good Things Co.`;
         document.title = fullTitle;
 
         // Set meta description

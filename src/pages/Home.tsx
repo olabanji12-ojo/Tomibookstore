@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MetaTags from '../components/shared/MetaTags';
 import HeroSection from '../components/home/HeroSection';
+import DiscoveryGrid from '../components/home/DiscoveryGrid';
 
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import TrustSection from '../components/home/TrustSection';
@@ -55,6 +56,9 @@ const Home = ({ onQuickView }: HomeProps) => {
       />
       {/* 01. Hero */}
       <HeroSection />
+      
+      {/* 02. Discovery Grid (The 3 Main Boxes) */}
+      <DiscoveryGrid />
       
 
 

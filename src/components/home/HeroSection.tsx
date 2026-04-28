@@ -65,14 +65,11 @@ const HeroSection = () => {
            transition={{ duration: 0.8, delay: 0.2 }}
            className="max-w-xl flex flex-col items-center md:items-start"
         >
-          {/* Desktop Only Intro */}
-          <span className="hidden md:block font-mona text-[12px] font-black tracking-[0.4em] uppercase text-black/20 mb-8">
-            Welcome to Good Things Co
-          </span>
+          {/* Desktop Only Intro - REMOVED */}
           
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-[6vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-6 md:mb-10">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-[7.5vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
              Live inspired, <br />
-             <span className="italic whitespace-nowrap">every day.</span>
+             <span className="italic whitespace-nowrap leading-none">Everyday.</span>
           </h1>
 
           {/* Mobile Only Typewriter */}
@@ -87,30 +84,27 @@ const HeroSection = () => {
             </h2>
           </div>
 
-          {/* Desktop Only Body */}
-          <p className="hidden md:block font-poppins text-xl text-black/40 leading-relaxed font-light mb-12 max-w-md">
-             Designed with intention for your everyday life.
-          </p>
+          {/* Desktop Only Body - REMOVED */}
 
-          {/* Action Grid (Outline Buttons - Always Black now) */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-6">
+          {/* Action Grid (Rectangular Buttons - Stacked on mobile, single row on desktop) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-3 w-full max-w-3xl">
             <Link 
               to="/shop?category=FASHION" 
-              className="border border-black/40 px-8 py-5 rounded-full font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center"
+              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
             >
-              Shop Fashion
+              FASHION
             </Link>
             <Link 
               to="/shop?category=GIFTING" 
-              className="border border-black/40 px-8 py-5 rounded-full font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center"
+              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
             >
-              Shop Gifts
+              GIFTS
             </Link>
             <Link 
               to="/shop?category=HOME" 
-              className="border border-black/40 px-8 py-5 rounded-full font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center"
+              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
             >
-              Shop Home
+              HOME
             </Link>
           </div>
         </motion.div>
