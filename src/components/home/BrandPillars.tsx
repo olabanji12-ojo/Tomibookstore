@@ -10,28 +10,28 @@ const PILLARS = [
     title: 'Shop',
     description: 'Everyday pieces you can use, wear, give, and live with.',
     href: '/shop',
-    color: '#f7f6f2' // Soft Bone
+    color: '#f7f6f2'
   },
   {
     id: '02',
     title: 'Create',
     description: 'Tailor made concepts for brands, businesses, and events.',
     href: '/personalize',
-    color: '#fdfdfd' // Clean Paper
+    color: '#fdfdfd'
   },
   {
     id: '03',
     title: 'Read',
-    description: 'Ideas and inspiration for living and building with delight and possibility every day.',
+    description: 'Ideas and inspiration for living and building with delight.',
     href: '/journal',
-    color: '#faf9f6' // Warm Alabaster
+    color: '#faf9f6'
   },
   {
     id: '04',
     title: 'Contact',
-    description: 'An idea, a question, or something you’d like to create — let’s begin.',
+    description: 'An idea, a question, or something you’d like to create.',
     href: '/contact',
-    color: '#f2f0ea' // Light Stonewash
+    color: '#f2f0ea'
   }
 ];
 
@@ -48,86 +48,74 @@ const PillarCard = ({
 
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.98, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ 
-        duration: 0.9, 
-        ease: [0.21, 1.11, 0.81, 0.99] // Subtle spring-like curve
-      }}
-      className="relative w-full z-10"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className={`relative w-full ${isExpanded ? 'col-span-2 lg:col-span-4' : 'col-span-1'}`}
     >
       <div 
         style={{ backgroundColor: pillar.color }}
-        className={`rounded-[3rem] p-12 md:p-28 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
-                   ${isExpanded ? 'h-auto pb-32' : 'aspect-[4/5] md:aspect-[5/3] items-center justify-center text-center'}`}
+        className={`rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
+                   ${isExpanded ? 'h-auto pb-20' : 'aspect-[4/5] items-center justify-center text-center'}`}
       >
-        {/* Pillar ID - REMOVED */}
-
-        {/* Arrow Indicator (Only if not toggling) */}
-        {!onToggle && (
-          <Link to={pillar.href} className="absolute top-10 md:top-14 right-10 md:right-14 w-12 h-12 rounded-full border border-black/5 flex items-center justify-center text-black/20 hover:text-black hover:border-black transition-all duration-500">
-            <ArrowUpRight size={20} strokeWidth={1.5} />
+        {/* Interaction Link */}
+        {!isExpanded && (
+          <Link to={pillar.href} className="absolute top-4 md:top-6 right-4 md:right-6 w-8 h-8 rounded-full border border-black/5 flex items-center justify-center text-black/20 hover:text-black transition-all">
+            <ArrowUpRight size={14} strokeWidth={1.5} />
           </Link>
         )}
 
-        {/* Pillar Content */}
-        <div className={`space-y-8 md:space-y-12 flex flex-col relative z-20 w-full 
+        {/* Content */}
+        <div className={`flex flex-col relative z-20 w-full 
                         ${isExpanded ? 'items-start text-left' : 'items-center text-center'}`}>
-          <div className="max-w-7xl w-full mx-auto">
-            <div className={`flex flex-col ${isExpanded ? 'items-start' : 'items-center'}`}>
-              <h3 className="font-serif text-6xl md:text-[120px] font-medium text-black tracking-tighter italic leading-[0.8] mb-8 md:mb-12">
-                 {pillar.title}
-              </h3>
-              <p className={`font-poppins text-base md:text-2xl text-black/40 leading-relaxed font-light max-w-2xl
-                            ${isExpanded ? '' : 'mx-auto px-6'}`}>
-                 {pillar.description}
-              </p>
-              
-              {/* Visual Accent / Toggle */}
-              {isHomePillar ? (
-                <button 
-                  onClick={onToggle}
-                  className="pt-12 flex flex-col items-center md:items-start gap-6 group cursor-pointer"
-                >
-                   <div className="h-[1px] w-12 bg-black/10 group-hover:w-24 transition-all duration-700" />
-                   <div className="flex items-center gap-3">
-                      <span className="font-mona text-[10px] font-black tracking-[0.3em] uppercase opacity-40 group-hover:opacity-100 transition-opacity duration-700">
-                        {isExpanded ? 'Close Narrative' : 'Open Narrative'}
-                      </span>
-                      {isExpanded ? <ChevronUp size={14} className="opacity-40" /> : <ChevronDown size={14} className="opacity-40" />}
-                   </div>
-                </button>
-              ) : (
-                <Link to={pillar.href} className="pt-12 flex flex-col items-center gap-6 group">
-                   <div className="h-[1px] w-12 bg-black/10 group-hover:w-24 transition-all duration-700" />
-                   <span className="font-mona text-[10px] font-black tracking-[0.3em] uppercase opacity-40 group-hover:opacity-100 transition-opacity duration-700">Open Narrative</span>
-                </Link>
-              )}
-            </div>
+          <h3 className={`font-serif font-medium text-black tracking-tight italic leading-none mb-3 md:mb-4
+                         ${isExpanded ? 'text-4xl md:text-6xl' : 'text-2xl md:text-3xl'}`}>
+             {pillar.title}
+          </h3>
+          <p className={`font-poppins text-black/40 font-light leading-relaxed
+                        ${isExpanded ? 'text-sm md:text-lg max-w-xl' : 'text-[10px] md:text-xs px-2'}`}>
+             {pillar.description}
+          </p>
+          
+          {/* Toggle / Action */}
+          {isHomePillar ? (
+            <button 
+              onClick={onToggle}
+              className="mt-6 flex items-center gap-2 group cursor-pointer"
+            >
+               <span className="font-mona text-[8px] font-black tracking-[0.2em] uppercase opacity-40 group-hover:opacity-100 transition-opacity">
+                 {isExpanded ? 'Close' : 'Explore'}
+               </span>
+               {isExpanded ? <ChevronUp size={10} className="opacity-40" /> : <ChevronDown size={10} className="opacity-40" />}
+            </button>
+          ) : (
+            <Link to={pillar.href} className="mt-6 font-mona text-[8px] font-black tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity">
+               Discover
+            </Link>
+          )}
+        </div>
 
-            {/* Expanded Content */}
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                  className="overflow-hidden w-full"
-                >
-                  <ExploreCategories />
-                </motion.div>
-              )}
-            </AnimatePresence>
+        {/* Expansion */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="w-full mt-12"
+            >
+              <ExploreCategories />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Background Accent */}
+        {!isExpanded && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02]">
+             <span className="font-serif text-[25vw] text-black italic">{pillar.title}</span>
           </div>
-        </div>
-
-        {/* Background Ghost Text */}
-        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02] transition-opacity duration-700
-                        ${isExpanded ? 'opacity-0' : 'opacity-[0.02]'}`}>
-           <span className="font-serif text-[45vw] text-black whitespace-nowrap italic">{pillar.title}</span>
-        </div>
+        )}
       </div>
     </motion.div>
   );
@@ -141,8 +129,8 @@ const BrandPillars = () => {
   };
 
   return (
-    <section className="bg-[#f3f2ee] pb-40 md:pb-80 px-4 md:px-12 relative">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 gap-16 md:gap-32">
+    <section className="bg-white pb-24 md:pb-32 px-4 md:px-12 relative">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         {PILLARS.map((pillar) => (
           <PillarCard 
             key={pillar.id} 

@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 const HERO_PHRASES = [
-  "Thoughtful goods",
-  "Meaningful Custom Work",
-  "Design at Scale"
+  "designed for your everyday life"
 ];
 
 const HeroSection = () => {
@@ -21,7 +18,7 @@ const HeroSection = () => {
         setDisplayText(currentFullText.substring(0, displayText.length + 1));
         setTypingSpeed(100);
         if (displayText === currentFullText) {
-          setTypingSpeed(2500);
+          setTypingSpeed(3000);
           setIsDeleting(true);
         }
       } else {
@@ -68,8 +65,8 @@ const HeroSection = () => {
           {/* Desktop Only Intro - REMOVED */}
           
           <h1 className="font-serif text-5xl md:text-7xl lg:text-[7.5vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
-             Live inspired, <br />
-             <span className="italic whitespace-nowrap leading-none">Everyday.</span>
+             Good for you, <br />
+             <span className="italic whitespace-nowrap leading-none">Made to inspire.</span>
           </h1>
 
           {/* Mobile Only Typewriter */}
@@ -82,30 +79,6 @@ const HeroSection = () => {
                   className="inline-block w-[2px] h-[0.9em] bg-black/30 ml-1 align-middle"
                 />
             </h2>
-          </div>
-
-          {/* Desktop Only Body - REMOVED */}
-
-          {/* Action Grid (Rectangular Buttons - Stacked on mobile, single row on desktop) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-3 w-full max-w-3xl">
-            <Link 
-              to="/shop?category=FASHION" 
-              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
-            >
-              FASHION
-            </Link>
-            <Link 
-              to="/shop?category=GIFTING" 
-              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
-            >
-              GIFTS
-            </Link>
-            <Link 
-              to="/shop?category=HOME" 
-              className="border border-black/40 px-2 md:px-4 py-4 md:py-5 rounded-none font-mona text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase text-black hover:bg-black hover:text-white transition-all text-center whitespace-nowrap overflow-hidden text-ellipsis"
-            >
-              HOME
-            </Link>
           </div>
         </motion.div>
       </div>
