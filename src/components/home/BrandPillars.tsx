@@ -56,8 +56,8 @@ const PillarCard = ({
     >
       <div 
         style={{ backgroundColor: pillar.color }}
-        className={`rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
-                   ${isExpanded ? 'h-auto pb-20' : 'aspect-[4/5] items-center justify-center text-center'}`}
+        className={`rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[3rem] p-6 md:p-8 lg:p-12 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
+                   ${isExpanded ? 'min-h-[60vh] pb-20' : 'min-h-[300px] md:min-h-[400px] lg:min-h-[500px] items-center justify-center text-center'}`}
       >
         {/* Interaction Link */}
         {!isExpanded && (
@@ -129,8 +129,8 @@ const BrandPillars = () => {
   };
 
   return (
-    <section className="bg-white pb-24 md:pb-32 px-4 md:px-12 relative">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+    <section className="bg-white py-12 md:py-24 px-4 md:px-8 lg:px-12 relative">
+      <div className="max-w-[1600px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
         {PILLARS.map((pillar) => (
           <PillarCard 
             key={pillar.id} 

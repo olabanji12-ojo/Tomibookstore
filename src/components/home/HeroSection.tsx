@@ -38,49 +38,56 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative w-full h-[100svh] md:min-h-screen bg-[#f3f2ee] flex flex-col md:flex-row overflow-hidden"
+      className="relative w-full h-[100svh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
     >
-      {/* BACKGROUND IMAGE (Full screen on mobile, Right side on desktop) */}
-      <div className="absolute inset-0 md:relative md:w-1/2 h-full order-1 md:order-2 overflow-hidden">
-        <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          src="/brand_intro.png"
-          alt="Boutique Collection"
-          className="w-full h-full object-cover"
-        />
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-black/[0.05]" />
-      </div>
+      {/* 
+         On Desktop: Grid split 50/50
+         On Mobile: Absolute overlay layout
+      */}
+      <div className="w-full h-full md:grid md:grid-cols-2">
+        
+        {/* LEFT: TEXT CONTENT (Desktop: Col 1, Mobile: Centered Overlay) */}
+        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:relative md:inset-auto md:z-auto md:items-start md:px-24 md:py-32 order-2 md:order-1 text-center md:text-left">
+          <motion.div
+             initial={{ opacity: 0, x: -20 }}
+             animate={{ opacity: 1, x: 0 }}
+             transition={{ duration: 0.8, delay: 0.2 }}
+             className="max-w-xl flex flex-col items-center md:items-start"
+          >
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-[7vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
+               Good for you, <br />
+               <span className="italic whitespace-nowrap leading-none">Made to inspire.</span>
+            </h1>
 
-      {/* TEXT CONTENT AREA (Centered overlay on mobile, Left col on desktop) */}
-      <div className="relative z-10 w-full h-full md:w-1/2 flex flex-col justify-center items-center md:items-start px-8 md:px-24 py-20 md:py-32 order-2 md:order-1 text-center md:text-left">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.8, delay: 0.2 }}
-           className="max-w-xl flex flex-col items-center md:items-start"
-        >
-          {/* Desktop Only Intro - REMOVED */}
-          
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-[7.5vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
-             Good for you, <br />
-             <span className="italic whitespace-nowrap leading-none">Made to inspire.</span>
-          </h1>
+            {/* Typewriter - Now visible on all screens with responsive sizing */}
+            <div className="min-h-[40px] mb-8">
+              <h2 className="font-serif text-2xl md:text-3xl font-light text-black/60 italic leading-none relative">
+                  {displayText}
+                  <motion.span 
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                    className="inline-block w-[2px] h-[0.9em] bg-black/30 ml-1 align-middle"
+                  />
+              </h2>
+            </div>
+          </motion.div>
+        </div>
 
-          {/* Mobile Only Typewriter */}
-          <div className="md:hidden min-h-[40px] mb-8">
-            <h2 className="font-serif text-2xl font-light text-black/60 italic leading-none relative">
-                {displayText}
-                <motion.span 
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-                  className="inline-block w-[2px] h-[0.9em] bg-black/30 ml-1 align-middle"
-                />
-            </h2>
-          </div>
-        </motion.div>
+        {/* RIGHT: IMAGE (Desktop: Col 2, Mobile: Full Background) */}
+        <div className="absolute inset-0 md:relative h-full order-1 md:order-2 overflow-hidden">
+          <motion.img
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            src="/brand_intro.png"
+            alt="Boutique Collection"
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle overlay for mobile readability */}
+          <div className="absolute inset-0 bg-white/20 md:hidden" />
+          <div className="absolute inset-0 bg-black/[0.05]" />
+        </div>
+
       </div>
     </section>
   );
