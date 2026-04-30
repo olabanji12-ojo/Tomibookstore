@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { getProducts } from '../../firebase/helpers';
 import type { Product } from '../../types';
 
