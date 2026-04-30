@@ -41,27 +41,26 @@ const HeroSection = () => {
       className="relative w-full h-[100svh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
     >
       {/* 
-         On Desktop: Grid split 50/50
-         On Mobile: Absolute overlay layout
+         Main Layout: Strict Grid Split on Desktop
       */}
       <div className="w-full h-full md:grid md:grid-cols-2">
         
-        {/* LEFT: TEXT CONTENT (Desktop: Col 1, Mobile: Centered Overlay) */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:relative md:inset-auto md:z-auto md:items-start md:px-24 md:py-32 order-2 md:order-1 text-center md:text-left">
+        {/* LEFT: TEXT CONTENT AREA */}
+        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:relative md:inset-auto md:z-auto md:items-start md:px-24 md:py-32 order-2 md:order-1 text-center md:text-left bg-[#f3f2ee]">
           <motion.div
              initial={{ opacity: 0, x: -20 }}
              animate={{ opacity: 1, x: 0 }}
              transition={{ duration: 0.8, delay: 0.2 }}
-             className="max-w-xl flex flex-col items-center md:items-start"
+             className="max-w-full md:max-w-xl lg:max-w-2xl"
           >
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-[7vw] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-[5.5vw] xl:text-[5.5rem] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
                Good for you, <br />
-               <span className="italic whitespace-nowrap leading-none">Made to inspire.</span>
+               <span className="italic leading-none">Made to inspire.</span>
             </h1>
 
-            {/* Typewriter - Now visible on all screens with responsive sizing */}
+            {/* Typewriter - Refined sizing for desktop hierarchy */}
             <div className="min-h-[40px] mb-8">
-              <h2 className="font-serif text-2xl md:text-3xl font-light text-black/60 italic leading-none relative">
+              <h2 className="font-serif text-2xl md:text-2xl lg:text-3xl font-light text-black/60 italic leading-none relative">
                   {displayText}
                   <motion.span 
                     animate={{ opacity: [1, 0, 1] }}
@@ -73,8 +72,8 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* RIGHT: IMAGE (Desktop: Col 2, Mobile: Full Background) */}
-        <div className="absolute inset-0 md:relative h-full order-1 md:order-2 overflow-hidden">
+        {/* RIGHT: IMAGE AREA */}
+        <div className="absolute inset-0 md:relative h-full order-1 md:order-2 overflow-hidden bg-black/5">
           <motion.img
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
@@ -83,9 +82,8 @@ const HeroSection = () => {
             alt="Boutique Collection"
             className="w-full h-full object-cover"
           />
-          {/* Subtle overlay for mobile readability */}
+          {/* Mobile Overlay Only */}
           <div className="absolute inset-0 bg-white/20 md:hidden" />
-          <div className="absolute inset-0 bg-black/[0.05]" />
         </div>
 
       </div>

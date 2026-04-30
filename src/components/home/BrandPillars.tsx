@@ -67,9 +67,9 @@ const PillarCard = ({
         )}
 
         {/* Content */}
-        <div className={`flex flex-col relative z-20 w-full 
+        <div className={`flex flex-col relative z-20 w-full overflow-hidden
                         ${isExpanded ? 'items-start text-left' : 'items-center text-center'}`}>
-          <h3 className={`font-serif font-medium text-black tracking-tight italic leading-none mb-3 md:mb-4
+          <h3 className={`font-serif font-medium text-black tracking-tight italic leading-none mb-3 md:mb-4 w-full truncate
                          ${isExpanded ? 'text-4xl md:text-6xl' : 'text-2xl md:text-3xl'}`}>
              {pillar.title}
           </h3>
