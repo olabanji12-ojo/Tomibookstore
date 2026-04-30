@@ -101,7 +101,7 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden absolute top-full left-0 w-full bg-[#f3f2ee] border-b border-black/[0.04] px-8 py-10 z-40 shadow-xl"
+            className="lg:hidden absolute top-full left-0 w-full bg-[#f3f2ee] border-b border-black/[0.04] px-8 py-10 z-40 shadow-xl"
           >
             <div className="flex flex-col gap-8 font-poppins text-center md:text-left">
               {NAV_LINKS.map(({ label, href }) => (
