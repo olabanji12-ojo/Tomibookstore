@@ -116,34 +116,37 @@ function App() {
           {/* Main Site Routes */}
           <Route path="/*" element={
             <>
-              {/* Announcement Bar */}
-              <AnimatePresence>
-                {showAnnouncement && (
-                  <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="bg-black py-2.5 px-6 text-center relative z-[60] overflow-hidden"
-                  >
-                    <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em] pr-4">
-                      Join the curated list & get 15% off your first purchase — <Link to="/contact" className="underline underline-offset-4 decoration-white/30">Claim now</Link>
-                    </p>
-                    <button 
-                      onClick={() => setShowAnnouncement(false)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors p-1"
+              {/* Sticky Header Container */}
+              <div className="sticky top-0 z-[60] w-full">
+                {/* Announcement Bar */}
+                <AnimatePresence>
+                  {showAnnouncement && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                      className="bg-black py-2.5 px-6 text-center relative z-[60] overflow-hidden"
                     >
-                      <X size={12} />
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em] pr-4">
+                        Join the curated list & get 15% off your first purchase — <Link to="/contact" className="underline underline-offset-4 decoration-white/30">Claim now</Link>
+                      </p>
+                      <button 
+                        onClick={() => setShowAnnouncement(false)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors p-1"
+                      >
+                        <X size={12} />
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              <Navbar 
-                cartCount={totalItems} 
-                onCartClick={handleOpenCart}
-                isAdding={isAddingToCart}
-              />
+                <Navbar 
+                  cartCount={totalItems} 
+                  onCartClick={handleOpenCart}
+                  isAdding={isAddingToCart}
+                />
+              </div>
               <Routes>
                 <Route path="/" element={<Home onQuickView={handleQuickView} />} />
                 <Route path="/shop" element={<Shop onQuickView={handleQuickView} />} />

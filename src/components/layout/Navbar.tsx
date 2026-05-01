@@ -21,7 +21,7 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#f3f2ee]">
+    <header className="z-50 w-full bg-[#f3f2ee]">
       <div className="border-b border-black/[0.04]">
         <div className="w-full px-8 md:px-24 h-[95px] flex items-center justify-between">
           
