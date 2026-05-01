@@ -27,6 +27,9 @@ const AdminAddProduct = () => {
     stock: '1',
     featured: false,
     author: '',
+    availableSizes: [] as string[],
+    fitInfo: '',
+    styleWithIds: '',
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +76,9 @@ const AdminAddProduct = () => {
         images: uploadRes.urls,
         image: uploadRes.urls[0], // Primary image
         hasVariants: false,
+        availableSizes: formData.availableSizes,
+        fitInfo: formData.fitInfo,
+        styleWithIds: formData.styleWithIds.split(',').map(s => s.trim()).filter(s => s !== ''),
       };
 
       // 3. Save to Firestore
@@ -211,6 +217,54 @@ const AdminAddProduct = () => {
                     {formData.featured && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                   </div>
                   <span className="font-mona text-[9px] font-black uppercase tracking-widest text-black/60">Featured Piece</span>
+                </div>
+              </div>
+
+              {/* NEW: Sizing & Details */}
+              <div className="pt-10 border-t border-black/5 space-y-10">
+                <div className="space-y-6">
+                  <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Available Sizes</label>
+                  <div className="flex flex-wrap gap-3">
+                    {['S', 'M', 'L', 'XL', 'XXL', 'OS'].map(size => (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => {
+                          const current = formData.availableSizes || [];
+                          const updated = current.includes(size) 
+                            ? current.filter(s => s !== size)
+                            : [...current, size];
+                          setFormData({...formData, availableSizes: updated});
+                        }}
+                        className={`px-6 py-3 rounded-xl font-mona text-[10px] font-black uppercase tracking-widest transition-all border
+                                   ${(formData.availableSizes || []).includes(size) ? 'bg-black text-white border-black shadow-lg' : 'bg-white text-black/40 border-black/5 hover:border-black/20'}`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Fit & Sizing Information</label>
+                  <textarea 
+                    rows={2}
+                    value={formData.fitInfo}
+                    onChange={e => setFormData({...formData, fitInfo: e.target.value})}
+                    placeholder="e.g. Regular fit. Model is 6'1 wearing a Large."
+                    className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none transition-all resize-none"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <label className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-black/30">Style With (Product IDs, comma separated)</label>
+                  <input 
+                    type="text"
+                    value={formData.styleWithIds}
+                    onChange={e => setFormData({...formData, styleWithIds: e.target.value})}
+                    placeholder="e.g. kaftan-01, silk-scarf-02"
+                    className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-sm focus:border-black outline-none transition-all"
+                  />
                 </div>
               </div>
             </section>

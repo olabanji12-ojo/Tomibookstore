@@ -27,7 +27,7 @@ interface CheckoutModalProps {
   onFormDataChange: (data: any) => void;
   onClose: () => void;
   onSuccess: () => void;
-  onAddToCart: (product: Product) => void; 
+  onAddToCart: (product: Product, size?: string) => void; 
 }
 
 const SHIPPING_OPTIONS = [
@@ -50,6 +50,19 @@ const CheckoutModal = ({
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [shippingMethod, setShippingMethod] = useState(SHIPPING_OPTIONS[0]);
+  const [selectedSize, setSelectedSize] = useState<string>('M');
+  const [openAccordion, setOpenAccordion] = useState<string | null>('details');
+
+  // Pre-fill size if available
+  useEffect(() => {
+    if (focusedBook?.availableSizes && focusedBook.availableSizes.length > 0) {
+      if (focusedBook.availableSizes.includes('M')) {
+        setSelectedSize('M');
+      } else {
+        setSelectedSize(focusedBook.availableSizes[0]);
+      }
+    }
+  }, [focusedBook]);
 
   // Initialize EmailJS with Public Key
   useEffect(() => {
@@ -281,20 +294,86 @@ const CheckoutModal = ({
                 <div className="space-y-8">
                   {/* Quick View Item (If not in cart) */}
                   {showQuickViewHeader && focusedBook && (
-                    <div className="flex gap-6 items-start animate-fade-in group/item bg-white/40 p-4 -mx-4 rounded-2xl border border-black/5 shadow-sm">
-                      <div className="w-16 h-20 flex-shrink-0 bg-white">
-                        <img src={focusedBook.image} alt={focusedBook.name} className="w-full h-full object-cover" />
+                    <div className="flex flex-col gap-8 animate-fade-in bg-white/40 p-6 -mx-4 rounded-[2.5rem] border border-black/5 shadow-sm">
+                      <div className="flex gap-6 items-start">
+                        <div className="w-24 h-32 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-md">
+                          <img src={focusedBook.image} alt={focusedBook.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0 py-2">
+                           <h4 className="font-mona text-sm font-black text-black leading-tight mb-2 uppercase">{focusedBook.name}</h4>
+                           <p className="font-poppins text-xs font-bold text-black/40 mb-4">₦{focusedBook.price.toLocaleString()}</p>
+                           
+                           {/* Size Selector */}
+                           {focusedBook.availableSizes && focusedBook.availableSizes.length > 0 && (
+                             <div className="space-y-3">
+                               <div className="flex items-center justify-between">
+                                 <label className="font-mona text-[8px] font-black uppercase tracking-widest text-black/30">Select Size</label>
+                                 <button className="font-mona text-[8px] font-black uppercase tracking-widest text-black/20 hover:text-black underline underline-offset-2">Size Guide</button>
+                               </div>
+                               <div className="flex flex-wrap gap-2">
+                                 {focusedBook.availableSizes.map(size => (
+                                   <button
+                                     key={size}
+                                     onClick={() => setSelectedSize(size)}
+                                     className={`w-9 h-9 rounded-lg font-mona text-[10px] font-black flex items-center justify-center transition-all border
+                                                ${selectedSize === size ? 'bg-black text-white border-black shadow-md' : 'bg-white text-black/40 border-black/5 hover:border-black/20'}`}
+                                   >
+                                     {size}
+                                   </button>
+                                 ))}
+                               </div>
+                             </div>
+                           )}
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                         <h4 className="font-mona text-xs font-black text-black leading-none mb-3 uppercase truncate">{focusedBook.name}</h4>
-                         <button
-                           onClick={() => onAddToCart(focusedBook)}
-                           className="w-full py-3 bg-black text-white font-mona text-[9px] font-black uppercase tracking-widest rounded-xl hover:bg-neutral-800 transition-all flex items-center justify-center gap-2"
-                         >
-                           <Plus size={12} />
-                           Add — ₦{focusedBook.price.toLocaleString()}
-                         </button>
+
+                      {/* Accordion Sections */}
+                      <div className="space-y-2 border-t border-black/5 pt-6">
+                        <AccordionItem 
+                          id="details" 
+                          title="Piece Details" 
+                          isOpen={openAccordion === 'details'} 
+                          onToggle={() => setOpenAccordion(openAccordion === 'details' ? null : 'details')}
+                        >
+                          <p className="font-poppins text-[11px] text-black/50 leading-relaxed">
+                            {focusedBook.description}
+                          </p>
+                        </AccordionItem>
+
+                        {focusedBook.fitInfo && (
+                          <AccordionItem 
+                            id="fit" 
+                            title="Sizing & Fit" 
+                            isOpen={openAccordion === 'fit'} 
+                            onToggle={() => setOpenAccordion(openAccordion === 'fit' ? null : 'fit')}
+                          >
+                            <p className="font-poppins text-[11px] text-black/50 leading-relaxed italic">
+                              {focusedBook.fitInfo}
+                            </p>
+                          </AccordionItem>
+                        )}
+
+                        <AccordionItem 
+                          id="shipping" 
+                          title="Delivery & Returns" 
+                          isOpen={openAccordion === 'shipping'} 
+                          onToggle={() => setOpenAccordion(openAccordion === 'shipping' ? null : 'shipping')}
+                        >
+                          <div className="font-poppins text-[10px] text-black/50 space-y-3">
+                            <p>• Premium fulfillment in 1-5 business days.</p>
+                            <p>• Complimentary exchanges within 7 days of delivery.</p>
+                            <p>• Artifacts must be unworn and in original curation.</p>
+                          </div>
+                        </AccordionItem>
                       </div>
+
+                      <button
+                        onClick={() => onAddToCart(focusedBook, selectedSize)}
+                        className="w-full py-5 bg-black text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-neutral-800 transition-all flex items-center justify-center gap-3 shadow-xl"
+                      >
+                        <Plus size={14} />
+                        Acquire Piece — ₦{focusedBook.price.toLocaleString()}
+                      </button>
                     </div>
                   )}
 
@@ -304,10 +383,13 @@ const CheckoutModal = ({
                         <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover shadow-md rounded-[1px]" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex justify-between gap-4 mb-2">
+                        <div className="flex justify-between gap-4 mb-1">
                           <h4 className="font-mona text-xs font-black text-black leading-snug uppercase tracking-tight truncate">{item.product.name}</h4>
                           <button onClick={() => onRemove(item.product.id)} className="text-black/10 hover:text-black transition-colors"><Trash2 size={12} /></button>
                         </div>
+                        {item.selectedSize && (
+                          <p className="font-mona text-[9px] font-black text-black/30 uppercase tracking-widest">Size: {item.selectedSize}</p>
+                        )}
                         <div className="flex items-center justify-between mt-4">
                             <div className="flex items-center gap-4 border border-black/5 bg-white px-3 py-1.5 rounded-full shadow-sm">
                                 <button onClick={() => onUpdateQuantity(item.product.id, -1)} className="text-black/30 hover:text-black"><Minus size={10} strokeWidth={3} /></button>
@@ -499,6 +581,41 @@ function InputField({ label, placeholder, value, onChange, type = "text" }: any)
             <input required type={type} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} className="w-full bg-transparent border-b border-black/10 py-4 font-poppins text-base md:text-sm focus:border-black outline-none transition-all placeholder:text-black/10" />
         </div>
     );
+}
+
+function AccordionItem({ id, title, isOpen, onToggle, children }: any) {
+  return (
+    <div className="border-b border-black/5 last:border-0">
+      <button 
+        onClick={onToggle}
+        className="w-full py-4 flex items-center justify-between text-left group"
+      >
+        <span className="font-mona text-[10px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">{title}</span>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-black/20"
+        >
+          <Plus size={12} />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="pb-6">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 export default CheckoutModal;

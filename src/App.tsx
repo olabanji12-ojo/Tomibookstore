@@ -8,6 +8,7 @@ import Journal from './pages/Journal';
 import Shop from './pages/Shop';
 import CheckoutModal from './components/modal/CheckoutModal';
 import About from './pages/About';
+import InfoPage from './pages/InfoPage';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { useCart } from './context/CartContext';
@@ -67,8 +68,8 @@ function App() {
     }
   }, [formData]);
 
-  const handleAddToCart = (product: Product) => {
-    addToCart(product);
+  const handleAddToCart = (product: Product, size?: string) => {
+    addToCart(product, null, size);
     setIsAddingToCart(true);
     setTimeout(() => setIsAddingToCart(false), 1500);
   };
@@ -106,6 +107,12 @@ function App() {
           {/* Main Site Routes */}
           <Route path="/*" element={
             <>
+              {/* Announcement Bar */}
+              <div className="bg-black py-2 px-4 text-center">
+                <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em]">
+                  Join the curated list & get 15% off your first purchase — <Link to="/contact" className="underline underline-offset-4 decoration-white/30">Claim now</Link>
+                </p>
+              </div>
               <Navbar 
                 cartCount={totalItems} 
                 onCartClick={handleOpenCart}
@@ -118,6 +125,9 @@ function App() {
                 <Route path="/journal" element={<Journal onQuickView={handleQuickView} />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/shipping" element={<InfoPage />} />
+                <Route path="/returns" element={<InfoPage />} />
+                <Route path="/faq" element={<InfoPage />} />
               </Routes>
               <Footer />
             </>

@@ -22,6 +22,9 @@ export interface Product {
   hasVariants?: boolean;
   variants?: ProductVariant[];
   featured?: boolean;
+  availableSizes?: string[];
+  fitInfo?: string;
+  styleWithIds?: string[];
   createdAt?: any;
 }
 
@@ -53,11 +56,12 @@ export interface CartItem {
   product: Product;
   quantity: number;
   variant?: ProductVariant | null;
+  selectedSize?: string;
 }
 
 export interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product, variant?: ProductVariant | null) => void;
+  addToCart: (product: Product, variant?: ProductVariant | null, selectedSize?: string) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, delta: number) => void;
   getItemQuantity: (productId: string) => number;

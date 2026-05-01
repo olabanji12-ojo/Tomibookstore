@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#ede9e1] py-24 px-8 md:px-12 border-t border-black/[0.03]">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-12 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-16 md:gap-12 text-center">
           
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-6 items-center">
@@ -25,6 +25,18 @@ const Footer = () => {
             <nav className="flex flex-col gap-4 font-poppins text-[13px] font-medium text-black/60">
               <Link to="/" className="hover:text-black transition-colors cursor-pointer">Home</Link>
               <Link to="/contact" className="hover:text-black transition-colors cursor-pointer">Contact Us</Link>
+            </nav>
+          </div>
+
+          {/* Column: Information */}
+          <div className="flex flex-col gap-8 items-center">
+            <h3 className="font-mona text-[10px] font-black uppercase tracking-[0.3em] text-black/30">
+              INFORMATION
+            </h3>
+            <nav className="flex flex-col gap-4 font-poppins text-[13px] font-medium text-black/60">
+              <Link to="/shipping" className="hover:text-black transition-colors cursor-pointer">Delivery Policy</Link>
+              <Link to="/returns" className="hover:text-black transition-colors cursor-pointer">Refund & Returns</Link>
+              <Link to="/faq" className="hover:text-black transition-colors cursor-pointer">FAQs</Link>
             </nav>
           </div>
 
@@ -78,7 +90,7 @@ const Footer = () => {
             <div className="w-full max-w-sm relative group">
               <input 
                 type="email" 
-                placeholder="Join the curated list"
+                placeholder="Get 15% off your first piece"
                 className="w-full bg-transparent border-b border-black/10 py-3 font-poppins text-sm focus:border-black outline-none transition-colors text-center"
                 style={{ fontSize: '16px' }}
               />
