@@ -330,7 +330,6 @@ const CheckoutModal = ({
                       {/* Accordion Sections */}
                       <div className="space-y-2 border-t border-black/5 pt-6">
                         <AccordionItem 
-                          id="details" 
                           title="Piece Details" 
                           isOpen={openAccordion === 'details'} 
                           onToggle={() => setOpenAccordion(openAccordion === 'details' ? null : 'details')}
@@ -342,7 +341,6 @@ const CheckoutModal = ({
 
                         {focusedBook.fitInfo && (
                           <AccordionItem 
-                            id="fit" 
                             title="Sizing & Fit" 
                             isOpen={openAccordion === 'fit'} 
                             onToggle={() => setOpenAccordion(openAccordion === 'fit' ? null : 'fit')}
@@ -354,7 +352,6 @@ const CheckoutModal = ({
                         )}
 
                         <AccordionItem 
-                          id="shipping" 
                           title="Delivery & Returns" 
                           isOpen={openAccordion === 'shipping'} 
                           onToggle={() => setOpenAccordion(openAccordion === 'shipping' ? null : 'shipping')}
@@ -583,7 +580,7 @@ function InputField({ label, placeholder, value, onChange, type = "text" }: any)
     );
 }
 
-function AccordionItem({ id, title, isOpen, onToggle, children }: any) {
+function AccordionItem({ title, isOpen, onToggle, children }: any) {
   return (
     <div className="border-b border-black/5 last:border-0">
       <button 
