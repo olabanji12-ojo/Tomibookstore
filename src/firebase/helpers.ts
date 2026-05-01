@@ -10,7 +10,9 @@ import {
   Timestamp,
   increment,
   getDoc,
-  setDoc
+  setDoc,
+  runTransaction,
+  serverTimestamp
 } from 'firebase/firestore';
 import { 
   signInWithEmailAndPassword, 
@@ -399,6 +401,79 @@ export const updateSiteSettings = async (data: any) => {
     await setDoc(doc(db, 'settings', 'global'), { ...data, updatedAt: Timestamp.now() }, { merge: true });
     return { success: true };
   } catch (error) {
+    return { success: false, error };
+  }
+};
+
+// --- Promotions ---
+export const getPromoSettings = async () => {
+  try {
+    const docRef = doc(db, 'promotions', 'primary');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { success: true, promo: docSnap.data() };
+    } else {
+      // Initialize if not exists
+      const initial = {
+        code: 'WELCOME15',
+        maxClaims: 10,
+        currentClaims: 0,
+        isActive: true,
+        text: 'Join the curated list & get 15% off your first purchase',
+        timerEnd: null
+      };
+      await setDoc(docRef, initial);
+      return { success: true, promo: initial };
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, error };
+  }
+};
+
+export const updatePromoSettings = async (data: any) => {
+  try {
+    const docRef = doc(db, 'promotions', 'primary');
+    await updateDoc(docRef, data);
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error };
+  }
+};
+
+export const claimPromo = async (email: string) => {
+  try {
+    const promoRef = doc(db, 'promotions', 'primary');
+    
+    // Use a transaction to ensure we don't exceed maxClaims
+    const result = await runTransaction(db, async (transaction) => {
+      const promoDoc = await transaction.get(promoRef);
+      if (!promoDoc.exists()) throw "Promo does not exist";
+      
+      const promoData = promoDoc.data();
+      if (!promoData.isActive) throw "Offer is no longer active";
+      if (promoData.currentClaims >= promoData.maxClaims) throw "Offer has ended";
+      
+      // Update count
+      transaction.update(promoRef, {
+        currentClaims: promoData.currentClaims + 1
+      });
+
+      // Log the lead
+      const leadRef = doc(collection(db, 'leads'));
+      transaction.set(leadRef, {
+        email,
+        promoCode: promoData.code,
+        createdAt: serverTimestamp()
+      });
+
+      return { code: promoData.code };
+    });
+
+    return { success: true, code: result.code };
+  } catch (error: any) {
+    console.error(error);
     return { success: false, error };
   }
 };

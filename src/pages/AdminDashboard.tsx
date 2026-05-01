@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, ShoppingCart, Package, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { LayoutDashboard, ShoppingCart, Package, TrendingUp, Sparkles } from 'lucide-react';
 import AdminLayout from '../components/admin/AdminLayout';
 import { getDashboardStats } from '../firebase/helpers';
 
@@ -70,6 +71,16 @@ const AdminDashboard = () => {
           icon={<Package size={16} />}
           subValue="Active pieces" 
         />
+        <Link to="/admin/promos" className="block">
+          <div className="bg-black p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-black shadow-xl group hover:bg-neutral-800 transition-all h-full">
+            <div className="flex items-center justify-between mb-6">
+              <p className="font-mona text-[9px] font-black uppercase tracking-[0.3em] text-white/50">Marketing</p>
+              <div className="text-white/20 group-hover:text-white transition-colors"><Sparkles size={16} /></div>
+            </div>
+            <p className="font-mona text-2xl font-black text-white mb-4 uppercase tracking-tighter">Promotion Studio</p>
+            <p className="font-poppins text-[10px] text-white/30 font-bold uppercase tracking-wider group-hover:text-white/50 transition-colors">Manage exclusive offers</p>
+          </div>
+        </Link>
       </div>
 
       <div className="mt-12 md:mt-16 bg-white rounded-[2rem] md:rounded-[2.5rem] border border-black/5 p-8 md:p-12 text-center min-h-[300px] flex flex-col items-center justify-center">

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import Navbar from './components/layout/Navbar';
@@ -12,11 +12,14 @@ import CheckoutModal from './components/modal/CheckoutModal';
 import About from './pages/About';
 import InfoPage from './pages/InfoPage';
 import Footer from './components/layout/Footer';
+import PromoModal from './components/modal/PromoModal';
+import { getPromoSettings } from './firebase/helpers';
 import ScrollToTop from './components/utils/ScrollToTop';
 import { useCart } from './context/CartContext';
 import AdminAuth from './pages/AdminAuth';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProducts from './pages/AdminProducts';
+import AdminPromos from './pages/AdminPromos';
 import AdminAddProduct from './pages/AdminAddProduct';
 import AdminEditProduct from './pages/AdminEditProduct';
 import AdminOrders from './pages/AdminOrders';
@@ -102,10 +105,20 @@ function App() {
   };
 
   const [showAnnouncement, setShowAnnouncement] = useState(false);
+  const [isPromoModalOpen, setIsPromoModalOpen] = useState(false);
+  const [promoData, setPromoData] = useState<any>(null);
   
   useEffect(() => {
-    const timer = setTimeout(() => setShowAnnouncement(true), 3500);
-    return () => clearTimeout(timer);
+    const fetchPromo = async () => {
+      const res = await getPromoSettings();
+      if (res.success && res.promo) {
+        setPromoData(res.promo);
+        if (res.promo.isActive) {
+          setTimeout(() => setShowAnnouncement(true), 3500);
+        }
+      }
+    };
+    fetchPromo();
   }, []);
 
   return (
@@ -128,9 +141,19 @@ function App() {
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       className="bg-black py-2.5 px-6 text-center relative z-[60] overflow-hidden"
                     >
-                      <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em] pr-4">
-                        Join the curated list & get 15% off your first purchase — <Link to="/contact" className="underline underline-offset-4 decoration-white/30">Claim now</Link>
-                      </p>
+                    <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em] pr-4">
+                      {promoData?.currentClaims >= promoData?.maxClaims 
+                        ? 'The exclusive offer has ended — Stay tuned for the next drop'
+                        : `${promoData?.text || 'Join the curated list & get 15% off your first purchase'} — `}
+                      {promoData?.currentClaims < promoData?.maxClaims && (
+                        <button 
+                          onClick={() => setIsPromoModalOpen(true)}
+                          className="underline underline-offset-4 decoration-white/30 hover:text-white/70 transition-colors"
+                        >
+                          Claim now
+                        </button>
+                      )}
+                    </p>
                       <button 
                         onClick={() => setShowAnnouncement(false)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors p-1"
@@ -175,6 +198,11 @@ function App() {
               <AdminProducts />
             </ProtectedRoute>
           } />
+          <Route path="/admin/promos" element={
+            <ProtectedRoute>
+              <AdminPromos />
+            </ProtectedRoute>
+          } />
           <Route path="/admin/products/add" element={
             <ProtectedRoute>
               <AdminAddProduct />
@@ -216,12 +244,19 @@ function App() {
             onAddToCart={handleAddToCart}
           />
         )}
+
+        <PromoModal 
+          isOpen={isPromoModalOpen} 
+          onClose={() => setIsPromoModalOpen(false)} 
+          promoText={promoData?.text} 
+        />
       </div>
     </BrowserRouter>
   );
 }
 
 export default App;
+
 
 
 {/* <style>
