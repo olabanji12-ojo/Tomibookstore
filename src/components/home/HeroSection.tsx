@@ -46,7 +46,7 @@ const HeroSection = () => {
       <div className="w-full h-full md:grid md:grid-cols-2">
         
         {/* LEFT: TEXT CONTENT AREA */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:relative md:inset-auto md:z-auto md:items-start md:px-24 md:py-32 order-2 md:order-1 text-center md:text-left bg-[#f3f2ee]">
+        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:relative md:inset-auto md:z-auto md:items-start md:px-24 md:py-32 order-2 md:order-1 text-center md:text-left md:bg-[#f3f2ee] bg-transparent">
           <motion.div
              initial={{ opacity: 0, x: -20 }}
              animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ const HeroSection = () => {
             className="w-full h-full object-cover"
           />
           {/* Mobile Overlay Only */}
-          <div className="absolute inset-0 bg-white/20 md:hidden" />
+          <div className="absolute inset-0 bg-white/40 md:hidden" />
         </div>
 
       </div>
