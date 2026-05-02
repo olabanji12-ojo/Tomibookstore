@@ -60,7 +60,7 @@ const HeroSection = () => {
 
             {/* Typewriter - Refined sizing for desktop hierarchy */}
             <div className="min-h-[40px] mb-8">
-              <h2 className="font-serif text-2xl md:text-2xl lg:text-3xl font-light text-black/60 italic leading-none relative">
+              <h2 className="font-serif text-lg md:text-2xl lg:text-3xl font-light text-black/60 italic leading-none relative">
                   {displayText}
                   <motion.span 
                     animate={{ opacity: [1, 0, 1] }}
