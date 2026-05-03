@@ -9,7 +9,8 @@ const CATEGORIES = [
   { id: 'fashion', label: 'Fashion', subs: ['Kaftans', 'Accessories', 'Occasion'] },
   { id: 'home', label: 'Home', subs: ['Decor', 'Fragrance', 'Kitchen'] },
   { id: 'gifts', label: 'Gifts', subs: ['For Her', 'For Him', 'Kids'] },
-  { id: 'books', label: 'Books', subs: ['Fiction', 'Non-Fiction', 'Children'] }
+  { id: 'books', label: 'Books', subs: ['Fiction', 'Non-Fiction', 'Children'] },
+  { id: 'bundles', label: 'Bundles', subs: ['Kits', 'Gift Boxes', 'Sets'] }
 ];
 
 const AdminAddProduct = () => {

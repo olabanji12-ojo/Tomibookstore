@@ -11,7 +11,7 @@ const CategoryBar = () => {
   return (
     <section className="bg-white py-6 md:py-10 border-b border-black/[0.03]">
       <div className="max-w-[1400px] mx-auto px-4 md:px-12">
-        <div className="grid grid-cols-3 gap-2 md:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {CATEGORIES.map((cat, i) => (
             <motion.div
               key={cat.label}
