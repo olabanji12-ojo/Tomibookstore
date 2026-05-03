@@ -73,7 +73,7 @@ const AdminAddProduct = () => {
         category: formData.category,
         subCategory: formData.subCategory,
         featured: formData.featured,
-        author: formData.category === 'books' ? formData.author : undefined,
+        author: formData.category === 'books' ? formData.author : null,
         images: uploadRes.urls,
         image: uploadRes.urls[0], // Primary image
         hasVariants: false,
