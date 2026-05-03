@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const HERO_PHRASES = [
   "designed for your everyday life"
+];
+
+const LIFESTYLE_IMAGES = [
+  { url: '/brand_intro.png', alt: 'Boutique Collection' },
+  { url: '/gift_entry.png', alt: 'Curated Gifts' },
+  { url: '/wear_entry.png', alt: 'Fashion & Wear' },
+  { url: '/space_entry.png', alt: 'Home & Space' }
 ];
 
 const HeroSection = () => {
@@ -10,7 +18,9 @@ const HeroSection = () => {
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Typewriter logic
   useEffect(() => {
     const handleType = () => {
       const currentFullText = HERO_PHRASES[currentPhraseIndex];
@@ -35,14 +45,19 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, currentPhraseIndex, typingSpeed]);
 
+  // Slideshow logic
+  useEffect(() => {
+    const imageTimer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % LIFESTYLE_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(imageTimer);
+  }, []);
+
   return (
     <section
       id="home"
       className="relative w-full h-[100svh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
     >
-      {/* 
-         Main Layout: Strict Grid Split on Desktop
-      */}
       <div className="w-full h-full md:grid md:grid-cols-2">
         
         {/* LEFT: TEXT CONTENT AREA */}
@@ -58,8 +73,8 @@ const HeroSection = () => {
                <span className="italic leading-none">Made to inspire.</span>
             </h1>
 
-            {/* Typewriter - Refined sizing for desktop hierarchy */}
-            <div className="min-h-[40px] mb-8">
+            {/* Typewriter */}
+            <div className="min-h-[40px]">
               <h2 className="font-serif text-lg md:text-2xl lg:text-3xl font-light text-black/60 italic leading-none relative">
                   {displayText}
                   <motion.span 
@@ -72,16 +87,20 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* RIGHT: IMAGE AREA */}
+        {/* RIGHT: IMAGE AREA (Slideshow) */}
         <div className="absolute inset-0 md:relative h-full order-1 md:order-2 overflow-hidden bg-black/5">
-          <motion.img
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            src="/brand_intro.png"
-            alt="Boutique Collection"
-            className="w-full h-full object-cover"
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImageIndex}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              src={LIFESTYLE_IMAGES[currentImageIndex].url}
+              alt={LIFESTYLE_IMAGES[currentImageIndex].alt}
+              className="w-full h-full object-cover"
+            />
+          </AnimatePresence>
           {/* Mobile Overlay Only */}
           <div className="absolute inset-0 bg-white/40 md:hidden" />
         </div>

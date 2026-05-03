@@ -6,6 +6,8 @@ import CategoryBar from '../components/home/CategoryBar';
 import BrandPillars from '../components/home/BrandPillars';
 import FeaturedCollection from '../components/home/FeaturedCollection';
 import BestSellers from '../components/home/BestSellers';
+import FoundersNote from '../components/home/FoundersNote';
+import BundleShowcase from '../components/home/BundleShowcase';
 import TrustSection from '../components/home/TrustSection';
 import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
@@ -62,6 +64,9 @@ const Home = ({ onQuickView }: HomeProps) => {
       
       {/* 03. Brand Pillars - SHOP, CREATE, READ, DESIGN */}
       <BrandPillars />
+
+      {/* 03b. Founders Note */}
+      <FoundersNote />
 
       {/* 04. Featured Selection Trigger */}
       <section className="bg-[#ede9e1] py-32 px-10 text-center relative border-b border-black/[0.03]">
@@ -144,6 +149,9 @@ const Home = ({ onQuickView }: HomeProps) => {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* 05b. Bundle Showcase */}
+      <BundleShowcase />
 
       {/* 06. Trust Section */}
       <TrustSection />

@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const CATEGORIES = [
-  { label: 'FASHION', path: '/shop?category=FASHION' },
-  { label: 'GIFTS', path: '/shop?category=GIFTING' },
-  { label: 'HOME', path: '/shop?category=HOME' }
+  { label: 'SHOP BESTSELLERS', path: '/shop?category=bestsellers' },
+  { label: 'SHOP GIFT SETS', path: '/shop?category=gifts' },
+  { label: 'EVERYDAY ESSENTIALS', path: '/shop?category=essentials' }
 ];
 
 const CategoryBar = () => {

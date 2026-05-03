@@ -166,15 +166,6 @@ export default function Personalize() {
       {/* Hero */}
       <section className="pt-32 pb-20 px-8">
         <div className="max-w-[1400px] mx-auto text-center">
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-block py-2 px-4 bg-black/5 rounded-full mb-8"
-            >
-                <span className="font-mona text-[10px] font-black tracking-[0.3em] uppercase text-black/40">
-                    Bespoke Creations
-                </span>
-            </motion.div>
           <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-10 leading-[0.9]">
             CREATE
           </h1>
