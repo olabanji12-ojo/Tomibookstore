@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import MetaTags from '../components/shared/MetaTags';
 import HeroSection from '../components/home/HeroSection';
 import CategoryBar from '../components/home/CategoryBar';
 import BrandPillars from '../components/home/BrandPillars';
-import FeaturedCollection from '../components/home/FeaturedCollection';
-import BestSellers from '../components/home/BestSellers';
-import FoundersNote from '../components/home/FoundersNote';
-import BundleShowcase from '../components/home/BundleShowcase';
+import ProductTrioSection from '../components/home/ProductTrioSection';
+import VisionSection from '../components/home/VisionSection';
 import TrustSection from '../components/home/TrustSection';
 import { getProducts } from '../firebase/helpers';
 import type { Product } from '../types';
@@ -17,22 +14,11 @@ interface HomeProps {
 }
 
 const Home = ({ onQuickView }: HomeProps) => {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showCollection, setShowCollection] = useState(false);
-
-  const [showBestSellers, setShowBestSellers] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
-      const [prodRes] = await Promise.all([
-        getProducts()
-      ]);
-      
-      if (prodRes.success && prodRes.products.length > 0) {
-        const featured = prodRes.products.filter(p => p.featured);
-        setFeaturedProducts(featured.length > 0 ? featured : [prodRes.products[0]]);
-      }
+      await getProducts();
       setLoading(false);
     };
     fetch();
@@ -51,109 +37,62 @@ const Home = ({ onQuickView }: HomeProps) => {
   }
 
   return (
-    <main className="overflow-x-hidden">
-      <MetaTags 
-        title="Home" 
+    <main className="overflow-x-hidden bg-white">
+      <MetaTags
+        title="Home"
         description="Thoughtful goods for inspired living. Designed to help you live with purpose and enjoy everyday moments."
       />
+
       {/* 01. Hero */}
       <HeroSection />
 
       {/* 02. Category Navigation Strip */}
       <CategoryBar />
-      
-      {/* 03. Brand Pillars - SHOP, CREATE, READ, DESIGN */}
-      <BrandPillars />
 
-      {/* 03b. Founders Note */}
-      <FoundersNote />
+      {/* 03. Brand Pillars - SHOP, CREATE, READ */}
+      <BrandPillars onQuickView={onQuickView} />
 
-      {/* 04. Featured Selection Trigger */}
-      <section className="bg-[#ede9e1] py-32 px-10 text-center relative border-b border-black/[0.03]">
-        <div className="max-w-[1200px] mx-auto">
-          <button 
-            onClick={() => setShowCollection(!showCollection)}
-            className="group flex flex-col items-center gap-8 mx-auto"
-          >
-            <div className="space-y-4">
-              <p className="font-poppins text-[9px] font-bold tracking-[0.4em] uppercase text-black/30">
-                The Current Series
-              </p>
-              <div className="flex items-center gap-6">
-                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
-                <h2 className="font-serif text-3xl md:text-5xl font-medium text-black italic tracking-tight">
-                  {showCollection ? 'Close Selection' : 'Featured Selection'}
-                </h2>
-                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
-              </div>
-            </div>
+      {/* 04. Featured Selection */}
+      <ProductTrioSection
+        label="The Current Series"
+        title="Featured Selection"
+        ctaText="Shop All"
+        ctaLink="/shop"
+        bgColor="#f7f6f2"
+        cardBorderColor="#ffffff"
+        filterFn={(products: Product[]) => products.filter(p => p.featured)}
+        onQuickView={onQuickView}
+      />
 
-            <div className="flex items-center gap-3 font-mona text-[10px] font-black uppercase tracking-[0.4em] text-black/40 group-hover:text-black transition-all animate-pulse">
-              {showCollection ? 'Click to minimize' : 'Click to discover'}
-            </div>
-          </button>
+      {/* 05. Best Sellers */}
+      <ProductTrioSection
+        label="Community Favorites"
+        title="Best Sellers"
+        ctaText="Shop Best Sellers"
+        ctaLink="/shop?filter=bestSeller"
+        bgColor="#ffffff"
+        fallbackStartIndex={3}
+        filterFn={(products: Product[]) => products.filter(p => p.bestSeller === true)}
+        onQuickView={onQuickView}
+      />
 
-          <AnimatePresence>
-            {showCollection && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden mt-16"
-              >
-                <FeaturedCollection featuredProducts={featuredProducts} onQuickView={onQuickView} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
+      {/* 06. Curated Kits */}
+      <ProductTrioSection
+        label="Curated for You"
+        title="Curated Kits"
+        ctaText="Explore Kits"
+        ctaLink="/shop?category=GIFTING"
+        bgColor="#faf9f6"
+        cardBorderColor="#ffffff"
+        fallbackStartIndex={6}
+        filterFn={(products: Product[]) => products.filter(p => p.category?.toUpperCase() === 'GIFTING')}
+        onQuickView={onQuickView}
+      />
 
-      {/* 05. Best Sellers Trigger */}
-      <section className="bg-white py-32 px-10 text-center relative">
-        <div className="max-w-[1200px] mx-auto">
-          <button 
-            onClick={() => setShowBestSellers(!showBestSellers)}
-            className="group flex flex-col items-center gap-8 mx-auto"
-          >
-            <div className="space-y-4">
-              <p className="font-poppins text-[9px] font-bold tracking-[0.4em] uppercase text-black/30">
-                Community Favorites
-              </p>
-              <div className="flex items-center gap-6">
-                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
-                <h2 className="font-serif text-3xl md:text-5xl font-medium text-black italic tracking-tight">
-                  {showBestSellers ? 'Close Favorites' : 'Best Sellers'}
-                </h2>
-                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
-              </div>
-            </div>
+      {/* 07. Our Vision */}
+      <VisionSection />
 
-            <div className="flex items-center gap-3 font-mona text-[10px] font-black uppercase tracking-[0.4em] text-black/40 group-hover:text-black transition-all animate-pulse">
-              {showBestSellers ? 'Click to minimize' : 'Click to discover'}
-            </div>
-          </button>
-
-          <AnimatePresence>
-            {showBestSellers && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-hidden mt-16"
-              >
-                <BestSellers onQuickView={onQuickView} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* 05b. Bundle Showcase */}
-      <BundleShowcase />
-
-      {/* 06. Trust Section */}
+      {/* 08. Trust Section */}
       <TrustSection />
     </main>
   );

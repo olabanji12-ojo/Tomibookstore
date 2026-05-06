@@ -1,130 +1,79 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ChevronDown, ChevronUp } from 'lucide-react';
-import ExploreCategories from './ExploreCategories';
 
-const PILLARS = [
+const PILLAR_DATA = [
   {
-    id: '01',
-    title: 'Shop',
+    id: 'shop',
+    title: 'SHOP',
     description: 'Everyday pieces you can use, wear, give, and live with.',
-    href: '/shop',
-    color: '#f7f6f2'
+    href: '/shop'
   },
   {
-    id: '02',
-    title: 'Create',
-    description: 'Tailor made concepts\nfor brands, businesses, and events.',
-    href: '/personalize',
-    color: '#fdfdfd'
+    id: 'create',
+    title: 'CREATE',
+    description: 'Tailor made concepts for brands, businesses, and events.',
+    href: '/personalize'
   },
   {
-    id: '03',
-    title: 'Read',
+    id: 'read',
+    title: 'READ',
     description: 'Ideas and inspiration for living and building with delight.',
-    href: '/journal',
-    color: '#faf9f6'
+    href: '/journal'
   }
 ];
 
-const PillarCard = ({ 
-  pillar, 
-  isExpanded, 
-  onToggle 
-}: { 
-  pillar: typeof PILLARS[0], 
-  isExpanded?: boolean, 
-  onToggle?: () => void 
-}) => {
-  const isHomePillar = pillar.title === 'Shop';
-
+const BrandPillars = ({ onQuickView }: { onQuickView?: (p: any) => void }) => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className={`relative w-full ${isExpanded ? 'col-span-2 lg:col-span-3' : 'col-span-1'}`}
-    >
-      <div 
-        style={{ backgroundColor: pillar.color }}
-        className={`rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[3rem] p-6 md:p-8 lg:p-12 flex flex-col transition-all duration-700 relative overflow-hidden border border-black/[0.03]
-                   ${isExpanded ? 'min-h-[60vh] pb-20' : 'min-h-[300px] md:min-h-[400px] lg:min-h-[500px] items-center justify-center text-center'}`}
-      >
-        {/* Interaction Link */}
-        {!isExpanded && (
-          <Link to={pillar.href} className="absolute top-4 md:top-6 right-4 md:right-6 w-8 h-8 rounded-full border border-black/5 flex items-center justify-center text-black/20 hover:text-black transition-all">
-            <ArrowUpRight size={14} strokeWidth={1.5} />
-          </Link>
-        )}
-
-        {/* Content */}
-        <div className={`flex flex-col relative z-20 w-full overflow-hidden
-                        ${isExpanded ? 'items-start text-left' : 'items-center text-center'}`}>
-          <h3 className={`font-serif font-medium text-black tracking-tight italic leading-none mb-3 md:mb-4 w-full truncate
-                         ${isExpanded ? 'text-4xl md:text-6xl' : 'text-2xl md:text-3xl'}`}>
-             {pillar.title}
-          </h3>
-          <p className={`font-poppins text-black/40 font-light leading-relaxed
-                        ${isExpanded ? 'text-sm md:text-lg max-w-xl' : 'text-[10px] md:text-xs px-2'}`}>
-             <span className="whitespace-pre-line">{pillar.description}</span>
-          </p>
-          
-          {/* Toggle / Action */}
-          {isHomePillar ? (
-            <button 
-              onClick={onToggle}
-              className="mt-6 flex items-center gap-2 group cursor-pointer"
-            >
-               <span className="font-mona text-[8px] font-black tracking-[0.2em] uppercase opacity-40 group-hover:opacity-100 transition-opacity">
-                 {isExpanded ? 'Close' : 'Explore'}
-               </span>
-               {isExpanded ? <ChevronUp size={10} className="opacity-40" /> : <ChevronDown size={10} className="opacity-40" />}
-            </button>
-          ) : (
-            <Link to={pillar.href} className="mt-6 font-mona text-[8px] font-black tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity">
-               Discover
-            </Link>
-          )}
+    <section className="bg-white py-16 md:py-32 px-6 md:px-12 border-b border-black/[0.03]">
+      <div className="max-w-[1400px] mx-auto">
+        
+        {/* Header Block */}
+        <div className="text-center mb-24 md:mb-32">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-serif text-4xl md:text-6xl font-medium text-black mb-6"
+          >
+            Designed for living.
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-poppins text-black/40 text-sm md:text-base tracking-wide"
+          >
+            A thoughtful collection of goods and ideas for your everyday.
+          </motion.p>
         </div>
 
-        {/* Expansion */}
-        <AnimatePresence mode="wait">
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="w-full mt-12"
-            >
-              <ExploreCategories />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
-  );
-};
+        {/* Triple Grid - Matching CategoryBar style */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 xl:gap-16">
+          {PILLAR_DATA.map((item, idx) => (
+            <Link to={item.href} key={item.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                className="bg-[#fdfdfd] border border-black/[0.06] p-8 md:p-12 lg:p-10 xl:p-16 min-h-[400px] flex flex-col items-center justify-center text-center transition-all duration-500 hover:shadow-xl group h-full"
+              >
+                {/* Title Content */}
+                <div className="mb-8">
+                  <h3 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-black tracking-tighter leading-[0.9] md:leading-[0.85] transition-all">
+                    {item.title}
+                  </h3>
+                </div>
 
-const BrandPillars = () => {
-  const [expandedPillar, setExpandedPillar] = useState<string | null>(null);
-
-  const togglePillar = (id: string) => {
-    setExpandedPillar(expandedPillar === id ? null : id);
-  };
-
-  return (
-    <section className="bg-white py-12 md:py-24 px-4 md:px-8 lg:px-12 relative">
-      <div className="max-w-[1600px] mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-        {PILLARS.map((pillar) => (
-          <PillarCard 
-            key={pillar.id} 
-            pillar={pillar} 
-            isExpanded={expandedPillar === pillar.id}
-            onToggle={pillar.title === 'Shop' ? () => togglePillar(pillar.id) : undefined}
-          />
-        ))}
+                {/* Description */}
+                <p className="font-poppins text-xs md:text-sm text-black/40 leading-relaxed italic">
+                  {item.description}
+                </p>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -22,6 +22,7 @@ export interface Product {
   hasVariants?: boolean;
   variants?: ProductVariant[];
   featured?: boolean;
+  bestSeller?: boolean;
   availableSizes?: string[];
   fitInfo?: string | null;
   styleWithIds?: string[] | null;
