@@ -9,22 +9,22 @@ export interface Product {
   id: string;
   name: string;
   slug?: string;
-  author?: string; // Kept for book compatibility
+  author?: string | null; // Kept for book compatibility
   price: number;
   stock?: number;
   description: string;
   images: string[];
   image: string; // Kept for backward compatibility with existing components
   category: string;
-  subCategory?: string;
+  subCategory?: string | null;
   functions?: string[];
   colors?: string[];
   hasVariants?: boolean;
   variants?: ProductVariant[];
   featured?: boolean;
   availableSizes?: string[];
-  fitInfo?: string;
-  styleWithIds?: string[];
+  fitInfo?: string | null;
+  styleWithIds?: string[] | null;
   createdAt?: any;
 }
 

@@ -27,6 +27,14 @@ export default function Shop({ onQuickView }: ShopProps) {
   const [sortBy, setSortBy] = useState('NEWEST');
   const [showFilters, setShowFilters] = useState(false);
 
+  const isFiltered = selectedCat !== 'ALL' || selectedRitual !== 'ALL' || searchQuery !== '';
+
+  const resetFilters = () => {
+    setSelectedCat('ALL');
+    setSelectedRitual('ALL');
+    setSearchQuery('');
+  };
+
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
@@ -257,6 +265,40 @@ export default function Shop({ onQuickView }: ShopProps) {
 
       {/* Product Display */}
       <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-20">
+        
+        {/* Active Filters / Clear All */}
+        <AnimatePresence>
+          {isFiltered && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex flex-wrap items-center gap-4 mb-12"
+            >
+              <p className="font-mona text-[9px] font-black tracking-widest text-black/30 uppercase">Active Filters:</p>
+              
+              <div className="flex flex-wrap gap-2">
+                {selectedCat !== 'ALL' && (
+                  <FilterPill label={selectedCat} onClear={() => setSelectedCat('ALL')} />
+                )}
+                {selectedRitual !== 'ALL' && (
+                  <FilterPill label={selectedRitual} onClear={() => setSelectedRitual('ALL')} />
+                )}
+                {searchQuery !== '' && (
+                  <FilterPill label={`"${searchQuery}"`} onClear={() => setSearchQuery('')} />
+                )}
+                
+                <button 
+                  onClick={resetFilters}
+                  className="font-mona text-[9px] font-black tracking-widest uppercase text-black underline underline-offset-4 hover:opacity-50 transition-opacity ml-2"
+                >
+                  Clear All
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <motion.div 
             layout
             className={viewMode === 'grid' 
@@ -364,5 +406,19 @@ function RitualCard({ label, active, onClick }: { label: string; active: boolean
             </span>
         </button>
     );
+}
+
+function FilterPill({ label, onClear }: { label: string; onClear: () => void }) {
+  return (
+    <div className="flex items-center gap-2 bg-black/5 border border-black/5 pl-3 pr-2 py-1.5 rounded-full">
+      <span className="font-mona text-[8px] font-black uppercase tracking-widest text-black/60">{label}</span>
+      <button 
+        onClick={onClear}
+        className="p-0.5 hover:bg-black/10 rounded-full transition-colors"
+      >
+        <X size={10} className="text-black/40" />
+      </button>
+    </div>
+  );
 }
 
