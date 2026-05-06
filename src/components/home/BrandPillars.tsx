@@ -22,7 +22,7 @@ const PILLAR_DATA = [
   }
 ];
 
-const BrandPillars = ({ onQuickView }: { onQuickView?: (p: any) => void }) => {
+const BrandPillars = () => {
   return (
     <section className="bg-white py-16 md:py-32 px-6 md:px-12 border-b border-black/[0.03]">
       <div className="max-w-[1400px] mx-auto">

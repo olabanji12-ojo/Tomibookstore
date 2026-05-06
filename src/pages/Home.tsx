@@ -50,11 +50,10 @@ const Home = ({ onQuickView }: HomeProps) => {
       <CategoryBar />
 
       {/* 03. Brand Pillars - SHOP, CREATE, READ */}
-      <BrandPillars onQuickView={onQuickView} />
+      <BrandPillars />
 
       {/* 04. Featured Selection */}
       <ProductTrioSection
-        label="The Current Series"
         title="Featured Selection"
         ctaText="Shop All"
         ctaLink="/shop"
@@ -66,7 +65,6 @@ const Home = ({ onQuickView }: HomeProps) => {
 
       {/* 05. Best Sellers */}
       <ProductTrioSection
-        label="Community Favorites"
         title="Best Sellers"
         ctaText="Shop Best Sellers"
         ctaLink="/shop?filter=bestSeller"
@@ -78,7 +76,6 @@ const Home = ({ onQuickView }: HomeProps) => {
 
       {/* 06. Curated Kits */}
       <ProductTrioSection
-        label="Curated for You"
         title="Curated Kits"
         ctaText="Explore Kits"
         ctaLink="/shop?category=GIFTING"

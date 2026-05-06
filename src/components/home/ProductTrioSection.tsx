@@ -5,7 +5,6 @@ import { getProducts } from '../../firebase/helpers';
 import type { Product } from '../../types';
 
 interface ProductTrioSectionProps {
-  label: string;
   title: string;
   ctaText: string;
   ctaLink: string;
@@ -17,7 +16,6 @@ interface ProductTrioSectionProps {
 }
 
 const ProductTrioSection = ({
-  label,
   title,
   ctaText,
   ctaLink,
