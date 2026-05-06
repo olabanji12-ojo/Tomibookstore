@@ -25,13 +25,6 @@ const PILLARS = [
     description: 'Ideas and inspiration for living and building with delight.',
     href: '/journal',
     color: '#faf9f6'
-  },
-  {
-    id: '04',
-    title: 'Contact',
-    description: 'An idea, a question, or something you’d like to create.',
-    href: '/contact',
-    color: '#f2f0ea'
   }
 ];
 
@@ -52,7 +45,7 @@ const PillarCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className={`relative w-full ${isExpanded ? 'col-span-2 lg:col-span-4' : 'col-span-1'}`}
+      className={`relative w-full ${isExpanded ? 'col-span-2 lg:col-span-3' : 'col-span-1'}`}
     >
       <div 
         style={{ backgroundColor: pillar.color }}
@@ -97,7 +90,7 @@ const PillarCard = ({
         </div>
 
         {/* Expansion */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isExpanded && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -109,13 +102,6 @@ const PillarCard = ({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Background Accent */}
-        {!isExpanded && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02]">
-             <span className="font-serif text-[25vw] text-black italic">{pillar.title}</span>
-          </div>
-        )}
       </div>
     </motion.div>
   );
@@ -130,7 +116,7 @@ const BrandPillars = () => {
 
   return (
     <section className="bg-white py-12 md:py-24 px-4 md:px-8 lg:px-12 relative">
-      <div className="max-w-[1600px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+      <div className="max-w-[1600px] mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         {PILLARS.map((pillar) => (
           <PillarCard 
             key={pillar.id} 
