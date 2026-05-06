@@ -38,9 +38,9 @@ const VisionSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="font-serif text-4xl md:text-6xl font-black text-black leading-[1.1] mb-10 italic tracking-tighter"
+              className="font-serif text-3xl md:text-5xl font-light leading-[1.3] text-black mb-12 italic max-w-3xl"
             >
-              Curating the art of <br /> intentional living.
+              Created for people choosing joy, purpose, and possibility every day.
             </motion.h2>
 
             <motion.div
@@ -48,16 +48,18 @@ const VisionSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="space-y-6 flex flex-col items-center md:items-start"
+              className="flex flex-col items-center md:items-start gap-8"
             >
-              <p className="font-poppins text-black/60 text-sm md:text-base leading-relaxed max-w-md">
-                We believe that the objects we surround ourselves with define the quality of our daily experience. Every piece in our collection is chosen for its ability to bring both function and delight to your space.
-              </p>
-              <p className="font-poppins text-black/60 text-sm md:text-base leading-relaxed max-w-md italic">
-                Our vision is to help you build a home and a life that feels authentic, considered, and beautifully yours.
-              </p>
+              {/* Founder Signature Block */}
+              <div className="flex flex-col items-center md:items-start gap-4">
+                <div className="w-12 h-[1px] bg-black/20" />
+                <div>
+                  <p className="font-serif text-2xl text-black">Sisi Tomilayo</p>
+                  <p className="font-mona text-[9px] font-black uppercase tracking-widest text-black/30 mt-2">Founder & Curator</p>
+                </div>
+              </div>
 
-              <div className="pt-8 w-full flex justify-center md:justify-start">
+              <div className="pt-8">
                 <Link 
                   to="/about" 
                   className="group flex flex-col md:flex-row items-center gap-4 text-black font-mona text-[11px] font-black uppercase tracking-[0.3em]"
