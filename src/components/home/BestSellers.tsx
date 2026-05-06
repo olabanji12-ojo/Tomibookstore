@@ -1,10 +1,26 @@
-import { useEffect, useState } from 'react';
-import { getProducts } from '../../firebase/helpers';
-import type { Product } from '../../types';
+import { motion } from 'framer-motion';
 
-interface BestSellersProps {
-  onQuickView: (product: Product) => void;
-}
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: {
+      duration: 1.2,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
 
 const BestSellers = ({ onQuickView }: BestSellersProps) => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -32,12 +48,19 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
   const [main, second, third] = products;
 
   return (
-    <div className="w-full">
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      className="w-full"
+    >
       {/* Bento Grid: One large, two small stacked */}
       <div className="grid grid-cols-12 gap-3 md:gap-6 aspect-[4/5] sm:aspect-[4/3] w-full">
         
         {/* Left Master Tile (Product 1) */}
-        <div 
+        <motion.div 
+          variants={itemVariants}
           onClick={() => onQuickView(main)}
           className="col-span-7 h-full relative group cursor-pointer"
         >
@@ -56,13 +79,14 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
                  </p>
               </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column (Stacked Products 2 & 3) */}
         <div className="col-span-5 h-full flex flex-col gap-3 md:gap-6">
           
           {/* Top Right (Product 2) */}
-          <div 
+          <motion.div 
+            variants={itemVariants}
             onClick={() => onQuickView(second)}
             className="flex-1 min-h-0 relative group cursor-pointer"
           >
@@ -79,10 +103,11 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
                   </span>
                </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bottom Right (Product 3) */}
-          <div 
+          <motion.div 
+            variants={itemVariants}
             onClick={() => onQuickView(third)}
             className="flex-1 min-h-0 relative group cursor-pointer"
           >
@@ -99,11 +124,13 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
                   </span>
                </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
-    </div>
+    </motion.div>
+  );
+};
   );
 };
 

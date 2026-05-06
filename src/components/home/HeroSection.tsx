@@ -55,7 +55,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative w-full h-[70vh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
+      className="relative w-full h-[60vh] md:h-[80vh] bg-[#f3f2ee] overflow-hidden"
     >
       <div className="w-full h-full md:grid md:grid-cols-2">
         
