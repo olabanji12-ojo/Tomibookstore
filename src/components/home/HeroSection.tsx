@@ -14,7 +14,7 @@ const HeroSection = () => {
           alt="Curated Gifts" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Centered Content */}
