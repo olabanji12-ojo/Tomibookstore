@@ -25,14 +25,14 @@ const HeroSection = () => {
            transition={{ duration: 0.8 }}
            className="max-w-3xl"
         >
-          <h1 className="font-serif text-4xl md:text-7xl lg:text-8xl font-black text-white leading-[0.95] tracking-tighter mb-8 drop-shadow-sm">
+          <h1 className="font-serif text-3xl md:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tighter mb-8 drop-shadow-sm">
              Good for you, <br />
              <span className="italic">Made to inspire.</span>
           </h1>
 
           <Link 
             to="/shop"
-            className="inline-block border border-white px-12 py-4 font-mona text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-white hover:bg-white hover:text-black transition-all duration-500 rounded-full md:rounded-none"
+            className="inline-block border border-white px-12 py-4 font-mona text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-white hover:bg-white hover:text-black transition-all duration-500"
           >
             Shop
           </Link>
@@ -41,7 +41,5 @@ const HeroSection = () => {
     </section>
   );
 };
-
-export default HeroSection;
 
 export default HeroSection;
