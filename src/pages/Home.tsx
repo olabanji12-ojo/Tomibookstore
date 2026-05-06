@@ -80,11 +80,11 @@ const Home = ({ onQuickView }: HomeProps) => {
                 The Current Series
               </p>
               <div className="flex items-center gap-6">
-                <div className={`h-[1px] bg-black/10 transition-all duration-700 ${showCollection ? 'w-24' : 'w-12 group-hover:w-24'}`} />
+                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
                 <h2 className="font-serif text-3xl md:text-5xl font-medium text-black italic tracking-tight">
                   {showCollection ? 'Close Selection' : 'Featured Selection'}
                 </h2>
-                <div className={`h-[1px] bg-black/10 transition-all duration-700 ${showCollection ? 'w-24' : 'w-12 group-hover:w-24'}`} />
+                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
               </div>
             </div>
 
@@ -121,11 +121,11 @@ const Home = ({ onQuickView }: HomeProps) => {
                 Community Favorites
               </p>
               <div className="flex items-center gap-6">
-                <div className={`h-[1px] bg-black/10 transition-all duration-700 ${showBestSellers ? 'w-24' : 'w-12 group-hover:w-24'}`} />
+                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
                 <h2 className="font-serif text-3xl md:text-5xl font-medium text-black italic tracking-tight">
                   {showBestSellers ? 'Close Favorites' : 'Best Sellers'}
                 </h2>
-                <div className={`h-[1px] bg-black/10 transition-all duration-700 ${showBestSellers ? 'w-24' : 'w-12 group-hover:w-24'}`} />
+                <div className="h-[1px] bg-black/10 w-16 md:w-24" />
               </div>
             </div>
 

@@ -1,4 +1,11 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { getProducts } from '../../firebase/helpers';
+import type { Product } from '../../types';
+
+interface BestSellersProps {
+  onQuickView: (product: Product) => void;
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -10,7 +17,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: any = {
   hidden: { opacity: 0, x: -40 },
   visible: { 
     opacity: 1, 
@@ -129,8 +136,6 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
         </div>
       </div>
     </motion.div>
-  );
-};
   );
 };
 
