@@ -23,7 +23,7 @@ const About = () => {
             <span className="font-mona text-[10px] md:text-[12px] font-black tracking-[0.4em] uppercase text-black/20 block mb-10 text-center">
               The Philosophy
             </span>
-            <h1 className="font-serif text-5xl md:text-8xl lg:text-9xl font-black text-black leading-[0.9] tracking-tighter mb-16">
+            <h1 className="font-serif text-2xl md:text-5xl lg:text-6xl font-black text-black leading-[0.9] tracking-tighter mb-16">
               WE BELIEVE <br />
               EVERYDAY LIFE <br />
               SHOULD FEEL <br />
@@ -42,7 +42,7 @@ const About = () => {
             viewport={{ once: true }}
             className="space-y-12 w-full"
           >
-             <h2 className="font-serif text-3xl md:text-5xl font-medium text-black leading-tight italic">
+             <h2 className="font-serif text-xl md:text-3xl font-medium text-black leading-tight italic">
                "We believe everyday life should feel intentional, delightful, and inspiring."
              </h2>
              <div className="w-16 h-px bg-black/10 mx-auto" />
@@ -56,7 +56,7 @@ const About = () => {
             className="space-y-10 mt-20"
           >
             <p className="font-poppins text-xl md:text-2xl text-black/60 leading-relaxed font-light">
-              Good Things Co exists to create pieces that are good for you — things you can use, wear, give, and live with.
+              Good Things Co exists to create pieces that are good for you, things you can use, wear, give, and live with.
             </p>
             <p className="font-poppins text-xl md:text-2xl text-black/60 leading-relaxed font-light">
               Everything we make is designed with intention and made to inspire how you show up in your everyday life.

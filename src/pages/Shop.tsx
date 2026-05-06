@@ -48,7 +48,9 @@ export default function Shop({ onQuickView }: ShopProps) {
       const category = p.category || 'Uncategorized';
       
       const matchesSearch = name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCat = selectedCat === 'ALL' || category.toUpperCase() === selectedCat;
+      const matchesCat = selectedCat === 'ALL' || 
+                        category.toUpperCase() === selectedCat ||
+                        (selectedCat === 'BESTSELLERS' && (p as any).bestSeller);
       const matchesRitual = selectedRitual === 'ALL' || (p.functions || []).some(f => f.toUpperCase() === selectedRitual);
       return matchesSearch && matchesCat && matchesRitual;
     })
@@ -85,7 +87,7 @@ export default function Shop({ onQuickView }: ShopProps) {
       <section className="pt-24 pb-12 px-4 md:px-8 border-b border-black/[0.03]">
         <div className="max-w-[1400px] mx-auto text-center">
 
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-9xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black mb-6 leading-[0.9] md:leading-[0.85]">
             CHOOSE <br className="md:hidden" /> GOOD THINGS.
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
@@ -341,7 +343,7 @@ function FilterTab({ label, active, onClick }: { label: string; active: boolean;
     return (
         <button 
             onClick={onClick}
-            className={`flex items-center gap-2 py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black/30 hover:border-black/20 hover:text-black/60'}`}
+            className={`flex items-center gap-2 py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black hover:border-black/20 hover:bg-black/5'}`}
         >
             <span className="font-mona text-[10px] font-black tracking-widest uppercase">
                 {label}
@@ -355,7 +357,7 @@ function RitualCard({ label, active, onClick }: { label: string; active: boolean
     return (
         <button 
             onClick={onClick}
-            className={`flex items-center justify-center py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black/40 hover:border-black/20 hover:text-black/80'}`}
+            className={`flex items-center justify-center py-3 px-5 rounded-full border transition-all ${active ? 'bg-black border-black text-white shadow-md' : 'bg-white border-black/5 text-black hover:border-black/20 hover:bg-black/5'}`}
         >
             <span className="font-mona text-[10px] font-black tracking-[0.2em] uppercase">
                 {label}

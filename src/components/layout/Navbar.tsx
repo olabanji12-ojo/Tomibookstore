@@ -28,7 +28,7 @@ const Navbar = ({ cartCount = 0, onCartClick, isAdding }: NavbarProps) => {
           {/* 1. LEFT: LOGO */}
           <div className="flex-1 flex justify-start">
             <Link to="/" className="hover:opacity-70 transition-opacity">
-              <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-28 md:h-32 w-auto object-contain" />
+              <img src="/goodthings.png" alt="Good Things Co" className="h-28 md:h-32 w-auto object-contain" />
             </Link>
           </div>
 

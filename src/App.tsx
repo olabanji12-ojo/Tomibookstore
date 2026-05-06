@@ -143,8 +143,8 @@ function App() {
                     >
                     <p className="font-mona text-[8px] md:text-[9px] font-black text-white uppercase tracking-[0.3em] pr-4">
                       {promoData?.currentClaims >= promoData?.maxClaims 
-                        ? 'The exclusive offer has ended — Stay tuned for the next drop'
-                        : `${promoData?.text || 'Join the curated list & get 15% off your first purchase'} — `}
+                        ? 'The exclusive offer has ended • Stay tuned for the next drop'
+                        : `${promoData?.text || 'Join the curated list & get 15% off your first purchase'} • `}
                       {promoData?.currentClaims < promoData?.maxClaims && (
                         <button 
                           onClick={() => setIsPromoModalOpen(true)}

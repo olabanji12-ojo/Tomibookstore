@@ -170,7 +170,7 @@ export default function Personalize() {
             CREATE
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">
-            Tailor made concepts for brands, businesses, and events.
+            Tailor made concepts <br className="hidden md:block" /> for brands, businesses and events.
           </p>
         </div>
       </section>

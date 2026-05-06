@@ -49,12 +49,12 @@ const BestSellers = ({ onQuickView }: BestSellersProps) => {
              />
              
              {/* Info Overlay */}
-             <div className="absolute inset-x-0 bottom-0 p-4 md:p-10 bg-gradient-to-t from-black/20 to-transparent">
-                <h5 className="font-serif text-xl md:text-4xl font-medium text-white italic">{main.name}</h5>
-                <p className="font-mona text-[8px] md:text-[10px] font-black text-white/80 uppercase tracking-widest mt-2">
-                   {main.category} — ${main.price}
-                </p>
-             </div>
+              <div className="absolute inset-x-0 bottom-0 p-4 md:p-10 bg-gradient-to-t from-black/20 to-transparent">
+                 <h5 className="font-serif text-xl md:text-4xl font-medium text-white italic">{main.name}</h5>
+                 <p className="font-mona text-[8px] md:text-[10px] font-black text-white/80 uppercase tracking-widest mt-2">
+                    {main.category} • ₦{main.price.toLocaleString()}
+                 </p>
+              </div>
           </div>
         </div>
 

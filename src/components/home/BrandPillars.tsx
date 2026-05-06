@@ -15,7 +15,7 @@ const PILLARS = [
   {
     id: '02',
     title: 'Create',
-    description: 'Tailor made concepts for brands, businesses, and events.',
+    description: 'Tailor made concepts\nfor brands, businesses, and events.',
     href: '/personalize',
     color: '#fdfdfd'
   },
@@ -75,7 +75,7 @@ const PillarCard = ({
           </h3>
           <p className={`font-poppins text-black/40 font-light leading-relaxed
                         ${isExpanded ? 'text-sm md:text-lg max-w-xl' : 'text-[10px] md:text-xs px-2'}`}>
-             {pillar.description}
+             <span className="whitespace-pre-line">{pillar.description}</span>
           </p>
           
           {/* Toggle / Action */}

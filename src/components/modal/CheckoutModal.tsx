@@ -369,7 +369,7 @@ const CheckoutModal = ({
                         className="w-full py-5 bg-black text-white font-mona text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl hover:bg-neutral-800 transition-all flex items-center justify-center gap-3 shadow-xl"
                       >
                         <Plus size={14} />
-                        Acquire Piece — ₦{focusedBook.price.toLocaleString()}
+                        Acquire Piece • ₦{focusedBook.price.toLocaleString()}
                       </button>
                     </div>
                   )}
@@ -545,7 +545,7 @@ const CheckoutModal = ({
 
                         <div className="flex gap-4">
                           <button onClick={() => setCurrentStep(2)} className="px-8 h-16 border border-black/10 font-poppins text-[10px] font-black uppercase tracking-[0.3em] text-black/40">Back</button>
-                          <button onClick={handlePurchaseButton} className="flex-1 h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase transition-all shadow-xl shadow-black/20 cursor-pointer">PURCHASE — ₦{totalPrice.toLocaleString()}</button>
+                          <button onClick={handlePurchaseButton} className="flex-1 h-16 bg-black text-white font-poppins text-[11px] font-black tracking-[0.5em] uppercase transition-all shadow-xl shadow-black/20 cursor-pointer">PURCHASE • ₦{totalPrice.toLocaleString()}</button>
                         </div>
                       </motion.div>
                     )}

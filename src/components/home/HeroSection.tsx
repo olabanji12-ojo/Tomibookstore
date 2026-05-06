@@ -55,7 +55,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative w-full h-[100svh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
+      className="relative w-full h-[70vh] md:h-[90vh] bg-[#f3f2ee] overflow-hidden"
     >
       <div className="w-full h-full md:grid md:grid-cols-2">
         
@@ -67,7 +67,7 @@ const HeroSection = () => {
              transition={{ duration: 0.8, delay: 0.2 }}
              className="max-w-full md:max-w-xl lg:max-w-2xl"
           >
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-[5.5vw] xl:text-[5.5rem] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-[5.5vw] xl:text-[5.5rem] font-black text-black leading-[0.95] md:leading-[0.85] tracking-tighter mb-10">
                Good for you, <br />
                <span className="italic leading-none">Made to inspire.</span>
             </h1>

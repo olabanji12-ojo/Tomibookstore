@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-6 items-center">
             <Link to="/" className="hover:opacity-70 transition-opacity">
-              <img src="/goodthings-removebg-preview.png" alt="Good Things Co" className="h-32 w-auto object-contain -ml-2" />
+              <img src="/goodthings.png" alt="Good Things Co" className="h-32 w-auto object-contain -ml-2" />
             </Link>
             <p className="font-poppins text-xs text-black/50 leading-relaxed max-w-[200px]">
               Live inspired. Choose good things.
