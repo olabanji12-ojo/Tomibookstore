@@ -34,14 +34,35 @@ const BundleShowcase = () => {
           <h2 className="font-serif text-4xl md:text-5xl font-medium text-black italic">The Curated Kits</h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {bundles.map((bundle, idx) => (
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+          className="grid md:grid-cols-3 gap-8"
+        >
+          {bundles.map((bundle) => (
             <motion.div
               key={bundle.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              variants={{
+                hidden: { opacity: 0, x: -30 },
+                visible: { 
+                  opacity: 1, 
+                  x: 0,
+                  transition: {
+                    duration: 1,
+                    ease: [0.22, 1, 0.36, 1]
+                  }
+                }
+              }}
               className="group"
             >
               <Link to={`/shop?category=bundles&id=${bundle.id}`}>
@@ -58,7 +79,7 @@ const BundleShowcase = () => {
               </Link>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
