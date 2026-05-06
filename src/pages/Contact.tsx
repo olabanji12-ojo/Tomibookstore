@@ -87,8 +87,8 @@ const Contact = () => {
           <p className="font-poppins text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-6">
             We’d love to hear from you.
           </p>
-          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed italic">
-            An idea, a question, or something you’d like to create <br /> let’s begin.
+          <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed italic whitespace-pre-line">
+            An idea, a question, or something you’d like to create. {"\n"} Let’s begin.
           </p>
 
           <div className="w-16 h-px bg-black/10 mx-auto mt-10" />
