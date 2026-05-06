@@ -81,7 +81,7 @@ const Contact = () => {
         
         {/* Header Section */}
         <div className="text-center mb-20 md:mb-32">
-          <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black text-black uppercase tracking-tighter mb-8 leading-[0.9]">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-black tracking-tighter mb-8 leading-[0.9] md:leading-[0.85]">
             CONTACT
           </h1>
           <p className="font-poppins text-[10px] font-black uppercase tracking-[0.4em] text-black/20 mb-6">

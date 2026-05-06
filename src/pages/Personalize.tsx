@@ -166,7 +166,7 @@ export default function Personalize() {
       {/* Hero */}
       <section className="pt-32 pb-20 px-8">
         <div className="max-w-[1400px] mx-auto text-center">
-          <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-10 leading-[0.9]">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black mb-10 leading-[0.9] md:leading-[0.85]">
             CREATE
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed">

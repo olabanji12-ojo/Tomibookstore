@@ -142,7 +142,7 @@ export default function Journal({ onQuickView }: JournalProps) {
       <section className="pt-32 md:pt-40 pb-16 md:pb-20 px-4 md:px-8">
         <div className="max-w-[1400px] mx-auto text-center">
 
-          <h1 className="font-mona text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black mb-8 md:mb-10 leading-[0.9] md:leading-[0.85]">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black mb-8 md:mb-10 leading-[0.9] md:leading-[0.85]">
             READ
           </h1>
           <p className="font-poppins text-base md:text-xl text-black/40 max-w-2xl mx-auto leading-relaxed px-4">
@@ -181,7 +181,7 @@ export default function Journal({ onQuickView }: JournalProps) {
                 <span className="font-mona text-[9px] font-black tracking-[0.3em] uppercase text-black/20 mb-6 block">
                   {book.author || 'Published Work'}
                 </span>
-                <h3 className="font-mona text-4xl md:text-6xl font-black text-black mb-8 tracking-tighter leading-none group-hover:text-black/60 transition-colors">
+                <h3 className="font-serif text-3xl md:text-6xl font-black text-black mb-8 tracking-tighter leading-none group-hover:text-black/60 transition-colors">
                   {book.name}
                 </h3>
                 <p className="font-poppins text-black/40 text-sm md:text-base leading-relaxed mb-10">
@@ -257,7 +257,7 @@ export default function Journal({ onQuickView }: JournalProps) {
       {/* Custom Request CTA */}
       <section className="bg-black py-24 md:py-40 px-6 md:px-8 text-center text-white overflow-hidden relative">
         <div className="max-w-4xl mx-auto relative z-10">
-          <h2 className="font-mona text-3xl md:text-7xl font-black tracking-tight mb-6 md:mb-8 leading-tight">
+          <h2 className="font-serif text-3xl md:text-6xl font-black tracking-tighter mb-6 md:mb-8 leading-tight">
             BECOME PART OF <br /> THE STORY
           </h2>
           <p className="font-poppins text-white/50 text-base md:text-lg mb-10 md:mb-12 max-w-2xl mx-auto italic">
