@@ -39,7 +39,7 @@ const Home = ({ onQuickView }: HomeProps) => {
   return (
     <main className="overflow-x-hidden bg-white">
       <MetaTags
-        title="Home"
+        title="Inspired Living"
         description="Thoughtful goods for inspired living. Designed to help you live with purpose and enjoy everyday moments."
       />
 

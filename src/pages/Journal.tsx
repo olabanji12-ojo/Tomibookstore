@@ -151,6 +151,33 @@ export default function Journal({ onQuickView }: JournalProps) {
         </div>
       </section>
 
+      {/* Filter Bar */}
+      <section className="sticky top-[70px] md:top-[85px] z-40 bg-[#f3f2ee]/80 backdrop-blur-xl border-y border-black/[0.03] py-4 md:py-6 px-4 md:px-8 mb-12 md:mb-20">
+        <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-center gap-3 md:gap-10">
+          <div className="flex items-center gap-3 mr-4 hidden md:flex">
+            <Filter size={14} className="text-black/30" />
+            <span className="font-mona text-[10px] font-black tracking-widest text-black/30 uppercase">Filter Stories</span>
+          </div>
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCat(cat)}
+              className={`font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all relative py-2 ${
+                activeCat === cat ? 'text-black' : 'text-black/30 hover:text-black/60'
+              }`}
+            >
+              {cat}
+              {activeCat === cat && (
+                <motion.div 
+                    layoutId="underline" 
+                    className="absolute bottom-0 left-0 w-full h-[2px] bg-black" 
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      </section>
+
       {/* Featured Books Section */}
       <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-24 md:mb-32">
         <div className="flex flex-col items-center gap-4 mb-16">
@@ -205,33 +232,6 @@ export default function Journal({ onQuickView }: JournalProps) {
                 <p className="font-mona text-[10px] font-black text-black/20 uppercase tracking-widest">No books currently featured.</p>
              </div>
           )}
-        </div>
-      </section>
-
-      {/* Filter Bar */}
-      <section className="sticky top-[70px] md:top-[85px] z-40 bg-[#f3f2ee]/80 backdrop-blur-xl border-y border-black/[0.03] py-4 md:py-6 px-4 md:px-8 mb-12 md:mb-20">
-        <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-center gap-3 md:gap-10">
-          <div className="flex items-center gap-3 mr-4 hidden md:flex">
-            <Filter size={14} className="text-black/30" />
-            <span className="font-mona text-[10px] font-black tracking-widest text-black/30 uppercase">Filter Stories</span>
-          </div>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCat(cat)}
-              className={`font-mona text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all relative py-2 ${
-                activeCat === cat ? 'text-black' : 'text-black/30 hover:text-black/60'
-              }`}
-            >
-              {cat}
-              {activeCat === cat && (
-                <motion.div 
-                    layoutId="underline" 
-                    className="absolute bottom-0 left-0 w-full h-[2px] bg-black" 
-                />
-              )}
-            </button>
-          ))}
         </div>
       </section>
 
